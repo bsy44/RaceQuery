@@ -3,9 +3,9 @@ from backend.services.driver_service import DriverService
 
 driver_bp = Blueprint('drivers', __name__)
 
-@driver_bp.get('/')
-def list_drivers():
-    service = DriverService(year=2025, grand_prix="Monza", session_type="R")
+@driver_bp.get("/<int:season>")
+def list_drivers(season):
+    service = DriverService(season)
     drivers = service.get_drivers()
 
     return jsonify(drivers)
