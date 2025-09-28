@@ -2,7 +2,6 @@ import fastf1
 from fastf1.ergast import Ergast
 import os
 
-
 class DriverService:
     def __init__(self, season: int):
         self.season = season

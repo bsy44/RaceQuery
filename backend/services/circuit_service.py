@@ -19,7 +19,6 @@ class CircuitService:
         for _, row in df.iterrows():
             result.append({
                 "circuitId": row["circuitId"],
-                "circuitUrl": row.get("circuitUrl"),
                 "name": row.get("circuitName"),
                 "locality": row.get("locality"),
                 "country": row.get("country"),
