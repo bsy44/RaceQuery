@@ -9,8 +9,6 @@ class ConstructorStandingService:
         standings = self.ergast.get_constructor_standings(season=self.year)
         df = standings.content[0]
 
-        print("Colonnes disponibles :", df.columns.tolist())
-
         results = []
         for _, row in df.iterrows():
             results.append({
