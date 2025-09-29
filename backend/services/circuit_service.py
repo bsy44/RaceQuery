@@ -2,7 +2,6 @@ import fastf1
 from fastf1.ergast import Ergast
 import os
 
-
 class CircuitService:
     def __init__(self, season: int = None):
         self.season = season

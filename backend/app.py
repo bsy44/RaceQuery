@@ -7,6 +7,7 @@ from backend.controllers.constructor_controller import contructor_bp
 from backend.controllers.circuit_controller import circuit_bp
 from backend.controllers.race_controller import race_bp
 from backend.controllers.result_controller import result_bp
+from backend.controllers.qualifying_controller import qualifying_bp
 
 app = Flask(__name__)
 CORS(app, origins="*")
@@ -15,6 +16,7 @@ app.register_blueprint(driver_bp, url_prefix='/drivers')
 app.register_blueprint(contructor_bp, url_prefix='/constructors')
 app.register_blueprint(circuit_bp, url_prefix='/circuits')
 app.register_blueprint(race_bp, url_prefix='/race')
+app.register_blueprint(qualifying_bp, url_prefix='/qualifyng')
 app.register_blueprint(result_bp, url_prefix='/results')
 app.register_blueprint(driver_standing_bp, url_prefix='/drivers-standings')
 app.register_blueprint(constructor_standing_bp, url_prefix='/constructors-standings')
