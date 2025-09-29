@@ -1,30 +1,43 @@
+import os
+import pandas as pd
 import fastf1
 from fastf1.ergast import Ergast
-import os
+
 
 class DriverService:
-    def __init__(self, season: int):
-        self.season = season
+    def __init__(self):
         self.ergast = Ergast()
 
         cache_dir = 'backend/data/fastf1_cache'
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
-    def get_drivers(self) -> list[dict]:
-        df = self.ergast.get_driver_info(season=self.season)
+    def get_drivers(self, season: int) -> list[dict]:
+        df = self.ergast.get_driver_info(season=season)
 
-        result = []
-        for _, row in df.iterrows():
-            result.append({
-                "driverId": row["driverId"],
-                "driverNumber": row.get("driverNumber"),
-                "code": row.get("driverCode"),
-                "fullName": f"{row['givenName']} {row['familyName']}",
-                "givenName": row["givenName"],
-                "familyName": row["familyName"],
-                "dateOfBirth": row.get("dateOfBirth"),
-                "nationality": row.get("driverNationality"),
-            })
+        return [self._format_driver(row) for _, row in df.iterrows()]
 
-        return result
+    def get_driver_by_id(self, driver_id: str) -> dict | None:
+        df = self.ergast.get_driver_info(driver=driver_id)
+        if df.empty:
+            return None
+        return self._format_driver(df.iloc[0])
+
+    def _format_driver(self, row) -> dict:
+        dob = row.get("dateOfBirth")
+        if pd.notna(dob):
+            dob_str = str(pd.to_datetime(dob).date())
+        else:
+            dob_str = None
+
+        return {
+            "driverId": str(row["driverId"]),
+            "driverNumber": int(row["driverNumber"]) if not pd.isna(row.get("driverNumber")) else None,
+            "code": row.get("driverCode"),
+            "fullName": f"{row['givenName']} {row['familyName']}",
+            "givenName": row["givenName"],
+            "familyName": row["familyName"],
+            "dateOfBirth": dob_str,
+            "nationality": row.get("driverNationality"),
+        }
+

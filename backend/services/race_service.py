@@ -3,8 +3,9 @@ from fastf1.ergast import Ergast
 import os
 
 class RaceService:
-    def __init__(self, season: int):
+    def __init__(self, season: int, round: int = None):
         self.season = season
+        self.round = round
         self.ergast = Ergast()
 
         cache_dir = 'backend/data/fastf1_cache'
@@ -24,7 +25,7 @@ class RaceService:
         return str(value) + "Z"
 
     def get_races(self)-> list[dict]:
-        df = self.ergast.get_race_schedule(season=self.season)
+        df = self.ergast.get_race_schedule(season=self.season, round=self.round)
 
         races = []
         for _, row in df.iterrows():
@@ -34,7 +35,6 @@ class RaceService:
                 "raceName": row.get("raceName"),
                 "Circuit": {
                     "circuitId": row.get("circuitId"),
-                    "url": row.get("circuitUrl"),
                     "circuitName": row.get("circuitName"),
                     "Location": {
                         "locality": row.get("locality"),
