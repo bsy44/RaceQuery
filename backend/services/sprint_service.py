@@ -1,14 +1,14 @@
+import os
 import fastf1
 from fastf1.ergast import Ergast
-import os
 
-class ResultService:
+class SprintService:
     def __init__(self, season: int, round: int = None):
         self.season = season
         self.round = round
         self.ergast = Ergast()
 
-        cache_dir = "backend/data/fastf1_cache"
+        cache_dir = 'backend/data/fastf1_cache'
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
@@ -33,19 +33,17 @@ class ResultService:
         except:
             return str(td)
 
-    def get_results(self) -> dict:
+    def get_sprint(self) -> dict:
         schedule_df = self.ergast.get_race_schedule(season=self.season, round=self.round)
-
         if self.round is not None:
             schedule_df = schedule_df[schedule_df['round'] == self.round]
 
         races = []
-
         for _, race_row in schedule_df.iterrows():
             round_num = race_row['round']
 
-            results_resp = self.ergast.get_race_results(season=self.season, round=round_num)
-            results_df = results_resp.content[0] if hasattr(results_resp, "content") and len(results_resp.content) > 0 else None
+            sprint_resp = self.ergast.get_sprint_results(season=self.season, round=round_num)
+            sprint_df = sprint_resp.content[0] if hasattr(sprint_resp, "content") and len(sprint_resp.content) > 0 else None
 
             race_info = {
                 "season": str(race_row.get("season")),
@@ -61,12 +59,12 @@ class ResultService:
                 },
                 "date": self._format_date(race_row.get("raceDate")),
                 "time": self._format_time(race_row.get("raceTime")),
-                "Results": []
+                "SprintResults": []
             }
 
-            if results_df is not None:
-                for _, r in results_df.iterrows():
-                    race_info["Results"].append({
+            if sprint_df is not None:
+                for _, r in sprint_df.iterrows():
+                    race_info["SprintResults"].append({
                         "position": str(r.get("position")),
                         "points": str(r.get("points")),
                         "grid": str(r.get("grid")),
