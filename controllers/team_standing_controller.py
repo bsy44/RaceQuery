@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from backend.services.constructor_standing_service import ConstructorStandingService
+from services.constructor_standing_service import ConstructorStandingService
 
 constructor_standing_bp = Blueprint('constructors-standing', __name__)
 

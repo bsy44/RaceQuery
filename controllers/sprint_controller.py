@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from backend.services.sprint_service import SprintService
+from services.sprint_service import SprintService
 
 sprint_bp = Blueprint('sprint', __name__)
 

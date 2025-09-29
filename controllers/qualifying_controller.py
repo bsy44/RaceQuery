@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from backend.services.qualifying_service import QualifyingService
+from services.qualifying_service import QualifyingService
 
 qualifying_bp = Blueprint("qualifying", __name__)
 

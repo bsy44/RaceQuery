@@ -7,7 +7,7 @@ class CircuitService:
         self.season = season
         self.ergast = Ergast()
 
-        cache_dir = "backend/data/fastf1_cache"
+        cache_dir = 'data/fastf1_cache'
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
