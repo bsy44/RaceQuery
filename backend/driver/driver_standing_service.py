@@ -1,9 +1,15 @@
+import fastf1
 from fastf1.ergast import Ergast
+import os
 
 class DriverStandingService:
     def __init__(self, year: int):
         self.year = year
         self.ergast = Ergast()
+
+        cache_dir = 'backend/data/fastf1_cache'
+        os.makedirs(cache_dir, exist_ok=True)
+        fastf1.Cache.enable_cache(cache_dir)
 
     def get_driver_standings(self) -> list[dict]:
         standings = self.ergast.get_driver_standings(season=self.year)
