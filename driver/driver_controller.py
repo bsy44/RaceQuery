@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from services.driver_service import DriverService
+from driver.driver_service import DriverService
 
 driver_bp = Blueprint('drivers', __name__)
 service = DriverService()

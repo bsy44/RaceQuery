@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from services.driver_standing_service import DriverStandingService
+from driver.driver_standing_service import DriverStandingService
 
 driver_standing_bp = Blueprint('drivers-standings', __name__)
 

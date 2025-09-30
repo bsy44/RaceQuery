@@ -2,8 +2,8 @@ import fastf1
 from fastf1.ergast import Ergast
 import os
 
-class ResultService:
-    def __init__(self, season: int, round: int = None):
+class LapService:
+    def __init__(self, season: int, round: int):
         self.season = season
         self.round = round
         self.ergast = Ergast()
@@ -33,7 +33,7 @@ class ResultService:
         except:
             return str(td)
 
-    def get_results(self) -> dict:
+    def get_lap(self, lap: int = None) -> dict:
         schedule_df = self.ergast.get_race_schedule(season=self.season, round=self.round)
 
         if self.round is not None:
@@ -44,8 +44,12 @@ class ResultService:
         for _, race_row in schedule_df.iterrows():
             round_num = race_row['round']
 
-            results_resp = self.ergast.get_race_results(season=self.season, round=round_num)
-            results_df = results_resp.content[0] if hasattr(results_resp, "content") and len(results_resp.content) > 0 else None
+            lap_resp = self.ergast.get_lap_times(
+                season=self.season,
+                round=round_num,
+                lap_number=lap
+            )
+            lap_df = lap_resp.content[0] if (hasattr(lap_resp, "content") and len(lap_resp.content) > 0) else None
 
             race_info = {
                 "season": str(race_row.get("season")),
@@ -61,40 +65,24 @@ class ResultService:
                 },
                 "date": self._format_date(race_row.get("raceDate")),
                 "time": self._format_time(race_row.get("raceTime")),
-                "Results": []
+                "Laps": []
             }
 
-            if results_df is not None:
-                for _, r in results_df.iterrows():
-                    race_info["Results"].append({
-                        "position": str(r.get("position")),
-                        "points": str(r.get("points")),
-                        "grid": str(r.get("grid")),
-                        "laps": str(r.get("laps")),
-                        "status": r.get("status"),
-                        "Driver": {
-                            "driverId": r.get("driverId"),
-                            "number": str(r.get("driverNumber")),
-                            "code": r.get("driverCode"),
-                            "givenName": r.get("givenName"),
-                            "familyName": r.get("familyName"),
-                            "nationality": r.get("driverNationality")
-                        },
-                        "Constructor": {
-                            "constructorId": r.get("constructorId"),
-                            "name": r.get("constructorName"),
-                        },
-                        "Time": {
-                            "millis": str(r.get("totalRaceTimeMillis")) if r.get("totalRaceTimeMillis") else None,
-                            "time": self._format_timedelta(r.get("totalRaceTime"))
-                        },
-                        "FastestLap": {
-                            "rank": str(r.get("fastestLapRank")) if r.get("fastestLapRank") else None,
-                            "Time": {
-                                "time": self._format_timedelta(r.get("fastestLapTime"))
-                            }
-                        }
-                    })
+            if lap_df is not None:
+
+                for lap_num, group in lap_df.groupby("number"):
+                    lap_info = {
+                        "lap": str(lap_num),
+                        "Timings": []
+                    }
+
+                    for _, row in group.iterrows():
+                        lap_info["Timings"].append({
+                            "driverId": row.get("driverId"),
+                            "position": str(row.get("position")),
+                        })
+
+                    race_info["Laps"].append(lap_info)
 
             races.append(race_info)
 
