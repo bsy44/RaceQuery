@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from result.result_service import ResultService
+from backend.result.result_service import ResultService
 
 result_bp = Blueprint('results', __name__)
 

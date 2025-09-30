@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from lap.lap_service import LapService
+from backend.lap.lap_service import LapService
 
 lap_bp = Blueprint('lap', __name__)
 

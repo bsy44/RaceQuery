@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_cors import CORS
 from driver.driver_controller import driver_bp
 from driver.driver_standing_controller import driver_standing_bp

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from race.race_service import RaceService
+from backend.race.race_service import RaceService
 
 race_bp = Blueprint('race', __name__)
 

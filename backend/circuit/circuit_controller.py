@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from circuit.circuit_service import CircuitService
+from backend.circuit.circuit_service import CircuitService
 
 circuit_bp = Blueprint('circuits', __name__)
 
