@@ -1,6 +1,7 @@
 import fastf1
 from fastf1.ergast import Ergast
 import os
+import pandas as pd
 
 class ResultService:
     def __init__(self, season: int, round: int = None):
@@ -8,7 +9,7 @@ class ResultService:
         self.round = round
         self.ergast = Ergast()
 
-        cache_dir = 'data/fastf1_cache'
+        cache_dir = 'backend/data/fastf1_cache'
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
@@ -102,4 +103,47 @@ class ResultService:
         return {
             "season": str(self.season),
             "Races": races
+        }
+
+    def get_stints(self, driver_id: str) -> dict:
+        session = fastf1.get_session(self.season, self.round, "R")
+        session.load(laps=True, telemetry=False, weather=False)
+
+        laps = session.laps
+        if driver_id:
+            laps = laps.pick_drivers([driver_id])
+
+        results = []
+
+        for drv in laps["Driver"].unique():
+            drv_laps = laps.pick_drivers([drv])
+            stint_groups = drv_laps.groupby("Stint")
+
+            driver_stints = []
+            for stint_id, grp in stint_groups:
+                start_lap = int(grp["LapNumber"].min())
+                end_lap = int(grp["LapNumber"].max())
+                compound = grp["Compound"].iloc[0] if "Compound" in grp else None
+                tyre_life = grp["TyreLife"].min() if "TyreLife" in grp else None
+
+                stint_info = {
+                    "stintId": int(stint_id),
+                    "startLap": start_lap,
+                    "endLap": end_lap,
+                    "compound": compound,
+                    "tyreLifeStart": int(tyre_life) if pd.notna(tyre_life) else None,
+                    "laps": end_lap - start_lap + 1
+                }
+
+                driver_stints.append(stint_info)
+
+            results.append({
+                "driverId": drv,
+                "Stints": driver_stints
+            })
+
+        return {
+            "season": self.season,
+            "round": self.round,
+            "stints": results
         }
