@@ -16,3 +16,9 @@ def get_results(season, round):
     results = service.get_results()
 
     return jsonify(results)
+
+@result_bp.get("/<int:season>/<int:round>/stint/<driver_id>")
+def get_stint(season, round, driver_id):
+    service = ResultService(season, round)
+    stints = service.get_stints(driver_id)
+    return jsonify(stints)
