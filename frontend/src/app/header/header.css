@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'logo_font';
+  src: url('../../assets/fonts/TechnoRace-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#container{
+  display: flex;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  background-color: #0e101b;
+  color: #E6E6E6;
+}
+
+#links{
+    flex-grow: 1;
+    display: flex;
+    gap: 20px;
+    justify-content: right;
+
+    .link{
+      cursor: pointer;
+      &:hover{
+        color: #FF1E1E;
+        border-bottom: 2px solid #FF1E1E;
+      }
+      &.active{
+        border-bottom: 2px solid #FF1E1E;
+      }
+    }
+}
+
+#logo{
+  font-size: 30px;
+  font-family: logo_font;
+}
