@@ -127,6 +127,16 @@
   margin-right: 10px;
 }
 
+#diff-points {
+  color: #7a7a7a;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+#position{
+  font-size: 1.25rem;
+  font-weight: bold;
+}
 
 /* Responsive mobile */
 @media (max-width: 768px) {

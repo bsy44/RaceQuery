@@ -20,6 +20,8 @@ class DriverStandingService:
             return {"season": str(self.year), "DriverStandings": []}
 
         results = []
+        first_points = float(df.iloc[0]["points"])
+
         for _, row in df.iterrows():
             drivers = {
                 "driverId": row.get("driverId"),
@@ -28,21 +30,26 @@ class DriverStandingService:
                 "nationality": row.get("driverNationality")
             }
 
-            # Prendre seulement la dernière écurie si plusieurs
             constructor_names = row.get("constructorNames")
             if isinstance(constructor_names, list):
-                last_constructor = constructor_names[-1]  # dernière équipe
+                last_constructor = constructor_names[-1]
             else:
                 last_constructor = constructor_names
 
+            points = float(row.get("points", 0.0))
+            diff = first_points - points  # Différence avec le premier
+
             standing = DriverStanding(
                 position=int(row.get("position", 0)),
-                points=float(row.get("points", 0.0)),
+                points=points,
                 wins=int(row.get("wins", 0)),
                 driver=drivers,
                 constructor=[last_constructor]
             )
-            results.append(standing.to_dict())
+
+            standing_dict = standing.to_dict()
+            standing_dict["points_diff"] = round(diff, 1)
+
+            results.append(standing_dict)
 
         return {"season": str(self.year), "DriverStandings": results}
-

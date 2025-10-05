@@ -35,8 +35,10 @@
               <span class="team-name">{{ item.constructor.join(', ') }}</span>
             </div>
           </td>
-
-          <td>{{ +item.points }}</td>
+          <td id="points">
+            {{ +item.points }}
+            <span *ngIf="i > 0" id="diff-points"> -{{ +item.points_diff }}</span>
+          </td>
         </tr>
       }
     </tbody>
