@@ -21,13 +21,28 @@ class DriverStandingService:
 
         results = []
         for _, row in df.iterrows():
+            drivers = {
+                "driverId": row.get("driverId"),
+                "fullName": f"{row.get('givenName')} {row.get('familyName')}",
+                "code": row.get("driverCode"),
+                "nationality": row.get("driverNationality")
+            }
+
+            # Prendre seulement la dernière écurie si plusieurs
+            constructor_names = row.get("constructorNames")
+            if isinstance(constructor_names, list):
+                last_constructor = constructor_names[-1]  # dernière équipe
+            else:
+                last_constructor = constructor_names
+
             standing = DriverStanding(
                 position=int(row.get("position", 0)),
                 points=float(row.get("points", 0.0)),
                 wins=int(row.get("wins", 0)),
-                driver=f"{row.get('givenName', '')} {row.get('familyName', '')}".strip(),
-                constructor=row.get("constructorNames", "")
+                driver=drivers,
+                constructor=[last_constructor]
             )
             results.append(standing.to_dict())
 
         return {"season": str(self.year), "DriverStandings": results}
+

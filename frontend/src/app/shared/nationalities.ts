@@ -1,0 +1,23 @@
+export const NATIONALITY_TO_ISO: Record<string, string> = {
+  "Australian": "au",
+  "New Zealander": "nz",
+  "British": "gb",
+  "German": "de",
+  "Dutch": "nl",
+  "French": "fr",
+  "Spanish": "es",
+  "Finnish": "fi",
+  "Italian": "it",
+  "Canadian": "ca",
+  "American": "us",
+  "Mexican": "mx",
+  "Japanese": "jp",
+  "Danish": "dk",
+  "Monegasque": "mc",
+  "Brazilian": "br",
+  "Argentine": "ar",
+  "Thai": "th",
+  "Chinese": "cn",
+  "Polish": "pl",
+  "Russian": "ru"
+};
