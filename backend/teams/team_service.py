@@ -1,7 +1,6 @@
 import os
 import fastf1
 from fastf1.ergast import Ergast
-from backend.teams.team import ConstructorStanding
 
 class ConstructorStandingService:
     def __init__(self, year: int):
@@ -12,16 +11,25 @@ class ConstructorStandingService:
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
-    def get_constructor_standings(self) -> list[ConstructorStanding]:
+    def get_constructor_standings(self) -> list[dict]:
         standings = self.ergast.get_constructor_standings(season=self.year)
-        df = standings.content[0] if standings and standings.content else None
+        df = standings.content[0]
+        if df is None or df.empty:
+            return []
 
         results = []
+        first_points = float(df.iloc[0]["points"])
         for _, row in df.iterrows():
-            results.append(ConstructorStanding(
-                position=int(row["position"]),
-                points=float(row["points"]),
-                wins=int(row["wins"]),
-                constructor=row["constructorName"]
-            ))
+            points = float(row["points"])
+            diff = first_points - points
+
+            results.append({
+                "position": str(row["position"]),
+                "points": str(points),
+                "wins": str(row["wins"]),
+                "constructor": row["constructorName"],
+                "points_diff": str(diff)
+            })
+
         return results
+

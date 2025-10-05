@@ -48,7 +48,7 @@ export class Drivers implements OnInit {
   ngOnInit() {
     // Remplit la liste des années de 2020 → année actuelle
     const currentYear = new Date().getFullYear();
-    this.years = Array.from({ length: currentYear - 2020 + 1 }, (_, i) => 2020 + i).reverse();
+    this.years = Array.from({ length: currentYear - 2022 + 1 }, (_, i) => 2022 + i).reverse();
 
     // Charge la saison actuelle au démarrage
     this.getDrivers();

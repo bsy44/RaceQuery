@@ -8,5 +8,5 @@ team_standing_bp = Blueprint('teams_standings', __name__)
 def get_teams_standings(year):
     service = ConstructorStandingService(year)
     standings = service.get_constructor_standings()
-    return jsonify([s.to_dict() for s in standings]), HTTPStatus.OK
+    return jsonify(standings), HTTPStatus.OK
 
