@@ -5,7 +5,7 @@ from fastf1.ergast import Ergast
 from backend.races.race import Race
 from backend.drivers.driver import Driver
 from backend.teams.team import Constructor
-from backend.circuits.circuit import Circuit
+from backend.races.circuits.circuit import Circuit
 from backend.races.result import Result, DriverResult, FastestLap
 from backend.races.qualifyings.qualifying import Qualifying, QualifyingResult
 from backend.races.sprints.sprint import Sprint, SprintResult
@@ -148,7 +148,7 @@ class RaceService:
     def get_split(self, session_q: str) -> dict:
         """Retourne les résultats de qualification pour Q1/Q2/Q3"""
 
-        # On récupère le calendrier
+        # récupération calendrier
         df = self.ergast.get_race_schedule(season=self.season)
         if self.round:
             df = df[df['round'] == self.round]
@@ -234,14 +234,7 @@ class RaceService:
                 season=race_row.get("season"),
                 round=round_num,
                 race_name=race_row.get("raceName"),
-                circuit={
-                    "circuitId": race_row.get("circuitId"),
-                    "circuitName": race_row.get("circuitName"),
-                    "Location": {
-                        "locality": race_row.get("locality"),
-                        "country": race_row.get("country")
-                    }
-                },
+                circuit= self._create_circuit(race_row),
                 date=self._format_date(race_row.get("raceDate")),
                 time=self._format_time(race_row.get("raceTime")),
                 results=results
@@ -321,22 +314,15 @@ class RaceService:
                     ]
                     laps.append(Lap(lap_number=lap_num, timings=timings))
 
-            race_info = {
-                "season": str(race_row.get("season")),
-                "round": str(round_num),
-                "raceName": race_row.get("raceName"),
-                "Circuit": {
-                    "circuitId": race_row.get("circuitId"),
-                    "circuitName": race_row.get("circuitName"),
-                    "Location": {
-                        "locality": race_row.get("locality"),
-                        "country": race_row.get("country")
-                    }
-                },
-                "date": self._format_date(race_row.get("raceDate")),
-                "time": self._format_time(race_row.get("raceTime")),
-                "Laps": [lap.to_dict() for lap in laps]
-            }
+            race_info = Race(
+                season=self.season,
+                round=self.round,
+                raceName=race_row.get("raceName"),
+                circuit=self._create_circuit(race_row),
+                date=self._format_date(race_row.get("raceDate")),
+                time=self._format_time(race_row.get("raceTime")),
+                laps= [lap.to_dict() for lap in laps]
+            )
 
             races.append(race_info)
 

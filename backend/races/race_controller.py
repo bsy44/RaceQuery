@@ -4,6 +4,9 @@ from backend.races.race_service import RaceService
 
 race_bp = Blueprint('races', __name__)
 
+"""
+SCHEDULE
+"""
 @race_bp.get("/<int:season>")
 def list_races(season):
     service = RaceService(season)

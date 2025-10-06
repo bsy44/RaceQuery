@@ -1,5 +1,5 @@
 from typing import Optional
-from backend.circuits.circuit import Circuit
+from backend.races.circuits.circuit import Circuit
 
 class Race:
     def __init__(self, season: int, round: int, raceName: str, circuit: Circuit,
