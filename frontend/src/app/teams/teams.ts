@@ -8,6 +8,7 @@ interface Team {
   constructor: string;
   points: string;
   teamLogo?: string;
+  points_diff: string;
 }
 
 @Component({
@@ -48,7 +49,8 @@ export class Teams implements OnInit {
             Pos: i + 1,
             constructor: constructor,
             teamLogo,
-            Points: +team.points
+            Points: +team.points,
+            PointsDiff: i > 0 ? +team.points_diff : 0
           };
         });
       });
