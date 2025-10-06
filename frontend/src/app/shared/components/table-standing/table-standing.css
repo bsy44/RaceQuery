@@ -1,0 +1,144 @@
+/* ===== Container du tableau ===== */
+.table-container {
+  margin: 0 auto 100px; /* espace entre le tableau et le footer */
+  padding: 0 15px;
+  box-sizing: border-box;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Tables génériques ===== */
+.table-common {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  color: #E6E6E6;
+  background-color: #181818;
+  table-layout: auto;
+}
+
+/* En-tête */
+.table-common thead {
+  background-color: #0D0D0D;
+  border-bottom: 3px solid #FF1E1E;
+}
+
+.table-common th {
+  padding: 20px 18px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  color: #E6E6E6;
+  border-bottom: 2px solid #2E2E3A;
+}
+
+
+
+/* Corps du tableau */
+.table-common tbody tr {
+  border-bottom: 2px solid #2E2E3A;
+  transition: background-color 0.2s;
+}
+
+.table-common tbody tr:hover {
+  background-color: #252525;
+}
+
+.table-common td {
+  padding: 20px 15px;
+  font-size: 1.25rem;
+}
+
+/* Alternance */
+.table-common tbody tr:nth-child(even) {
+  background-color: #202020;
+}
+
+/* ===== Year selector ===== */
+.year-selector {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.year-selector label {
+  color: #E6E6E6;
+  margin-right: 10px;
+}
+
+.year-selector select {
+  padding: 8px 12px;
+  background: #1A1A1A;
+  color: #E6E6E6;
+  border: 2px solid #FF1E1E;
+  border-radius: 5px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.year-selector select:focus {
+  outline: none;
+  border-color: #ff4d4d;
+}
+
+/* ===== Cellules Écurie / Pilote ===== */
+.team-cell {
+  padding: 20px 15px;
+}
+
+.team-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-logo {
+  width: 40px;
+  height: 38px;
+  object-fit: contain;
+  display: block;
+}
+
+.team-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flag-icon {
+  margin-right: 10px;
+}
+
+.points-wrapper {
+  display: inline-flex;
+  gap: 5px; /* espace entre points et diff */
+  align-items: center;
+}
+
+#diff-points {
+  color: #7a7a7a;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+
+#position {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* ===== Responsive mobile ===== */
+@media (max-width: 768px) {
+  .table-common th,
+  .table-common td {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  .points-wrapper {
+    gap: 2px;
+    font-size: 0.75rem;
+  }
+}

@@ -9,6 +9,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="flag-icons" level="application" />
   </component>
   <component name="PackageRequirementsSettings">
     <option name="versionSpecifier" value="Don't specify version" />

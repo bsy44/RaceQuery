@@ -1,0 +1,47 @@
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"
+/>
+
+<div class="year-selector">
+  <select [ngModel]="selectedYear" (ngModelChange)="onYearChange($event)">
+    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+  </select>
+</div>
+
+<div class="table-container">
+  <table class="table-common drivers-table">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data; let i = index">
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col === 'Pos'">
+            {{ row.Pos }}
+          </ng-container>
+
+          <ng-container *ngIf="col === 'Pilote' && row.driver">
+            <span class="fi fi-{{ getDriverFlag(row.driver.nationality) }} flag-icon"></span>
+            {{ row.driver.fullName }}
+          </ng-container>
+
+          <ng-container *ngIf="col === 'Ecurie' && row.teamLogo">
+            <div class="team-wrapper">
+              <img [src]="row.teamLogo" width="40" height="24" alt="{{ row.constructor }}" class="team-logo">
+              <span class="team-name">{{ row.constructor }}</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="col === 'Points'">
+            <span class="points-wrapper">
+              {{ row.Points }}
+              <span *ngIf="row.PointsDiff > 0" id="diff-points"> -{{ row.PointsDiff }} </span>
+            </span>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

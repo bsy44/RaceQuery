@@ -11,5 +11,5 @@ export const TEAMS_INFO: { [key: string]: { logo: string } } = {
   "Sauber": { logo: "logos/kick-sauber-logo.avif" },
   "Racing Point": { logo: "logos/Racing_Point.svg" },
   "AlphaTauri": { logo: "logos/alphaTauri.svg.png" },
-
+  "Alfa Romeo": { logo: "logos/alfa-romeo-seeklogo.png" }
 };

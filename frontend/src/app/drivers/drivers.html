@@ -4,43 +4,11 @@
 
 <h1 class="page-title">Classement Pilotes - Saison {{ selectedYear }}</h1>
 
-<div class="year-selector">
-  <select id="year" [(ngModel)]="selectedYear" (change)="getDrivers()">
-    @for (year of years; track year) {
-      <option [value]="year">{{ year }}</option>
-    }
-  </select>
-</div>
+<app-table-standing
+  [columns]="columns"
+  [data]="driverList"
+  [years]="years"
+  [(selectedYear)]="selectedYear"
+  (selectedYearChange)="getDrivers()">
+</app-table-standing>
 
-<div class="table-container">
-  <table class="drivers-table">
-    <thead>
-      <tr>
-        <th>Pos.</th>
-        <th>Pilote</th>
-        <th>Ecurie</th>
-        <th>Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of driverList; let i = $index; track item) {
-        <tr>
-          <td id="position">{{ i + 1 }}</td>
-          <td id="driver-name">
-            <span class="fi fi-{{ getDriverFlag(item.driver.nationality) }} flag-icon"></span>
-            {{ item.driver.fullName }}</td>
-          <td class="team-cell">
-            <div class="team-wrapper">
-              <img *ngIf="item.teamLogo" ngSrc="{{ item.teamLogo }}" width="40" height="24" alt="{{ item.constructor[0] }}" class="team-logo">
-              <span class="team-name">{{ item.constructor.join(', ') }}</span>
-            </div>
-          </td>
-          <td id="points">
-            {{ +item.points }}
-            <span *ngIf="i > 0" id="diff-points"> -{{ +item.points_diff }}</span>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</div>

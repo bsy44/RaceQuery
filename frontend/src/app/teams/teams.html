@@ -1,38 +1,9 @@
 <h1 class="page-title">Classement Constructeur - Saison {{ selectedYear }}</h1>
 
-<div class="year-selector">
-  <select id="year" [(ngModel)]="selectedYear" (change)="getTeams()">
-    @for (year of years; track year) {
-      <option [value]="year">{{ year }}</option>
-    }
-  </select>
-</div>
-
-<div class="table-container">
-  <table class="teams-table">
-    <thead>
-      <tr>
-        <th>Pos.</th>
-        <th>Ecurie</th>
-        <th>Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of teamList; let i = $index; track item) {
-        <tr>
-          <td id="position">{{ i + 1 }}</td>
-          <td class="team-cell">
-            <div class="team-wrapper">
-              <img *ngIf="item.teamLogo" ngSrc="{{ item.teamLogo }}" width="40" height="24" alt="{{ item.constructor[0] }}" class="team-logo">
-              <span class="team-name">{{ item.constructor }}</span>
-            </div>
-          </td>
-          <td id="points">
-            {{ +item.points }}
-            <span *ngIf="i > 0" id="diff-points"> -{{ +item.points_diff }}</span>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</div>
+<app-table-standing
+  [columns]="columns"
+  [data]="teamList"
+  [years]="years"
+  [(selectedYear)]="selectedYear"
+  (selectedYearChange)="getTeams()">
+</app-table-standing>
