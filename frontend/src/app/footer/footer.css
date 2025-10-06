@@ -1,0 +1,124 @@
+@font-face {
+  font-family: 'logo_font';
+  src: url('../../../public/fonts/TechnoRace-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.site-footer {
+  background-color: #111;
+  color: #e6e6e6;
+  padding: 30px 20px;
+  border-top: 3px solid #FF1E1E;
+}
+
+/* Conteneur principal du contenu du haut */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+#logo {
+  font-family: logo_font;
+  font-size: 2rem;
+  color: #E6E6E6;
+}
+
+#links-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.link {
+  cursor: pointer;
+  text-decoration: none;
+  color: #e6e6e6;
+  transition: color 0.2s;
+}
+
+#links-list h3 {
+  text-align: center;
+  color: #fff;        /* facultatif : pour garder le contraste */
+}
+
+
+.link:hover{
+  color: #ff1e1e;
+}
+
+#socials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.social-link {
+  text-decoration: none;
+  color: #e6e6e6;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.social-link i {
+  font-size: 1.2rem; /* icône GitHub */
+}
+
+.social-link:hover {
+  color: #ff1e1e;
+}
+
+#footer-info {
+  font-size: 0.85rem;
+  color: #7a7a7a;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.footer .copyright {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;            /* même largeur que le haut */
+  margin: 30px auto 0;          /* centré et espacé du haut */
+  padding-top: 15px;
+  border-top: 1px solid #444;   /* TRAIT visible */
+  text-align: center;
+  font-size: 0.9rem;
+  color: #7a7a7a;
+  background-color: #111;       /* s’assure que le fond soit le même (pour le trait) */
+  box-sizing: border-box;       /* évite un dépassement */
+}
+
+.footer .copyright span {
+  flex: 1;
+  text-align: center;
+  min-width: 150px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer .copyright {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+    border-top: 1px solid #444; /* garde bien le trait sur mobile */
+  }
+}
