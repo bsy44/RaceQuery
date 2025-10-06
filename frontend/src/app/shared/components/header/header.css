@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'logo_font';
-  src: url('../../../public/fonts/TechnoRace-Italic.otf') format('opentype');
+  src: url('../../../../../public/fonts/TechnoRace-Italic.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,6 +21,9 @@
 
     .link{
       cursor: pointer;
+      text-decoration: none;
+      color: #E6E6E6;
+      transition: color 0.2s;
       &:hover{
         color: #FF1E1E;
         border-bottom: 2px solid #FF1E1E;
