@@ -1,1 +1,31 @@
-<p>races works!</p>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"/>
+
+<h1 class="page-title">Calendrier saison {{ selectedYear }}</h1>
+
+<div class="year-selector">
+  <select [(ngModel)]="selectedYear" (change)="getRaces()">
+    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+  </select>
+</div>
+
+<div class="container">
+  @for (race of raceList; track raceList){
+    <div class="card">
+      <div class="card-header">
+        <div class="card-round">Manche {{ race.round }}</div>
+        <div class="card-date">
+          <i class="fa-solid fa-flag-checkered"></i> {{ race.date }}
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-flag">
+          <span [class]="'fi fi-' + getFlagClass(race.country)"></span>
+        </div>
+        <div class="card-text">
+          <h2 class="card-title">{{ race.raceName }}</h2>
+          <div class="card-locality">{{ race.locality }}</div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

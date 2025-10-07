@@ -1,7 +1,7 @@
-/* Titre de la page */
 .page-title {
   color: #E6E6E6;
-  text-align: center;
+  text-align: left;
+  padding: 20px;
   margin-bottom: 25px;
   font-size: 2.2rem;
   font-weight: bold;

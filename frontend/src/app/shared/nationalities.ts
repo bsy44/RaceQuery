@@ -21,3 +21,28 @@ export const NATIONALITY_TO_ISO: Record<string, string> = {
   "Polish": "pl",
   "Russian": "ru"
 };
+
+export const COUNTRY_TO_ISO: Record<string, string> = {
+  "Australia": "au",
+  "China": "cn",
+  "Japan": "jp",
+  "Bahrain": "bh",
+  "Saudi Arabia": "sa",
+  "USA": "us",
+  "Italy": "it",
+  "Monaco": "mc",
+  "Spain": "es",
+  "Canada": "ca",
+  "Austria": "at",
+  "UK": "gb",
+  "Belgium": "be",
+  "Hungary": "hu",
+  "Netherlands": "nl",
+  "Azerbaijan": "az",
+  "Singapore": "sg",
+  "Mexico": "mx",
+  "Brazil": "br",
+  "Qatar": "qa",
+  "UAE": "ae" // Abu Dhabi
+};
+
