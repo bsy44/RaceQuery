@@ -12,6 +12,7 @@ import { NATIONALITY_TO_ISO } from '../../nationalities';
 export class TableStanding {
   @Input() columns: string[] = [];
   @Input() data: any[] = [];
+  @Input() tableType: 'drivers' | 'teams' = 'drivers';
 
   getDriverFlag(driverNationality: string): string {
     return NATIONALITY_TO_ISO[driverNationality] || 'un';

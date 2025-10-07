@@ -3,7 +3,7 @@
 />
 
 <div class="table-container">
-  <table class="table-common drivers-table">
+  <table class="table-common" [ngClass]="tableType + '-table'">
     <thead>
       <tr>
         <th *ngFor="let col of columns">{{ col }}</th>
@@ -11,31 +11,30 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of data; let i = index">
-        <td *ngFor="let col of columns">
-          <ng-container *ngIf="col === 'Pos'">
-            {{ row.Pos }}
-          </ng-container>
 
-          <ng-container *ngIf="col === 'Pilote' && row.driver">
-            <span class="fi fi-{{ getDriverFlag(row.driver.nationality) }} flag-icon"></span>
-            {{ row.driver.fullName }}
-          </ng-container>
+        <td *ngIf="columns.includes('Pos')">{{ row.Pos }}</td>
 
-          <ng-container *ngIf="col === 'Ecurie' && row.teamLogo">
-            <div class="team-wrapper">
-              <img [src]="row.teamLogo" width="40" height="24" alt="{{ row.constructor }}" class="team-logo">
-              <span class="team-name">{{ row.constructor }}</span>
-            </div>
-          </ng-container>
-
-          <ng-container *ngIf="col === 'Points'">
-            <span class="points-wrapper">
-              {{ row.Points }}
-              <span *ngIf="row.PointsDiff > 0" id="diff-points"> -{{ row.PointsDiff }} </span>
-            </span>
-          </ng-container>
+        <td *ngIf="columns.includes('Pilote') && row.driver">
+          <span class="fi fi-{{ getDriverFlag(row.driver.nationality) }} flag-icon"></span>
+          {{ row.driver.fullName }}
         </td>
+
+        <td *ngIf="columns.includes('Ecurie') && row.teamLogo">
+          <div class="team-wrapper">
+            <img [src]="row.teamLogo" width="40" height="24" alt="{{ row.constructor }}" class="team-logo">
+            <span class="team-name">{{ row.constructor }}</span>
+          </div>
+        </td>
+
+        <td *ngIf="columns.includes('Points')">
+          <span class="points-wrapper">
+            {{ row.Points }}
+            <span *ngIf="row.PointsDiff > 0" id="diff-points"> -{{ row.PointsDiff }} </span>
+          </span>
+        </td>
+
       </tr>
     </tbody>
   </table>
 </div>
+

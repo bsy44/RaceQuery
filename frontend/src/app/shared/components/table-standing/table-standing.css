@@ -15,8 +15,9 @@
   border-collapse: collapse;
   color: #E6E6E6;
   background-color: #181818;
-  table-layout: auto;
+  table-layout: fixed;
 }
+
 
 /* En-tête */
 .table-common thead {
@@ -34,6 +35,52 @@
   border-bottom: 2px solid #2E2E3A;
 }
 
+/* ===== Pilotes ===== */
+.drivers-table th:nth-child(1),
+.drivers-table td:nth-child(1) {
+  width: 5%;
+  text-align: center;
+}
+.drivers-table th:nth-child(2),
+.drivers-table td:nth-child(2) {
+  width: 30%;
+  text-align: left;
+  padding-left: 30px;
+}
+.drivers-table th:nth-child(3),
+.drivers-table td:nth-child(3) {
+  width: 35%;
+  text-align: left;
+  padding-left: 10px;
+}
+.drivers-table th:nth-child(4),
+.drivers-table td:nth-child(4) {
+  width: 10%; text-align: left; padding-left: 5px;
+}
+
+/* ===== Constructeurs ===== */
+.teams-table th:nth-child(1),
+.teams-table td:nth-child(1) {
+  width: 5%; text-align: center;
+}
+.teams-table th:nth-child(2),
+.teams-table td:nth-child(2) {
+  width: 40%; text-align: left;
+  padding-left: 7rem;
+}
+.teams-table th:nth-child(3),
+.teams-table td:nth-child(3) {
+  width: 10%;
+  text-align: left;
+}
+
+
+/* Optionnel : ellipsis pour éviter débordement des noms */
+.table-common td {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 
 /* Corps du tableau */
