@@ -1,25 +1,11 @@
-import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {COUNTRY_TO_ISO} from '../shared/nationalities';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {SelectorYears} from '../shared/components/selector-years/selector-years';
-
-interface Race {
-  Circuit: {
-    Location: {
-      country: string;
-      locality: string;
-    }
-  }
-  FirstPractice: {
-    date: string;
-  }
-  date: string;
-  raceName: string;
-  round: string;
-  sprint: boolean;
-}
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { COUNTRY_TO_ISO } from '../shared/nationalities';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SelectorYears } from '../shared/components/selector-years/selector-years';
+import { RouterLink } from '@angular/router';
+import { RaceDetail } from '../shared/models/race.model';
 
 @Component({
   selector: 'app-races',
@@ -27,7 +13,8 @@ interface Race {
   imports: [
     CommonModule,
     FormsModule,
-    SelectorYears
+    SelectorYears,
+    RouterLink
   ],
   templateUrl: './races.html',
   styleUrl: './races.css'
@@ -49,10 +36,9 @@ export class Races implements OnInit{
 
   getRaces() {
     this.http.get(`http://127.0.0.1:5000/races/${this.selectedYear}`).subscribe((result: any) => {
-      this.raceList = (result || []).map((race: Race, i: number) => {
+      this.raceList = (result || []).map((race: RaceDetail, i: number) => {
         const circuit = race.Circuit;
         const location = circuit?.Location;
-
 
         const formatDateRange = (startStr: string | null | undefined, endStr: string | null | undefined): string => {
           if (!startStr || !endStr) return '—';
@@ -71,13 +57,20 @@ export class Races implements OnInit{
           return `${startDay} - ${endDay} ${month}`;
         };
 
+        const raceDate = new Date(race.date);
+        const isFinished = raceDate < new Date();
+
+        const isSprint = race.Sprint?.date != null && race.Sprint?.time != null;
+
         return {
           round: race.round || i + 1,
           country: location?.country,
           raceName: race.raceName,
           locality: location?.locality,
-          date: formatDateRange(race.FirstPractice?.date, race.date)
-        }
+          date: formatDateRange(race.FirstPractice?.date, race.date),
+          isFinished: isFinished,
+          isSprint: isSprint
+        };
       });
     });
   }

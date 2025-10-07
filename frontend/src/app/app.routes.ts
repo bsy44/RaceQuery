@@ -4,12 +4,16 @@ import {Dashboard} from './dashboard/dashboard';
 import {Drivers} from './drivers/drivers';
 import {Teams} from './teams/teams';
 import {Races} from './races/races';
+import {RaceResult} from './race-result/race-result';
+import {RaceDetail} from './race-details/race-detail';
 
 export const routes: Routes = [
   {path: 'dashboard', component: Dashboard},
-  {path: 'drivers', component: Drivers},
-  {path: 'teams', component: Teams},
+  {path: 'driver/standings', component: Drivers},
+  {path: 'team/standings', component: Teams},
   {path: 'races', component: Races},
+  {path: 'race/:season/:round/result', component: RaceResult},
+  {path: 'race/:season/:round/detail', component: RaceDetail}
 ];
 
 @NgModule({

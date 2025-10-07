@@ -75,6 +75,24 @@
   margin-top: 4px;
 }
 
+.sprint-badge {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  background-color: #ff1e1e;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.card {
+  position: relative; /* nécessaire pour que la pastille se positionne correctement */
+}
+
+
 @media (max-width: 1024px) {
   .container {
     grid-template-columns: repeat(2, 1fr);

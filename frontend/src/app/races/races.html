@@ -10,7 +10,11 @@
 
 <div class="container">
   @for (race of raceList; track raceList){
-    <div class="card">
+    <div [routerLink]="race.isFinished ? ['/race', selectedYear, race.round, 'detail'] :
+      ['/race', selectedYear, race.round, 'result']" class="card">
+
+      <span *ngIf="race.isSprint" class="sprint-badge">SPRINT</span>
+
       <div class="card-header">
         <div class="card-round">Manche {{ race.round }}</div>
         <div class="card-date">
@@ -26,6 +30,6 @@
           <div class="card-locality">{{ race.locality }}</div>
         </div>
       </div>
-    </div>
+  </div>
   }
 </div>
