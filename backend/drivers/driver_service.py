@@ -75,20 +75,42 @@ class DriverService:
             last_constructor = constructor_names
 
         driver_detail = {
-            "driverId": row.get("driverId"),
+            "driverId": str(row.get("driverId")),
             "fullName": f"{row.get('givenName')} {row.get('familyName')}",
             "position": int(row.get("position", 0)),
             "points": float(row.get("points", 0.0)),
             "wins": int(row.get("wins", 0)),
-            "constructor": last_constructor,
+            "podium": int(self.get_nb_podium(str(row.get("driverId")))),
+            "constructor": str(last_constructor),
             "Drivers": [
                 {
-                    "permanentNumber": row.get("permanentNumber"), # ajoute le numéro
-                    "code": row.get("driverCode"),
-                    "dateOfBirth": row.get("dateOfBirth"),
-                    "nationality": row.get("driverNationality")
+                    "driverNumber": int(row.get("driverNumber")) if row.get("driverNumber") else None,
+                    "code": str(row.get("driverCode")),
+                    "dateOfBirth": str(row.get("dateOfBirth")),
+                    "nationality": str(row.get("driverNationality"))
                 }
             ]
         }
 
         return driver_detail
+
+    def get_nb_podium(self, id_driver: str) -> int:
+        ergast = Ergast()
+        races = ergast.get_race_schedule(season=self.year)
+        podium_count = 0
+
+        for _, race in races.iterrows():
+            results_resp = ergast.get_race_results(season=self.year, round=race["round"])
+            df = results_resp.content[0] if results_resp.content else None
+            if df is None:
+                continue
+            driver_row = df[df["driverId"] == id_driver]
+            if not driver_row.empty:
+                try:
+                    pos = int(driver_row.iloc[0]["position"])
+                    if 1 <= pos <= 3:
+                        podium_count += 1
+                except (ValueError, TypeError):
+                    continue
+
+        return podium_count
