@@ -32,7 +32,7 @@ export class Drivers implements OnInit {
 
   getDrivers() {
     this.http
-      .get<any>(`http://127.0.0.1:5000/standings/drivers/${this.selectedYear}`)
+      .get<any>(`http://127.0.0.1:5000/drivers/standings/${this.selectedYear}`)
       .subscribe((result) => {
         this.driverList = result.DriverStandings.map((driver: any, i: number) => {
           const teamName = driver.constructor[0];

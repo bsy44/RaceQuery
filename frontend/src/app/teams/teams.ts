@@ -41,7 +41,7 @@ export class Teams implements OnInit {
 
   getTeams() {
     this.http
-      .get<any>(`http://127.0.0.1:5000/standings/teams/${this.selectedYear}`)
+      .get<any>(`http://127.0.0.1:5000/teams/standings/${this.selectedYear}`)
       .subscribe((result) => {
 
         this.teamList = (result || []).map((team: Team, i: number) => {
