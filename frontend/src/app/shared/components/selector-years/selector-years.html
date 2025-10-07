@@ -1,0 +1,11 @@
+<div class="year-selector">
+  <label for="year" class="mr-2">Saison :</label>
+  <select
+    id="year"
+    [(ngModel)]="selectedYear"
+    (ngModelChange)="onChange($event)"
+    class="form-select"
+  >
+    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+  </select>
+</div>

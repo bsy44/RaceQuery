@@ -1,9 +1,12 @@
-<h1 class="page-title">Classement Constructeur - Saison {{ selectedYear }}</h1>
+<h1 class="page-title">Classement Constructeurs - Saison {{ selectedYear }}</h1>
 
-<app-table-standing
-  [columns]="columns"
-  [data]="teamList"
+<app-year-selector
   [years]="years"
   [(selectedYear)]="selectedYear"
   (selectedYearChange)="getTeams()">
+</app-year-selector>
+
+<app-table-standing
+  [columns]="columns"
+  [data]="teamList">
 </app-table-standing>

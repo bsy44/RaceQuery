@@ -2,12 +2,6 @@
   href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"
 />
 
-<div class="year-selector">
-  <select [ngModel]="selectedYear" (ngModelChange)="onYearChange($event)">
-    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-  </select>
-</div>
-
 <div class="table-container">
   <table class="table-common drivers-table">
     <thead>

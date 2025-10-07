@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { TEAMS_INFO } from '../shared/teams-info'
-import {TableStanding} from '../shared/components/table-standing/table-standing';
+import { TableStanding } from '../shared/components/table-standing/table-standing';
+import { SelectorYears } from '../shared/components/selector-years/selector-years';
 
 interface Team {
   constructor: string;
@@ -16,7 +17,8 @@ interface Team {
   templateUrl: './teams.html',
   imports: [
     FormsModule,
-    TableStanding
+    TableStanding,
+    SelectorYears
   ],
   styleUrls: ['./teams.css']
 })

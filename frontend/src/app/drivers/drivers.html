@@ -4,11 +4,14 @@
 
 <h1 class="page-title">Classement Pilotes - Saison {{ selectedYear }}</h1>
 
-<app-table-standing
-  [columns]="columns"
-  [data]="driverList"
+<app-year-selector
   [years]="years"
   [(selectedYear)]="selectedYear"
   (selectedYearChange)="getDrivers()">
+</app-year-selector>
+
+<app-table-standing
+  [columns]="columns"
+  [data]="driverList">
 </app-table-standing>
 
