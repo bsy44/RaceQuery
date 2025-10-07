@@ -3,11 +3,6 @@
   margin-bottom: 20px;
 }
 
-.year-selector label {
-  color: #E6E6E6;
-  margin-right: 10px;
-}
-
 .year-selector select {
   padding: 8px 12px;
   background: #1A1A1A;
@@ -17,6 +12,10 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
   cursor: pointer;
+
+  -webkit-appearance: none;  /* Chrome, Safari, Edge */
+  -moz-appearance: none;     /* Firefox */
+  appearance: none;
 }
 
 .year-selector select:focus {

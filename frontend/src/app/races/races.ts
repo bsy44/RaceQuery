@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {COUNTRY_TO_ISO} from '../shared/nationalities';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {SelectorYears} from '../shared/components/selector-years/selector-years';
 
 interface Race {
   Circuit: {
@@ -25,7 +26,8 @@ interface Race {
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    SelectorYears
   ],
   templateUrl: './races.html',
   styleUrl: './races.css'

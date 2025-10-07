@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"/>
 
-<h1 class="page-title">Calendrier saison {{ selectedYear }}</h1>
+<h1 class="page-title">Calendrier saison - {{ selectedYear }}</h1>
 
-<div class="year-selector">
-  <select [(ngModel)]="selectedYear" (change)="getRaces()">
-    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-  </select>
-</div>
+<app-year-selector
+  [years]="years"
+  [(selectedYear)]="selectedYear"
+  (selectedYearChange)="getRaces()">
+</app-year-selector>
 
 <div class="container">
   @for (race of raceList; track raceList){
