@@ -57,6 +57,7 @@ class ConstructorService:
             "position": str(row["position"]),
             "points": str(points),
             "wins": str(row["wins"]),
+            "podiums": int(self.get_nb_podium(str(row.get("constructorId")))),
             "constructor": row["constructorName"],
             "points_diff": str(diff),
             "Constructor": constructor_info
@@ -64,3 +65,23 @@ class ConstructorService:
 
         return result
 
+    def get_nb_podium(self, team_id: str) -> int:
+        podium_count = 0
+        races = self.ergast.get_race_schedule(season=self.year)
+
+        for _, race in races.iterrows():
+            results_resp = self.ergast.get_race_results(season=self.year, round=race["round"])
+            df = results_resp.content[0] if results_resp.content else None
+            if df is None:
+                continue
+
+            team_results = df[df["constructorId"] == team_id]
+            for _, row in team_results.iterrows():
+                try:
+                    pos = int(row["position"])
+                    if 1 <= pos <= 3:
+                        podium_count += 1
+                except (ValueError, TypeError):
+                    continue
+
+        return podium_count
