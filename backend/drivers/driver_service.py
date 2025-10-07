@@ -75,8 +75,6 @@ class DriverService:
             last_constructor = constructor_names
 
         driver_detail = {
-            "driverId": str(row.get("driverId")),
-            "fullName": f"{row.get('givenName')} {row.get('familyName')}",
             "position": int(row.get("position", 0)),
             "points": float(row.get("points", 0.0)),
             "wins": int(row.get("wins", 0)),
@@ -84,6 +82,8 @@ class DriverService:
             "constructor": str(last_constructor),
             "Drivers": [
                 {
+                    "driverId": str(row.get("driverId")),
+                    "fullName": f"{row.get('givenName')} {row.get('familyName')}",
                     "driverNumber": int(row.get("driverNumber")) if row.get("driverNumber") else None,
                     "code": str(row.get("driverCode")),
                     "dateOfBirth": str(row.get("dateOfBirth")),

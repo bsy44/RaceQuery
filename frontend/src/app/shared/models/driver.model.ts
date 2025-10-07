@@ -1,12 +1,15 @@
 export interface Driver {
   driver: {
-    fullName: string;       
+    driverId: string;
+    fullName: string;
     nationality: string;
     code?: string;
-    permanentNumber?: string;
+    driverNumber?: string;
     dateOfBirth?: string;
   };
   constructor: string[];
+  wins: number;
+  podium: number;
   points: string;
   points_diff: string;
   teamLogo?: string;
