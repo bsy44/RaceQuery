@@ -3,7 +3,7 @@ import fastf1
 from fastf1.ergast import Ergast
 from backend.drivers.driver import DriverStanding
 
-class DriverStandingService:
+class DriverService:
     def __init__(self, year: int):
         self.year = year
         self.ergast = Ergast()
@@ -53,3 +53,42 @@ class DriverStandingService:
             results.append(standing_dict)
 
         return {"season": str(self.year), "DriverStandings": results}
+
+    def get_driver(self, id_driver: str) -> dict:
+        standings = self.ergast.get_driver_standings(season=self.year)
+        df = standings.content[0] if standings and standings.content else None
+
+        if df is None or df.empty:
+            return {"error": f"Aucun classement disponible pour {self.year}"}
+
+        driver_row = df[df["driverId"] == id_driver]
+
+        if driver_row.empty:
+            return {"error": f"Pilote '{id_driver}' non trouvé pour {self.year}"}
+
+        row = driver_row.iloc[0]
+
+        constructor_names = row.get("constructorNames")
+        if isinstance(constructor_names, list):
+            last_constructor = constructor_names[-1]
+        else:
+            last_constructor = constructor_names
+
+        driver_detail = {
+            "driverId": row.get("driverId"),
+            "fullName": f"{row.get('givenName')} {row.get('familyName')}",
+            "position": int(row.get("position", 0)),
+            "points": float(row.get("points", 0.0)),
+            "wins": int(row.get("wins", 0)),
+            "constructor": last_constructor,
+            "Drivers": [
+                {
+                    "permanentNumber": row.get("permanentNumber"), # ajoute le numéro
+                    "code": row.get("driverCode"),
+                    "dateOfBirth": row.get("dateOfBirth"),
+                    "nationality": row.get("driverNationality")
+                }
+            ]
+        }
+
+        return driver_detail

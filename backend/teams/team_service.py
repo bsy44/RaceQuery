@@ -2,7 +2,7 @@ import os
 import fastf1
 from fastf1.ergast import Ergast
 
-class ConstructorStandingService:
+class ConstructorService:
     def __init__(self, year: int):
         self.year = year
         self.ergast = Ergast()
@@ -32,4 +32,35 @@ class ConstructorStandingService:
             })
 
         return results
+
+    def get_team(self, team_id: str) -> dict:
+        standings = self.ergast.get_constructor_standings(season=self.year)
+        df = standings.content[0]
+        if df is None or df.empty:
+            return {"error": f"Aucun classement constructeur disponible pour {self.year}"}
+
+        team_row = df[df["constructorId"] == team_id]
+        if team_row.empty:
+            return {"error": f"Constructeur '{team_id}' non trouvé pour {self.year}"}
+
+        row = team_row.iloc[0]
+        first_points = float(df.iloc[0]["points"])
+        points = float(row["points"])
+        diff = first_points - points
+
+        constructor_info = {
+            "constructorId": row.get("constructorId"),
+            "nationality": row.get("constructorNationality")
+        }
+
+        result = {
+            "position": str(row["position"]),
+            "points": str(points),
+            "wins": str(row["wins"]),
+            "constructor": row["constructorName"],
+            "points_diff": str(diff),
+            "Constructor": constructor_info
+        }
+
+        return result
 
