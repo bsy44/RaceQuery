@@ -2,15 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import { TEAMS_INFO } from '../shared/teams-info'
-import { TableStanding } from '../shared/components/table-standing/table-standing';
-import { SelectorYears } from '../shared/components/selector-years/selector-years';
-
-interface Team {
-  constructor: string;
-  points: string;
-  teamLogo?: string;
-  points_diff: string;
-}
+import {TableStanding} from '../shared/components/table-standing/table-standing';
+import {Team} from '../shared/models/team.model';
+import {SelectorYears} from '../shared/components/selector-years/selector-years';
 
 @Component({
   selector: 'app-teams',
@@ -26,6 +20,7 @@ export class Teams implements OnInit {
   teamList: any[] = [];
   years: number[] = [];
   selectedYear: number = new Date().getFullYear();
+  columns = ['Pos', 'Ecurie', 'Points'];
 
   constructor(private http: HttpClient) {}
 
@@ -36,17 +31,15 @@ export class Teams implements OnInit {
     this.getTeams();
   }
 
-    columns = ['Pos', 'Ecurie', 'Points'];
-
-
   getTeams() {
     this.http
       .get<any>(`http://127.0.0.1:5000/teams/standings/${this.selectedYear}`)
       .subscribe((result) => {
 
         this.teamList = (result || []).map((team: Team, i: number) => {
+          console.log(team.constructor)
           const constructor = team.constructor;
-          const teamLogo = TEAMS_INFO[constructor]?.logo || '';
+          const teamLogo = TEAMS_INFO[team.constructor]?.logo || '';
           return {
             Pos: i + 1,
             constructor: constructor,

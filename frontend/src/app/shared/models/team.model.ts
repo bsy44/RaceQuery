@@ -1,12 +1,12 @@
-export interface Constructor {
-  constructor: {
+export interface Team {
+  Constructor: {
     constructorId: string;
-    name: string;
     nationality: string;
     teamLogo?: string;
   };
-  position: string;
+  constructor: string;
   points: string;
   points_diff: string;
+  position: string;
   wins: string;
 }
