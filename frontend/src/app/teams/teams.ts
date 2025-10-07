@@ -45,7 +45,9 @@ export class Teams implements OnInit {
             constructor: constructor,
             teamLogo,
             Points: +team.points,
-            PointsDiff: i > 0 ? +team.points_diff : 0
+            PointsDiff: i > 0 ? +team.points_diff : 0,
+            wins: team.wins,
+            podiums: team.podiums
           };
         });
       });

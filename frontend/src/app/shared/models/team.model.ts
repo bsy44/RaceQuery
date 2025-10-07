@@ -9,4 +9,5 @@ export interface Team {
   points_diff: string;
   position: string;
   wins: string;
+  podiums: string;
 }
