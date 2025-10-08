@@ -10,8 +10,8 @@
 
 <div class="container">
   @for (race of raceList; track raceList){
-    <div [routerLink]="race.isFinished ? ['/race', selectedYear, race.round, 'detail'] :
-      ['/race', selectedYear, race.round, 'result']" class="card">
+    <div [routerLink]="race.isFinished ? ['/race', selectedYear, race.round, 'result'] :
+      ['/race', selectedYear, race.round, 'detail']" class="card">
 
       <span *ngIf="race.isSprint" class="sprint-badge">SPRINT</span>
 
