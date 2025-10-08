@@ -20,14 +20,15 @@
 .card{
   padding: 15px;
   border-radius: 12px;
+  border: 2px solid transparent;
   background-color: #010102;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
 }
 
 .card:hover {
   transform: scale(1.05) translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-color: #FF1E1E;
 }
 
 .card-header{
