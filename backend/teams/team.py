@@ -14,14 +14,14 @@ class ConstructorStanding:
         }
 
 class Constructor:
-    def __init__(self, constructorId: str, name: str, nationality: str = None):
+    def __init__(self, constructorId: str, constructorName: str, nationality: str = None):
         self.constructorId = constructorId
-        self.name = name
+        self.constructorName = constructorName
         self.nationality = nationality
 
     def to_dict(self):
         return {
             "constructorId": self.constructorId,
-            "name": self.name,
+            "constructorName": self.constructorName,
             "nationality": self.nationality if self.nationality else None
         }

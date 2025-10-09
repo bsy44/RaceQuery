@@ -44,7 +44,7 @@ class DriverService:
                 points=points,
                 wins=int(row.get("wins", 0)),
                 driver=drivers,
-                constructor=[last_constructor]
+                team=str(last_constructor)
             )
 
             standing_dict = standing.to_dict()
@@ -68,18 +68,18 @@ class DriverService:
 
         row = driver_row.iloc[0]
 
-        constructor_names = row.get("constructorNames")
-        if isinstance(constructor_names, list):
+        constructor_names = row.get("constructorName")
+        if isinstance(constructor_names, list) and constructor_names:
             last_constructor = constructor_names[-1]
         else:
-            last_constructor = constructor_names
+            last_constructor = constructor_names or "Inconnu"
 
         driver_detail = {
             "position": int(row.get("position", 0)),
             "points": float(row.get("points", 0.0)),
             "wins": int(row.get("wins", 0)),
             "podium": int(self.get_nb_podium(str(row.get("driverId")))),
-            "constructor": str(last_constructor),
+            "team": str(last_constructor),
             "Drivers": [
                 {
                     "driverId": str(row.get("driverId")),

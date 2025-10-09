@@ -21,8 +21,8 @@
 
         <td *ngIf="columns.includes('Ecurie') && row.teamLogo">
           <div class="team-wrapper">
-            <img [src]="row.teamLogo" width="40" height="24" alt="{{ row.constructor }}" class="team-logo">
-            <span class="team-name">{{ row.constructor }}</span>
+            <img [src]="row.teamLogo" width="40" height="24" alt="{{ row.team }}" class="team-logo">
+            <span class="team-name">{{ row.team  }}</span>
           </div>
         </td>
 
@@ -37,4 +37,3 @@
     </tbody>
   </table>
 </div>
-

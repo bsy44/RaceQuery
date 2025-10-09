@@ -22,7 +22,7 @@ import { RaceDetail } from '../shared/models/race.model';
 
 export class Races implements OnInit{
   years: number [] = [];
-  raceList: any[] = [];
+  raceList: RaceDetail[] = [];
   selectedYear: number = new Date().getFullYear();
 
   constructor(private http:HttpClient) {}
@@ -30,27 +30,20 @@ export class Races implements OnInit{
   ngOnInit() {
     const currentYear = new Date().getFullYear();
     this.years = Array.from({length: currentYear - 2024 + 1}, (_, i) => 2024 + i).reverse();
-
     this.getRaces();
   }
 
   getRaces() {
     this.http.get(`http://127.0.0.1:5000/races/${this.selectedYear}`).subscribe((result: any) => {
       this.raceList = (result || []).map((race: RaceDetail, i: number) => {
-        const circuit = race.Circuit;
-        const location = circuit?.Location;
 
         const formatDateRange = (startStr: string | null | undefined, endStr: string | null | undefined): string => {
           if (!startStr || !endStr) return '—';
-
           const start = new Date(startStr.replace(' ', 'T'));
           const end = new Date(endStr.replace(' ', 'T'));
-
           if (isNaN(start.getTime()) || isNaN(end.getTime())) return '—';
-
           const startDay = start.getDate().toString().padStart(2, '0');
           const endDay = end.getDate().toString().padStart(2, '0');
-
           const month = end.toLocaleDateString('fr-FR', { month: 'short' })
             .replace('.', '')
             .toUpperCase();
@@ -59,19 +52,17 @@ export class Races implements OnInit{
 
         const raceDate = new Date(race.date);
         const isFinished = raceDate < new Date();
-
         const isSprint = race.Sprint?.date != null && race.Sprint?.time != null;
 
         return {
+          ...race,
           round: race.round || i + 1,
-          country: location?.country,
-          raceName: race.raceName,
-          locality: location?.locality,
           date: formatDateRange(race.FirstPractice?.date, race.date),
-          isFinished: isFinished,
-          isSprint: isSprint
+          isFinished,
+          isSprint
         };
       });
+
     });
   }
 

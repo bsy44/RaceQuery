@@ -35,14 +35,14 @@ export class Teams implements OnInit {
     this.http
       .get<any>(`http://127.0.0.1:5000/teams/standings/${this.selectedYear}`)
       .subscribe((result) => {
-
         this.teamList = (result || []).map((team: Team, i: number) => {
-          console.log(team.constructor)
-          const constructor = team.constructor;
-          const teamLogo = TEAMS_INFO[team.constructor]?.logo || '';
+          const teamLogo = TEAMS_INFO[team.Team.constructorName]?.logo || '';
+          const Team = team.Team
+          console.log(team.Team)
           return {
             Pos: i + 1,
-            constructor: constructor,
+            Team,
+            team: Team.constructorName,
             teamLogo,
             Points: +team.points,
             PointsDiff: i > 0 ? +team.points_diff : 0,

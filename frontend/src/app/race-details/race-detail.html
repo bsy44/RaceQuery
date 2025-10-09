@@ -1,6 +1,6 @@
 <div *ngIf="raceData">
   <h1>{{ raceData.raceName }} - Round {{ raceData.round }}</h1>
-  <p>Circuit: {{ raceData.circuitName }} ({{ raceData.locality }}, {{ raceData.country }})</p>
+  <p>Circuit: {{ raceData.circuitName }}, {{ raceData.locality }}, {{ raceData.country }}</p>
 
   <div *ngIf="raceData.fp1Date">
     <h2>FP1</h2>

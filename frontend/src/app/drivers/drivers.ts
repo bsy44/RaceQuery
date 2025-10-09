@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TEAMS_INFO } from '../shared/teams-info';
 import { TableStanding } from '../shared/components/table-standing/table-standing';
 import { SelectorYears } from '../shared/components/selector-years/selector-years';
-import {Driver} from '../shared/models/driver.model';
+import { Driver } from '../shared/models/driver.model';
 
 @Component({
   selector: 'app-drivers',
@@ -36,8 +36,7 @@ export class Drivers implements OnInit {
       .get<any>(`http://127.0.0.1:5000/drivers/standings/${this.selectedYear}`)
       .subscribe((result) => {
         this.driverList = result.DriverStandings.map((driver: Driver, i: number) => {
-          const teamName = driver.constructor[0];
-          const teamLogo = TEAMS_INFO[teamName]?.logo || '';
+          const teamLogo = TEAMS_INFO[driver.team]?.logo || '';
 
           return {
             Pos: i + 1,
@@ -45,7 +44,7 @@ export class Drivers implements OnInit {
               fullName: driver.driver.fullName,
               nationality: driver.driver.nationality
             },
-            constructor: teamName,
+            team: driver.team,
             teamLogo,
             Points: +driver.points,
             PointsDiff: i > 0 ? +driver.points_diff : 0

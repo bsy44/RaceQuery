@@ -42,8 +42,6 @@ class RaceService:
         return Driver(
             driverId=row.get("driverId"),
             fullName=f"{row.get('givenName')} {row.get('familyName')}",
-            givenName=row.get("givenName"),
-            familyName=row.get("familyName"),
             nationality=row.get("driverNationality"),
             driverNumber=row.get("driverNumber"),
             code=row.get("driverCode")
@@ -52,7 +50,7 @@ class RaceService:
     def _format_constructor(self, row) -> Constructor:
         return Constructor(
             constructorId=row.get("constructorId"),
-            name=row.get("constructorName"),
+            constructorName=row.get("constructorName"),
             nationality=row.get("constructorNationality")
         )
 

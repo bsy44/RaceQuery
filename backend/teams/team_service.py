@@ -1,6 +1,7 @@
 import os
 import fastf1
 from fastf1.ergast import Ergast
+from backend.teams.team import Constructor
 
 class ConstructorService:
     def __init__(self, year: int):
@@ -10,6 +11,13 @@ class ConstructorService:
         cache_dir = 'backend/data/fastf1_cache'
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
+
+    def _format_constructor(self, row) -> Constructor:
+        return Constructor(
+            constructorId=row.get("constructorId"),
+            constructorName=row.get("constructorName"),
+            nationality=row.get("constructorNationality")
+        )
 
     def get_constructor_standings(self) -> list[dict]:
         standings = self.ergast.get_constructor_standings(season=self.year)
@@ -27,7 +35,8 @@ class ConstructorService:
                 "position": str(row["position"]),
                 "points": str(points),
                 "wins": str(row["wins"]),
-                "constructor": row["constructorName"],
+                "podiums": int(self.get_nb_podium(str(row.get("constructorId")))),
+                "Team": self._format_constructor(row).to_dict(),
                 "points_diff": str(diff)
             })
 
@@ -48,19 +57,13 @@ class ConstructorService:
         points = float(row["points"])
         diff = first_points - points
 
-        constructor_info = {
-            "constructorId": row.get("constructorId"),
-            "nationality": row.get("constructorNationality")
-        }
-
         result = {
             "position": str(row["position"]),
             "points": str(points),
             "wins": str(row["wins"]),
             "podiums": int(self.get_nb_podium(str(row.get("constructorId")))),
-            "constructor": row["constructorName"],
             "points_diff": str(diff),
-            "Constructor": constructor_info
+            "Team": self._format_constructor(row).to_dict()
         }
 
         return result

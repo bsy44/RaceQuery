@@ -25,30 +25,29 @@ export class RaceDetail implements OnInit {
   }
 
   getRaceDetail() {
-  this.httpClient.get<any[]>(`http://127.0.0.1:5000/races/${this.season}/${this.round}`)
-    .subscribe((result: any[]) => {
-      const race = result[0];
-
-      this.raceData = {
-        circuitName: race.Circuit.circuitName,
-        country: race.Circuit?.Location?.country,
-        locality: race.Circuit?.Location?.locality,
-        fp1Time: race.FirstPractice?.time,
-        fp1Date: race.FirstPractice?.date,
-        fp2Time: race.SecondPractice?.time,
-        fp2Date: race.SecondPractice?.date,
-        fp3Time: race.ThirdPractice?.time,
-        fp3Date: race.ThirdPractice?.date,
-        qualiTime: race.Qualifying?.time,
-        qualiDate: race.Qualifying?.date,
-        sprintTime: race.Sprint?.time,
-        sprintDate: race.Sprint?.date,
-        date: race.date,
-        raceName: race.raceName,
-        round: +race.round,
-        time: race.time
-      };
-    });
-}
-
-}
+    this.httpClient.get<any[]>(`http://127.0.0.1:5000/races/${this.season}/${this.round}`)
+      .subscribe((result: any) => {
+        const raceResult = result[0];
+        console.log(raceResult.Circuit.circuitName)
+        this.raceData =  {
+          circuitName: raceResult.Circuit.circuitName,
+          country: raceResult?.Circuit.Location?.country,
+          locality: raceResult.Circuit?.Location?.locality,
+          fp1Time: raceResult.FirstPractice?.time,
+          fp1Date: raceResult.FirstPractice?.date,
+          fp2Time: raceResult.SecondPractice?.time,
+          fp2Date: raceResult.SecondPractice?.date,
+          fp3Time: raceResult.ThirdPractice?.time,
+          fp3Date: raceResult.ThirdPractice?.date,
+          qualiTime: raceResult.Qualifying?.time,
+          qualiDate: raceResult.Qualifying?.date,
+          sprintTime: raceResult.Sprint?.time,
+          sprintDate: raceResult.Sprint?.date,
+          date: raceResult.date,
+          raceName: raceResult.raceName,
+          round: +raceResult.round,
+          time: raceResult.time
+        };
+      });
+    }
+  }

@@ -30,4 +30,6 @@ export interface RaceDetail {
   raceName: string;
   round: string;
   time: string;
+  isFinished:boolean;
+  isSprint: boolean;
 }

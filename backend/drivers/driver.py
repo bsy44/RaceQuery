@@ -22,12 +22,12 @@ class Driver:
         }
 
 class DriverStanding:
-    def __init__(self, position: int, points: float, wins: int, driver: str, constructor: str):
+    def __init__(self, position: int, points: float, wins: int, driver: str, team: str):
         self.position = position
         self.points = points
         self.wins = wins
         self.driver = driver
-        self.constructor = constructor
+        self.team = team
 
     def to_dict(self):
         return {
@@ -35,5 +35,5 @@ class DriverStanding:
             "points": str(self.points),
             "wins": str(self.wins),
             "driver": self.driver,
-            "constructor": self.constructor
+            "team": self.team
         }

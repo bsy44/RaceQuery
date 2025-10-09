@@ -7,7 +7,7 @@ export interface Driver {
     driverNumber?: string;
     dateOfBirth?: string;
   };
-  constructor: string[];
+  team: string;
   wins: number;
   podium: number;
   points: string;

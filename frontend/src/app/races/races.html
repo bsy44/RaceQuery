@@ -23,11 +23,11 @@
       </div>
       <div class="card-content">
         <div class="card-flag">
-          <span [class]="'fi fi-' + getFlagClass(race.country)"></span>
+          <span [class]="'fi fi-' + getFlagClass(race.Circuit.Location.country)"></span>
         </div>
         <div class="card-text">
           <h2 class="card-title">{{ race.raceName }}</h2>
-          <div class="card-locality">{{ race.locality }}</div>
+          <div class="card-locality">{{ race.Circuit.Location.locality }}</div>
         </div>
       </div>
   </div>

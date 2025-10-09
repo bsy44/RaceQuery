@@ -1,10 +1,10 @@
 export interface Team {
-  Constructor: {
+  Team: {
     constructorId: string;
     nationality: string;
     teamLogo?: string;
+    constructorName: string;
   };
-  constructor: string;
   points: string;
   points_diff: string;
   position: string;
