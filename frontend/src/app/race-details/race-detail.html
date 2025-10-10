@@ -1,34 +1,82 @@
 <div *ngIf="raceData">
-  <h1>{{ raceData.raceName }} - Round {{ raceData.round }}</h1>
-  <p>Circuit: {{ raceData.circuitName }}, {{ raceData.locality }}, {{ raceData.country }}</p>
+  <div class="container">
+    <div class="page-header">
+      <button class="back-button" (click)="goBack()">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
 
-  <div *ngIf="raceData.fp1Date">
-    <h2>FP1</h2>
-    <p>{{ raceData.fp1Date }} - {{ raceData.fp1Time }}</p>
-  </div>
+      <div class="titles">
+        <h1 class="page-title">{{ raceData.raceName }} - {{ season }}</h1>
+        <h3 class="subtitle">Manche {{ raceData.round }}</h3>
+      </div>
+    </div>
+    @for (i of [1, 2, 3]; track i) {
+      @if (raceData['fp' + i + 'Date']) {
+        <div class="session-card free-practice">
+          <div class="date">
+            <span class="day">{{ raceData['fp' + i + 'Date']?.split(' ')[0] }}</span>
+            <span class="month">{{ raceData['fp' + i + 'Date']?.split(' ')[1] }}</span>
+          </div>
 
-  <div *ngIf="raceData.fp2Date">
-    <h2>FP2</h2>
-    <p>{{ raceData.fp2Date }} - {{ raceData.fp2Time }}</p>
-  </div>
+          <div class="separator"></div>
 
-  <div *ngIf="raceData.fp1Date">
-    <h2>FP3</h2>
-    <p>{{ raceData.fp3Date }} - {{ raceData.fp3Time }}</p>
-  </div>
+          <div class="session-info">
+            <span class="title">ESSAIS LIBRE {{ i }}</span>
+            <span class="time">{{ raceData['fp' + i + 'Time'] }}</span>
+          </div>
+        </div>
+      }
+    }
 
-  <div *ngIf="raceData.qualiDate">
-    <h2>Qualifying</h2>
-    <p>{{ raceData.qualiDate }} - {{ raceData.qualiTime }}</p>
-  </div>
+    @if (raceData.sprintDate) {
+      <div class="session-card sprint">
+        <div class="date">
+          <span class="day">{{ raceData.sprintDate?.split(' ')[0] }}</span>
+          <span class="month">{{ raceData.sprintDate?.split(' ')[1] }}</span>
+        </div>
 
-  <div *ngIf="raceData.sprintDate">
-    <h2>Sprint</h2>
-    <p>{{ raceData.sprintDate }} - {{ raceData.sprintTime }}</p>
-  </div>
+        <div class="separator"></div>
 
-  <div *ngIf="raceData.date">
-    <h2>Race</h2>
-    <p>{{ raceData.date }} - {{ raceData.time }}</p>
+        <div class="session-info">
+          <span class="title">
+            <i class="fa-solid fa-flag-checkered"></i> Course SPRINT
+          </span>
+          <span class="time">{{ raceData.sprintTime }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="session-card quali">
+      <div class="date">
+        <span class="day">{{ raceData.qualiDate?.split(' ')[0] }}</span>
+        <span class="month">{{ raceData.qualiDate?.split(' ')[1] }}</span>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="session-info">
+        <span class="title">
+          <i class="fa-solid fa-stopwatch"></i> QUALIFICATION
+        </span>
+        <span class="time">{{ raceData.qualiTime }}</span>
+      </div>
+    </div>
+
+
+    <div class="session-card race">
+      <div class="date">
+        <span class="day">{{ raceData.date?.split(' ')[0] }}</span>
+        <span class="month">{{ raceData.date?.split(' ')[1]  }}</span>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="session-info">
+        <span class="title">
+          <i class="fa-solid fa-flag-checkered"></i> COURSE
+        </span>
+        <span class="time">{{ raceData.time }}</span>
+      </div>
+    </div>
   </div>
 </div>
