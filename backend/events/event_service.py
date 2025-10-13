@@ -17,7 +17,7 @@ class EventService:
        fastf1.Cache.enable_cache(cache_dir)
 
     def get_schedule(self):
-        schedule = fastf1.get_event_schedule(self.season)
+        schedule = fastf1.get_event_schedule(self.season, include_testing=False)
 
         events_list = []
 
@@ -57,7 +57,7 @@ class EventService:
         return events_list
 
     def get_event(self):
-        schedule = fastf1.get_event_schedule(self.season)
+        schedule = fastf1.get_event_schedule(self.season, include_testing=False)
 
         try:
            event = schedule.get_event_by_round(self.round)
