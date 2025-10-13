@@ -17,4 +17,11 @@ export class TableStanding {
   getDriverFlag(driverNationality: string): string {
     return NATIONALITY_TO_ISO[driverNationality] || 'un';
   }
+
+  getLastName(fullName: string): string {
+    if (!fullName) return '';
+    const parts = fullName.split(' ');
+    return parts[parts.length - 1];
+  }
+
 }

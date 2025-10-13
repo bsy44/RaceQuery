@@ -14,9 +14,10 @@
 
         <td *ngIf="columns.includes('Pos')">{{ row.Pos }}</td>
 
-        <td *ngIf="columns.includes('Pilote') && row.driver">
+        <td *ngIf="columns.includes('Pilote') && row.driver" class="driver-cell">
           <span class="fi fi-{{ getDriverFlag(row.driver.nationality) }} flag-icon"></span>
-          {{ row.driver.fullName }}
+          <span class="driver-fullname">{{ row.driver.fullName }}</span>
+          <span class="driver-lastname">{{ getLastName(row.driver.fullName) }}</span>
         </td>
 
         <td *ngIf="columns.includes('Ecurie') && row.teamLogo">
