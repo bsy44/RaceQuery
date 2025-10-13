@@ -11,7 +11,7 @@ export const routes: Routes = [
   {path: 'dashboard', component: Dashboard},
   {path: 'driver/standings', component: Drivers},
   {path: 'team/standings', component: Teams},
-  {path: 'races', component: Races},
+  {path: 'events', component: Races},
   {path: 'race/:season/:round/result', component: RaceResult},
   {path: 'race/:season/:round/detail', component: RaceDetail}
 ];

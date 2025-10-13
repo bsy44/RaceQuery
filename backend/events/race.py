@@ -1,8 +1,7 @@
 from typing import Optional
-from backend.races.circuits.circuit import Circuit
 
 class Race:
-    def __init__(self, season: int, round: int, raceName: str, circuit: Circuit,
+    def __init__(self, season: int, round: int, raceName: str,
                  date: Optional[str] = None, time: Optional[str] = None,
                  firstPractice: Optional[dict] = None,
                  secondPractice: Optional[dict] = None,
@@ -12,7 +11,6 @@ class Race:
         self.season = season
         self.round = round
         self.raceName = raceName
-        self.circuit = circuit
         self.date = date
         self.time = time
         self.firstPractice = firstPractice
@@ -26,7 +24,6 @@ class Race:
             "season": str(self.season),
             "round": str(self.round),
             "raceName": self.raceName,
-            "Circuit": self.circuit.to_dict(),
             "date": self.date,
             "time": self.time,
             "FirstPractice": self.firstPractice,
@@ -40,9 +37,5 @@ class Race:
         return {
             "season": str(self.season),
             "round": str(self.round),
-            "raceName": self.raceName,
-            "Circuit": {
-                "circuitId": self.circuit.circuitId,
-                "circuitName": self.circuit.circuitName
-            }
+            "raceName": self.raceName
         }

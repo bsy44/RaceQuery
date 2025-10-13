@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 import { RaceDetail } from '../shared/models/race.model';
 
 @Component({
-  selector: 'app-races',
+  selector: 'app-events',
   standalone: true,
   imports: [
     CommonModule,

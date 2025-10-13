@@ -1,5 +1,5 @@
 from typing import Optional, List
-from backend.races.race import Race
+from backend.events.race import Race
 from backend.drivers.driver import Driver
 from backend.teams.team import Constructor
 
