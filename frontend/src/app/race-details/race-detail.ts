@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import {DatePipe, NgIf, UpperCasePipe} from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-race-details',
   templateUrl: './race-detail.html',
-  imports: [NgIf, DatePipe, UpperCasePipe],
+  imports: [NgIf],
   styleUrls: ['./race-detail.css']
 })
 export class RaceDetail implements OnInit {

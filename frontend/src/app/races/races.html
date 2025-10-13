@@ -13,23 +13,25 @@
     <div [routerLink]="race.isFinished ? ['/race', selectedYear, race.round, 'result'] :
       ['/race', selectedYear, race.round, 'detail']" class="card">
 
-      <span *ngIf="race.isSprint" class="sprint-badge">SPRINT</span>
-
+      @if (race.eventFormat === "sprint_qualifying"){
+        <span class="sprint-badge">SPRINT</span>
+      }
       <div class="card-header">
         <div class="card-round">Manche {{ race.round }}</div>
         <div class="card-date">
-          <i class="fa-solid fa-flag-checkered"></i> {{ race.date }}
+          <i class="fa-solid fa-flag-checkered"></i> {{ race.eventDate }}
         </div>
       </div>
       <div class="card-content">
         <div class="card-flag">
-          <span [class]="'fi fi-' + getFlagClass(race.Circuit.Location.country)"></span>
+          <span [class]="'fi fi-' + getFlagClass(race.country)"></span>
         </div>
         <div class="card-text">
-          <h2 class="card-title">{{ race.raceName }}</h2>
-          <div class="card-locality">{{ race.Circuit.Location.locality }}</div>
+          <h2 class="card-title">{{ race.gpName }}</h2>
+          <div class="card-locality">{{ race.location }}</div>
         </div>
       </div>
   </div>
   }
 </div>
+

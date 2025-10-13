@@ -1,17 +1,17 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {Dashboard} from './dashboard/dashboard';
-import {Drivers} from './drivers/drivers';
-import {Teams} from './teams/teams';
-import {Races} from './races/races';
-import {RaceResult} from './race-result/race-result';
-import {RaceDetail} from './race-details/race-detail';
+import { Dashboard } from './dashboard/dashboard';
+import { Drivers } from './drivers/drivers';
+import { Teams } from './teams/teams';
+import { Races } from './races/races';
+import { RaceResult } from './race-result/race-result';
+import { RaceDetail } from './race-details/race-detail';
 
 export const routes: Routes = [
   {path: 'dashboard', component: Dashboard},
   {path: 'driver/standings', component: Drivers},
   {path: 'team/standings', component: Teams},
-  {path: 'events', component: Races},
+  {path: 'races', component: Races},
   {path: 'race/:season/:round/result', component: RaceResult},
   {path: 'race/:season/:round/detail', component: RaceDetail}
 ];
@@ -21,4 +21,3 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-

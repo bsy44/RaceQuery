@@ -28,13 +28,13 @@ export const COUNTRY_TO_ISO: Record<string, string> = {
   "Japan": "jp",
   "Bahrain": "bh",
   "Saudi Arabia": "sa",
-  "USA": "us",
+  "United States": "us",
   "Italy": "it",
   "Monaco": "mc",
   "Spain": "es",
   "Canada": "ca",
   "Austria": "at",
-  "UK": "gb",
+  "United Kingdom": "gb",
   "Belgium": "be",
   "Hungary": "hu",
   "Netherlands": "nl",
@@ -43,6 +43,6 @@ export const COUNTRY_TO_ISO: Record<string, string> = {
   "Mexico": "mx",
   "Brazil": "br",
   "Qatar": "qa",
-  "UAE": "ae" // Abu Dhabi
+  "United Arab Emirates": "ae"
 };
 

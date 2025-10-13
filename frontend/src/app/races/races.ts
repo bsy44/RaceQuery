@@ -22,7 +22,7 @@ import { RaceDetail } from '../shared/models/race.model';
 
 export class Races implements OnInit{
   years: number [] = [];
-  raceList: RaceDetail[] = [];
+  raceList: any[] = [];
   selectedYear: number = new Date().getFullYear();
 
   constructor(private http:HttpClient) {}
@@ -34,35 +34,47 @@ export class Races implements OnInit{
   }
 
   getRaces() {
-    this.http.get(`http://127.0.0.1:5000/races/${this.selectedYear}`).subscribe((result: any) => {
-      this.raceList = (result || []).map((race: RaceDetail, i: number) => {
+    this.http.get(`http://127.0.0.1:5000/events/${this.selectedYear}`).subscribe((result: any) => {
+      this.raceList = (result || []).map((race: any) => {
+        console.log(race);
 
-        const formatDateRange = (startStr: string | null | undefined, endStr: string | null | undefined): string => {
+        const formatDateRange = (
+          sessions: any[] | undefined,
+          raceEndStr: string | null | undefined
+        ): string => {
+          if (!sessions || sessions.length === 0) return '—';
+
+          const fp1 = sessions.find(s => s.name?.toLowerCase().includes('fp1')) || sessions[0];
+          const startStr = fp1?.local_date;
+          const endStr = raceEndStr;
+
           if (!startStr || !endStr) return '—';
           const start = new Date(startStr.replace(' ', 'T'));
           const end = new Date(endStr.replace(' ', 'T'));
+
           if (isNaN(start.getTime()) || isNaN(end.getTime())) return '—';
+
           const startDay = start.getDate().toString().padStart(2, '0');
           const endDay = end.getDate().toString().padStart(2, '0');
           const month = end.toLocaleDateString('fr-FR', { month: 'short' })
             .replace('.', '')
             .toUpperCase();
+
           return `${startDay} - ${endDay} ${month}`;
         };
 
-        const raceDate = new Date(race.date);
-        const isFinished = raceDate < new Date();
-        const isSprint = race.Sprint?.date != null && race.Sprint?.time != null;
-
         return {
-          ...race,
-          round: race.round || i + 1,
-          date: formatDateRange(race.FirstPractice?.date, race.date),
-          isFinished,
-          isSprint
+          circuitName: race.circuit_name,
+          country: race.country,
+          eventDate: formatDateRange(race.sessions, race.event_date),
+          location: race.location,
+          round: race.round,
+          season: race.season,
+          gpName: race.short_name,
+          sessions: race.sessions,
+          eventFormat: race.event_format
         };
       });
-
     });
   }
 
