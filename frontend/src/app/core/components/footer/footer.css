@@ -5,11 +5,10 @@
   font-style: normal;
 }
 
-
 .site-footer {
   background-color: #111;
   color: #e6e6e6;
-  padding: 30px 20px;
+  padding: 25px;
   border-top: 3px solid #FF1E1E;
 }
 
@@ -20,7 +19,7 @@
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 40px;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -90,7 +89,7 @@
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 1200px;            /* même largeur que le haut */
+  max-width: 1600px;            /* même largeur que le haut */
   margin: 30px auto 0;          /* centré et espacé du haut */
   padding-top: 15px;
   border-top: 1px solid #444;   /* TRAIT visible */
