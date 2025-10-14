@@ -1,4 +1,4 @@
-<div *ngIf="raceData">
+@if (raceData) {
   <div class="container">
     <div class="page-header">
       <button class="back-button" (click)="goBack()">
@@ -6,77 +6,38 @@
       </button>
 
       <div class="titles">
-        <h1 class="page-title">{{ raceData.raceName }} - {{ season }}</h1>
+        <h1 class="page-title">{{ raceData.gpName }} - {{ season }}</h1>
         <h3 class="subtitle">Manche {{ raceData.round }}</h3>
       </div>
     </div>
-    @for (i of [1, 2, 3]; track i) {
-      @if (raceData['fp' + i + 'Date']) {
-        <div class="session-card free-practice">
-          <div class="date">
-            <span class="day">{{ raceData['fp' + i + 'Date']?.split(' ')[0] }}</span>
-            <span class="month">{{ raceData['fp' + i + 'Date']?.split(' ')[1] }}</span>
-          </div>
 
-          <div class="separator"></div>
-
-          <div class="session-info">
-            <span class="title">ESSAIS LIBRE {{ i }}</span>
-            <span class="time">{{ raceData['fp' + i + 'Time'] }}</span>
-          </div>
-        </div>
-      }
-    }
-
-    @if (raceData.sprintDate) {
-      <div class="session-card sprint">
+    @for (session of raceData.sessions; track session; let i = $index) {
+      <div class="session-card {{ getSessionClass(session.name) }}">
         <div class="date">
-          <span class="day">{{ raceData.sprintDate?.split(' ')[0] }}</span>
-          <span class="month">{{ raceData.sprintDate?.split(' ')[1] }}</span>
+          <div class="day">
+            {{ session.utc_date + 'Z' | date:'d':'UTC' }}
+          </div>
+          <div class="month">
+            {{ session.utc_date + 'Z' | date:'MMM':'UTC' }}
+          </div>
         </div>
 
         <div class="separator"></div>
-
         <div class="session-info">
           <span class="title">
-            <i class="fa-solid fa-flag-checkered"></i> Course SPRINT
+            @if (session.name.toLowerCase().includes('race') ||
+                 (session.name.toLowerCase().includes('sprint') && !session.name.toLowerCase().includes('qualifying'))) {
+              <i class="fa-solid fa-flag-checkered mr-1"></i>
+            }
+            @else if (session.name.toLowerCase().includes('qualifying')) {
+              <i class="fa-solid fa-stopwatch mr-1"></i>
+            }
+
+            {{ translateSessionName(session.name, i) }}
           </span>
-          <span class="time">{{ raceData.sprintTime }}</span>
+          <span class="time">{{ session.utc_date + 'Z' | date:'HH:mm':'UTC' }}</span>
         </div>
       </div>
     }
-
-    <div class="session-card quali">
-      <div class="date">
-        <span class="day">{{ raceData.qualiDate?.split(' ')[0] }}</span>
-        <span class="month">{{ raceData.qualiDate?.split(' ')[1] }}</span>
-      </div>
-
-      <div class="separator"></div>
-
-      <div class="session-info">
-        <span class="title">
-          <i class="fa-solid fa-stopwatch"></i> QUALIFICATION
-        </span>
-        <span class="time">{{ raceData.qualiTime }}</span>
-      </div>
-    </div>
-
-
-    <div class="session-card race">
-      <div class="date">
-        <span class="day">{{ raceData.date?.split(' ')[0] }}</span>
-        <span class="month">{{ raceData.date?.split(' ')[1]  }}</span>
-      </div>
-
-      <div class="separator"></div>
-
-      <div class="session-info">
-        <span class="title">
-          <i class="fa-solid fa-flag-checkered"></i> COURSE
-        </span>
-        <span class="time">{{ raceData.time }}</span>
-      </div>
-    </div>
   </div>
-</div>
+}

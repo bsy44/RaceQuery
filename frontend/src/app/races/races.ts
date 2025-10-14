@@ -69,10 +69,9 @@ export class Races implements OnInit{
           eventDate: formatDateRange(race.sessions, race.event_date),
           location: race.location,
           round: race.round,
-          season: race.season,
           gpName: race.short_name,
-          sessions: race.sessions,
-          eventFormat: race.event_format
+          eventFormat: race.event_format,
+          isFinished: new Date(race.event_date) < new Date()
         };
       });
     });
