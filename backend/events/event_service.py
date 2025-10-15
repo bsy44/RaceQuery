@@ -125,13 +125,15 @@ class EventService:
                 driver_id = lap.get(driver_col)
                 driver_info = session.get_driver(driver_id)
 
+                # Nombre total de tours du pilote
+                total_laps = laps[laps[driver_col] == driver_id].shape[0]
+
                 results.append({
                     "position": pos,
-                    "driverId": driver_id,
-                    "fullName": driver_info.get("FullName", None),
+                    "driver": driver_info.get("FullName", None),
                     "team": lap.get("Team", None),
                     "best_lap": str(lap["LapTime"]).split(" days ")[-1] if pd.notna(lap["LapTime"]) else None,
-                    "compound": lap.get("Compound", None)
+                    "lap": total_laps
                 })
 
             return results
@@ -143,8 +145,7 @@ class EventService:
         for _, row in session.results.iterrows():
             result_data = {
                 "position": int(row["Position"]) if not pd.isna(row["Position"]) else None,
-                "driverId": row.get("DriverId"),
-                "fullName": row.get("FullName"),
+                "driver": row.get("FullName"),
                 "team": row.get("TeamName"),
                 "laps": int(row["Laps"]) if not pd.isna(row.get("Laps")) else None,
                 "time": str(row.get("Time")) if row.get("Time") is not None else None,

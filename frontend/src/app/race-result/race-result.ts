@@ -1,50 +1,91 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { NgForOf, NgIf} from '@angular/common';
 import { RaceResultModel } from '../shared/models/raceResult.model';
+import { FormsModule } from '@angular/forms';
+import { SessionResultTableComponent } from '../shared/components/table-results/table-results';
+import {NgForOf} from '@angular/common';
 
 @Component({
-  selector: 'app-race-result',
-  templateUrl: './race-result.html',
   imports: [
-    NgIf,
+    FormsModule,
+    SessionResultTableComponent,
     NgForOf
   ],
-  styleUrls: ['./race-result.css']
+  selector: 'app-race-result',
+  styleUrls: ['./race-result.css'],
+  templateUrl: './race-result.html'
 })
-export class RaceResult implements OnInit{
+export class RaceResult implements OnInit {
   round!: number;
   season!: number;
-  raceList: any[] = []
+  raceList: any[] = [];
   isLoading = false;
   race: any = null;
+  sessionCode: string = 'R';
+  sessions: string[] = [];
+  sessionMapping: { [key: string]: string } = {
+    'Essais libres 1': 'FP1',
+    'Essais libres 2': 'FP2',
+    'Essais libres 3': 'FP3',
+    'Qualification': 'Q',
+    'Qualification sprint': 'SQ',
+    'Course sprint': 'S',
+    'Course': 'R'
+  };
 
   constructor(private httpClient: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.round = +this.route.snapshot.paramMap.get('round')!;
     this.season = +this.route.snapshot.paramMap.get('season')!;
-    this.getRaceResult();
+
+    this.httpClient.get<any>(`http://127.0.0.1:5000/events/${this.season}/${this.round}`)
+      .subscribe(result => {
+        this.race = result;
+
+        if (this.race.event_format === 'sprint_qualifying') {
+          this.sessions = [
+            'Essais libres 1',
+            'Qualification sprint',
+            'Qualification',
+            'Course sprint',
+            'Course'
+          ];
+        } else {
+          this.sessions = [
+            'Essais libres 1',
+            'Essais libres 2',
+            'Essais libres 3',
+            'Qualification',
+            'Course'
+          ];
+        }
+
+        this.sessionCode = this.sessionMapping['Course'];
+        this.getSessionResult();
+      });
   }
 
-  getRaceResult() {
+  getSessionResult() {
+    if (!this.sessionCode) return;
+
+    const session = this.sessionCode.trim().toUpperCase();
     this.isLoading = true;
 
     this.httpClient
-      .get<RaceResultModel[]>(`http://127.0.0.1:5000/races/results/${this.season}/${this.round}`)
+      .get<RaceResultModel[]>(`http://127.0.0.1:5000/events/${session}-results/${this.season}/${this.round}`)
       .subscribe({
         next: (response: RaceResultModel[]) => {
-          const raceData = response[0];
-          this.race = raceData.race;
-          this.raceList = raceData.Results;
+          console.log('Résultats reçus pour', session, ':', response);
+          this.raceList = Array.isArray(response) ? response : [];
           this.isLoading = false;
         },
         error: (err) => {
           console.error('Erreur de chargement des résultats :', err);
+          this.raceList = [];
           this.isLoading = false;
         },
       });
   }
-
 }

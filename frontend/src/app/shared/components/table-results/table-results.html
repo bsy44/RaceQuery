@@ -1,0 +1,63 @@
+@if (results.length) {
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Pos</th>
+        <th>Pilote</th>
+        <th>Équipe</th>
+
+        @if (isQualifying()) {
+          <th>Q1</th>
+          <th>Q2</th>
+          <th>Q3</th>
+        }
+
+        @if (isPractice()) {
+          <th>Temps</th>
+          <th>Tours</th>
+        }
+
+        @if (isRaceOrSprint()) {
+          <th>Tours</th>
+          <th>Temps / Écart</th>
+          <th>Points</th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (r of results; track r) {
+        <tr>
+          <td>{{ r.position }}</td>
+          <td>{{ r.driver }}</td>
+          <td>{{ r.team }}</td>
+
+          @if (isQualifying()) {
+            <td>{{ r.q1 }}</td>
+            <td>{{ r.q2 }}</td>
+            <td>{{ r.q3 }}</td>
+          }
+
+          @if (isPractice()) {
+            <td>{{ r.best_lap }}</td>
+            <td>{{ r.lap }}</td>
+          }
+
+          @if (isRaceOrSprint()) {
+            <td>{{ r.laps }}</td>
+            <td>
+              @if (r.time && r.time !== 'NaT') {
+                <span>{{ r.time }}</span>
+              } @else {
+                <span>{{ r.status }}</span>
+              }
+            </td>
+            <td>{{ r.points }}</td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p>Aucun résultat disponible.</p>
+}
