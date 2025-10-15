@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import fastf1
+import re
 from fastf1.ergast import Ergast
 from backend.events.race import Race
 from backend.drivers.driver import Driver
@@ -102,11 +103,46 @@ class EventService:
             print(f"Erreur FastF1 : {e}")
             return []
 
+        import re
+
+        def clean_fastf1_time(time_str):
+            if not time_str:
+                return None
+
+            t = str(time_str).strip()
+            t = t.replace("0 days ", "")
+
+            t = re.sub(r'(\.\d*?)0+$', r'\1', t)
+            t = re.sub(r'\.$', '', t)
+
+            # Séparer heures, minutes, secondes
+            parts = t.split(":")
+            parts = [p.lstrip("0") or "0" for p in parts]
+
+            if len(parts) == 3:
+                h, m, s = parts
+                if h == "0":
+                    t = f"{m}:{s}" if m != "0" else s
+                else:
+                    t = f"{h}:{m}:{s}"
+            elif len(parts) == 2:
+                m, s = parts
+                if m == "0":
+                    t = s
+                else:
+                    t = f"{m}:{s}"
+            else:
+                t = parts[0]
+
+            if t.startswith("."):
+                t = "0" + t
+
+            return t
+
         results = []
 
         if "Practice" in session.name or "FP" in session.name:
             laps = session.laps
-
             if laps.empty:
                 print("Aucun tour enregistré pour cette session.")
                 return []
@@ -118,21 +154,18 @@ class EventService:
 
             best_laps_idx = laps.groupby(driver_col)["LapTime"].idxmin().dropna()
             best_laps = laps.loc[best_laps_idx].copy()
-
             best_laps = best_laps.sort_values("LapTime").reset_index(drop=True)
 
             for pos, (_, lap) in enumerate(best_laps.iterrows(), start=1):
                 driver_id = lap.get(driver_col)
                 driver_info = session.get_driver(driver_id)
-
-                # Nombre total de tours du pilote
                 total_laps = laps[laps[driver_col] == driver_id].shape[0]
 
                 results.append({
                     "position": pos,
                     "driver": driver_info.get("FullName", None),
                     "team": lap.get("Team", None),
-                    "best_lap": str(lap["LapTime"]).split(" days ")[-1] if pd.notna(lap["LapTime"]) else None,
+                    "best_lap": clean_fastf1_time(lap["LapTime"]) if pd.notna(lap["LapTime"]) else None,
                     "lap": total_laps
                 })
 
@@ -143,18 +176,34 @@ class EventService:
             return []
 
         for _, row in session.results.iterrows():
+            laps = row.get("Laps")
+            status = str(row.get("Status")) if row.get("Status") else ""
+            time_val = row.get("Time")
+            clean_time = None
+
+            if "Lapped" in status or "+1 Lap" in status or "+2 Laps" in status:
+                match = re.search(r"\+(\d+)\s+Lap", status)
+                if match:
+                    n = int(match.group(1))
+                    clean_time = f"{n} Tours" if n > 1 else "1 Tour"
+                else:
+                    clean_time = "+ 1 Tour"
+            elif time_val and pd.notna(time_val):
+                clean_time = clean_fastf1_time(time_val)
+
             result_data = {
                 "position": int(row["Position"]) if not pd.isna(row["Position"]) else None,
                 "driver": row.get("FullName"),
                 "team": row.get("TeamName"),
+                "teamColor": row.get("TeamColor"),
                 "laps": int(row["Laps"]) if not pd.isna(row.get("Laps")) else None,
-                "time": str(row.get("Time")) if row.get("Time") is not None else None,
+                "time": clean_time,
                 "points": float(row["Points"]) if not pd.isna(row.get("Points")) else 0.0,
                 "status": row.get("Status"),
                 "grid_position": int(row["GridPosition"]) if not pd.isna(row.get("GridPosition")) else None,
-                "q1": str(row.get("Q1")) if pd.notna(row.get("Q1")) else None,
-                "q2": str(row.get("Q2")) if pd.notna(row.get("Q2")) else None,
-                "q3": str(row.get("Q3")) if pd.notna(row.get("Q3")) else None,
+                "q1": clean_fastf1_time(row.get("Q1")) if pd.notna(row.get("Q1")) else None,
+                "q2": clean_fastf1_time(row.get("Q2")) if pd.notna(row.get("Q2")) else None,
+                "q3": clean_fastf1_time(row.get("Q3")) if pd.notna(row.get("Q3")) else None
             }
             results.append(result_data)
 

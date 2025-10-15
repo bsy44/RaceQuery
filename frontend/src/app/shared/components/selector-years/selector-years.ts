@@ -15,10 +15,6 @@ export class SelectorYears implements OnInit {
   @Output() selectedYearChange = new EventEmitter<number>();
 
   ngOnInit() {
-    if (!this.years || this.years.length === 0) {
-      const currentYear = new Date().getFullYear();
-      this.years = Array.from({ length: currentYear - 2024 + 1 }, (_, i) => 2024 + i).reverse();
-    }
   }
 
   onChange(newYear: number) {
