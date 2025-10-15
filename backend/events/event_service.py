@@ -103,42 +103,6 @@ class EventService:
             print(f"Erreur FastF1 : {e}")
             return []
 
-        import re
-
-        def clean_fastf1_time(time_str):
-            if not time_str:
-                return None
-
-            t = str(time_str).strip()
-            t = t.replace("0 days ", "")
-
-            t = re.sub(r'(\.\d*?)0+$', r'\1', t)
-            t = re.sub(r'\.$', '', t)
-
-            # Séparer heures, minutes, secondes
-            parts = t.split(":")
-            parts = [p.lstrip("0") or "0" for p in parts]
-
-            if len(parts) == 3:
-                h, m, s = parts
-                if h == "0":
-                    t = f"{m}:{s}" if m != "0" else s
-                else:
-                    t = f"{h}:{m}:{s}"
-            elif len(parts) == 2:
-                m, s = parts
-                if m == "0":
-                    t = s
-                else:
-                    t = f"{m}:{s}"
-            else:
-                t = parts[0]
-
-            if t.startswith("."):
-                t = "0" + t
-
-            return t
-
         results = []
 
         if "Practice" in session.name or "FP" in session.name:
@@ -189,7 +153,7 @@ class EventService:
                 else:
                     clean_time = "+ 1 Tour"
             elif time_val and pd.notna(time_val):
-                clean_time = clean_fastf1_time(time_val)
+                clean_time = self._clean_fastf1_time(time_val)
 
             result_data = {
                 "position": int(row["Position"]) if not pd.isna(row["Position"]) else None,
@@ -201,10 +165,44 @@ class EventService:
                 "points": float(row["Points"]) if not pd.isna(row.get("Points")) else 0.0,
                 "status": row.get("Status"),
                 "grid_position": int(row["GridPosition"]) if not pd.isna(row.get("GridPosition")) else None,
-                "q1": clean_fastf1_time(row.get("Q1")) if pd.notna(row.get("Q1")) else None,
-                "q2": clean_fastf1_time(row.get("Q2")) if pd.notna(row.get("Q2")) else None,
-                "q3": clean_fastf1_time(row.get("Q3")) if pd.notna(row.get("Q3")) else None
+                "q1": self._clean_fastf1_time(row.get("Q1")) if pd.notna(row.get("Q1")) else None,
+                "q2": self._clean_fastf1_time(row.get("Q2")) if pd.notna(row.get("Q2")) else None,
+                "q3": self._clean_fastf1_time(row.get("Q3")) if pd.notna(row.get("Q3")) else None
             }
             results.append(result_data)
 
         return results
+
+    def _clean_fastf1_time(self, time_str):
+        if not time_str:
+            return None
+
+        t = str(time_str).strip()
+        t = t.replace("0 days ", "")
+
+        t = re.sub(r'(\.\d*?)0+$', r'\1', t)
+        t = re.sub(r'\.$', '', t)
+
+        # Séparer heures, minutes, secondes
+        parts = t.split(":")
+        parts = [p.lstrip("0") or "0" for p in parts]
+
+        if len(parts) == 3:
+            h, m, s = parts
+            if h == "0":
+                t = f"{m}:{s}" if m != "0" else s
+            else:
+                t = f"{h}:{m}:{s}"
+        elif len(parts) == 2:
+            m, s = parts
+            if m == "0":
+                t = s
+            else:
+                t = f"{m}:{s}"
+        else:
+            t = parts[0]
+
+        if t.startswith("."):
+            t = "0" + t
+
+        return t
