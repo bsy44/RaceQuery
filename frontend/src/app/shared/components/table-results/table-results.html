@@ -30,7 +30,10 @@
         <tr>
           <td>{{ r.position }}</td>
           <td>{{ r.driver }}</td>
-          <td>{{ r.team }}</td>
+          <td>
+            <img src="{{ r.teamLogo }}" width="40" height="40" alt="{{ r.teamLogo }}" class="team-logo">
+            <span>{{ r.team }}</span>
+          </td>
 
           @if (isQualifying()) {
             <td>{{ r.q1 }}</td>
@@ -47,7 +50,7 @@
             <td>{{ r.laps }}</td>
             <td>
               @if (r.time && r.time !== 'NaT') {
-                <span>{{ r.time }}</span>
+                <span>{{ r.position > 1 ? "+ " + r.time: r.time }}</span>
               } @else {
                 <span>{{ r.status }}</span>
               }

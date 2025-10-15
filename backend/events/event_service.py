@@ -17,6 +17,7 @@ class EventService:
        os.makedirs(cache_dir, exist_ok=True)
        fastf1.Cache.enable_cache(cache_dir)
 
+
     def get_schedule(self):
         schedule = fastf1.get_event_schedule(self.season, include_testing=False)
 
@@ -95,6 +96,7 @@ class EventService:
 
         return event_info
 
+
     def get_session_results(self, session_id: str) -> list[dict]:
         try:
             session = fastf1.get_session(self.season, self.round, session_id)
@@ -127,9 +129,10 @@ class EventService:
 
                 results.append({
                     "position": pos,
-                    "driver": driver_info.get("FullName", None),
+                    "driver": driver_info.get("FullName", None) if driver_info is not None else None,
+                    "DriverNumber": driver_info.get("DriverNumber") if driver_info is not None else None,
                     "team": lap.get("Team", None),
-                    "best_lap": clean_fastf1_time(lap["LapTime"]) if pd.notna(lap["LapTime"]) else None,
+                    "best_lap": self._clean_fastf1_time(lap["LapTime"]) if pd.notna(lap["LapTime"]) else None,
                     "lap": total_laps
                 })
 
@@ -151,13 +154,14 @@ class EventService:
                     n = int(match.group(1))
                     clean_time = f"{n} Tours" if n > 1 else "1 Tour"
                 else:
-                    clean_time = "+ 1 Tour"
+                    clean_time = "1 Tour"
             elif time_val and pd.notna(time_val):
                 clean_time = self._clean_fastf1_time(time_val)
 
             result_data = {
                 "position": int(row["Position"]) if not pd.isna(row["Position"]) else None,
                 "driver": row.get("FullName"),
+                "DriverNumber": row.get("DriverNumber"),
                 "team": row.get("TeamName"),
                 "teamColor": row.get("TeamColor"),
                 "laps": int(row["Laps"]) if not pd.isna(row.get("Laps")) else None,
@@ -176,17 +180,12 @@ class EventService:
     def _clean_fastf1_time(self, time_str):
         if not time_str:
             return None
-
         t = str(time_str).strip()
         t = t.replace("0 days ", "")
-
         t = re.sub(r'(\.\d*?)0+$', r'\1', t)
         t = re.sub(r'\.$', '', t)
-
-        # Séparer heures, minutes, secondes
         parts = t.split(":")
         parts = [p.lstrip("0") or "0" for p in parts]
-
         if len(parts) == 3:
             h, m, s = parts
             if h == "0":
@@ -195,14 +194,9 @@ class EventService:
                 t = f"{h}:{m}:{s}"
         elif len(parts) == 2:
             m, s = parts
-            if m == "0":
-                t = s
-            else:
-                t = f"{m}:{s}"
+            t = s if m == "0" else f"{m}:{s}"
         else:
             t = parts[0]
-
         if t.startswith("."):
             t = "0" + t
-
         return t

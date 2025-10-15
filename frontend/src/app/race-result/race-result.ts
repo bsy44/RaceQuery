@@ -5,6 +5,7 @@ import { RaceResultModel } from '../shared/models/raceResult.model';
 import { FormsModule } from '@angular/forms';
 import { SessionResultTableComponent } from '../shared/components/table-results/table-results';
 import {NgForOf} from '@angular/common';
+import { TEAMS_INFO } from '../shared/teams-info'
 
 @Component({
   imports: [
@@ -76,16 +77,19 @@ export class RaceResult implements OnInit {
     this.httpClient
       .get<RaceResultModel[]>(`http://127.0.0.1:5000/events/${session}-results/${this.season}/${this.round}`)
       .subscribe({
-        next: (response: RaceResultModel[]) => {
-          console.log('Résultats reçus pour', session, ':', response);
-          this.raceList = Array.isArray(response) ? response : [];
+        next: (response: any[]) => {
+          if (Array.isArray(response)) {
+            this.raceList = response.map(r => {
+              return {
+                ...r,
+                teamLogo: TEAMS_INFO[r.team]?.logo || ''
+              };
+            });
+          } else {
+            this.raceList = [];
+          }
           this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Erreur de chargement des résultats :', err);
-          this.raceList = [];
-          this.isLoading = false;
-        },
+        }
       });
   }
 }
