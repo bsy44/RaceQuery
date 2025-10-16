@@ -12,8 +12,8 @@ export const routes: Routes = [
   {path: 'driver/standings', component: Drivers},
   {path: 'team/standings', component: Teams},
   {path: 'races', component: Races},
-  {path: 'race/:season/:round/result', component: RaceResult},
-  {path: 'race/:season/:round/detail', component: RaceDetail}
+  {path: 'race/:season/:gpName/results', component: RaceResult},
+  {path: 'race/:season/:gpName/details', component: RaceDetail}
 ];
 
 @NgModule({

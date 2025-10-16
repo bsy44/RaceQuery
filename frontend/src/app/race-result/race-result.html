@@ -1,12 +1,15 @@
-<h1>{{ race }} - {{ season }}</h1>
+<h1>{{ eventInfo }} - {{ season }}</h1>
 
 <div class="session-selector">
   <select [(ngModel)]="sessionCode" (change)="getSessionResult()">
-    <option *ngFor="let s of sessions" [value]="sessionMapping[s]">
-      {{ s }}
-    </option>
+    @for (s of sessions; track s) {
+      <option [value]="sessionMapping[s]">
+        {{ s }}
+      </option>
+    }
   </select>
 </div>
+
 
 <app-session-result-table
   [sessionCode]="sessionCode"

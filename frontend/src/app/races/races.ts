@@ -33,6 +33,16 @@ export class Races implements OnInit{
     this.getRaces();
   }
 
+  slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize('NFD')                 // enlève les accents
+    .replace(/[\u0300-\u036f]/g, '') // idem accents
+    .replace(/[^a-z0-9]+/g, '-')     // remplace tout ce qui n’est pas lettre ou chiffre par "-"
+    .replace(/^-+|-+$/g, '');        // retire les tirets en trop
+}
+
+
   getRaces() {
     this.http.get(`http://127.0.0.1:5000/events/${this.selectedYear}`).subscribe((result: any) => {
       this.raceList = (result || []).map((race: any) => {

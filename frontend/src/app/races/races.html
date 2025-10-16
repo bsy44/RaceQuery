@@ -10,8 +10,11 @@
 
 <div class="container">
   @for (race of raceList; track raceList){
-    <div [routerLink]="race.isFinished ? ['/race', selectedYear, race.round, 'result'] :
-      ['/race', selectedYear, race.round, 'detail']" class="card">
+    <div [routerLink]="race.isFinished
+        ? ['/race', selectedYear, slugify(race.gpName), 'results']
+        : ['/race', selectedYear, slugify(race.gpName), 'details']"
+      [state]="{ round: race.round, race: race.gpName }"
+      class="card">
 
       @if (race.eventFormat === "sprint_qualifying"){
         <span class="sprint-badge">SPRINT</span>
