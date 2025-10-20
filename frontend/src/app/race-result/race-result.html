@@ -9,9 +9,7 @@
   <div class="session-selector">
     <select id="session" [(ngModel)]="sessionCode" (change)="getSessionResult()" class="form-select">
       @for (s of sessions; track s) {
-        <option [value]="sessionMapping[s]">
-          {{ s }}
-        </option>
+        <option [value]="sessionMapping[s]">{{ s }}</option>
       }
     </select>
   </div>
@@ -50,7 +48,7 @@
     </div>
 
     <div class="card fastestLap">
-     <div class="card-header">
+      <div class="card-header">
         <div>Meilleur Tour</div>
         <span class="material-symbols-outlined">timer</span>
       </div>
@@ -66,10 +64,9 @@
     </div>
   </div>
 
+  <!-- Seul ce tableau se met à jour -->
   <app-session-result-table
     [sessionCode]="sessionCode"
     [results]="raceList">
   </app-session-result-table>
 </div>
-
-
