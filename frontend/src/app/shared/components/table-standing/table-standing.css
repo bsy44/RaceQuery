@@ -1,28 +1,32 @@
 /* ===== Container du tableau ===== */
 .table-container {
-  margin: 0 auto 100px; /* espace entre le tableau et le footer */
-  padding: 0 15px;
+  margin: 0 auto 100px;
   box-sizing: border-box;
-  max-width: 1200px;
+  max-width: 1600px;
   display: flex;
   justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #202020;
 }
+
 
 /* ===== Tables génériques ===== */
 .table-common {
   width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
-  color: #E6E6E6;
-  background-color: #181818;
   table-layout: fixed;
+  background-color: transparent;
 }
 
 
 /* En-tête */
 .table-common thead {
-  background-color: #0D0D0D;
+  background-color: #171717;
   border-bottom: 3px solid #FF1E1E;
+    border-radius: 12px;
+
 }
 
 .table-common th {
@@ -98,10 +102,7 @@
   font-size: 1.25rem;
 }
 
-/* Alternance */
-.table-common tbody tr:nth-child(even) {
-  background-color: #202020;
-}
+
 
 /* ===== Year selector ===== */
 .year-selector {
