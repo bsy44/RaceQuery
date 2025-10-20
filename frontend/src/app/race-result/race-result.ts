@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RaceResultModel } from '../shared/models/raceResult.model';
 import { FormsModule } from '@angular/forms';
 import { SessionResultTableComponent } from '../shared/components/table-results/table-results';
 import { TEAMS_INFO } from '../shared/teams-info'
@@ -19,7 +18,7 @@ export class RaceResult implements OnInit {
   round!: number;
   season!: number;
   eventInfo!: string;
-  raceList: any[] = [];
+  raceList: RaceResultModel[] = [];
   isLoading = false;
   race: any = null;
   sessionCode: string = 'R';
@@ -33,6 +32,9 @@ export class RaceResult implements OnInit {
     'Course sprint': 'S',
     'Course': 'R'
   };
+  winner:any;
+  pole: any;
+  fastestLap : any;
 
   constructor(private httpClient: HttpClient, private route: ActivatedRoute, private router:Router) {}
 
@@ -40,7 +42,10 @@ export class RaceResult implements OnInit {
     const nav = this.router.lastSuccessfulNavigation;
     this.round = nav?.extras?.state?.['round'] || null;
     this.season = +this.route.snapshot.paramMap.get('season')!;
-    this.eventInfo = this.route.snapshot.paramMap.get('gpName')!.replace('-', ' ').toUpperCase();
+    this.eventInfo = this.route.snapshot.paramMap
+      .get('gpName')!
+      .replace(/-/g, ' ')
+      .toUpperCase();
 
     this.httpClient.get<any>(`http://127.0.0.1:5000/events/${this.season}/${this.round}`)
       .subscribe(result => {
@@ -76,21 +81,34 @@ export class RaceResult implements OnInit {
     this.isLoading = true;
 
     this.httpClient
-      .get<RaceResultModel[]>(`http://127.0.0.1:5000/events/${session}-results/${this.season}/${this.round}`)
+      .get<any>(`http://127.0.0.1:5000/events/${session}-results/${this.season}/${this.round}`)
       .subscribe({
-        next: (response: any[]) => {
-          if (Array.isArray(response)) {
-            this.raceList = response.map(r => {
-              return {
-                ...r,
-                teamLogo: TEAMS_INFO[r.team]?.logo || ''
-              };
-            });
+        next: (response: any) => {
+          if (response && Array.isArray(response.results)) {
+            this.winner = response.winner || null;
+            this.pole = response.poleman || null;
+            this.fastestLap = response.fastestLap || null;
+            this.raceList = response.results.map((r: RaceResultModel) => ({
+              ...r
+            }));
           } else {
             this.raceList = [];
+            this.winner = null;
+            this.pole = null;
+            this.fastestLap = null;
           }
+          this.isLoading = false;
+        },
+        error: err => {
+          console.error('Erreur de chargement des résultats :', err);
+          this.raceList = [];
+          this.winner = null;
+          this.pole = null;
+          this.fastestLap = null;
           this.isLoading = false;
         }
       });
   }
+
+  protected readonly TEAMS_INFO = TEAMS_INFO;
 }

@@ -4,13 +4,14 @@
 }
 
 .year-selector select {
-  padding: 8px 12px;
+  padding: 15px 40px;
   background: #1A1A1A;
   color: #E6E6E6;
   border: 2px solid #FF1E1E;
   border-radius: 5px;
   font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
   cursor: pointer;
 
   -webkit-appearance: none;  /* Chrome, Safari, Edge */

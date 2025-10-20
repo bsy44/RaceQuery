@@ -96,70 +96,86 @@ class EventService:
 
         return event_info
 
+    def get_session_results(self, session_id: str) -> dict:
+        """
+        Retourne les résultats de la session avec infos supplémentaires :
+        - vainqueur
+        - poleman
+        - meilleur tour
+        """
+        DEFAULT_INFO = {
+            "driver": "Information non disponible",
+            "team": "",
+            "time": ""
+        }
 
-    def get_session_results(self, session_id: str) -> list[dict]:
         try:
             session = fastf1.get_session(self.season, self.round, session_id)
             session.load(laps=True, telemetry=False, weather=False)
         except Exception as e:
             print(f"Erreur FastF1 : {e}")
-            return []
+            return {
+                "results": [],
+                "winner": DEFAULT_INFO,
+                "poleman": DEFAULT_INFO,
+                "fastestLap": DEFAULT_INFO
+            }
 
         results = []
 
+        # --- FP / Practice ---
         if "Practice" in session.name or "FP" in session.name:
             laps = session.laps
             if laps.empty:
-                print("Aucun tour enregistré pour cette session.")
-                return []
+                return {"results": [], "winner": None, "poleman": None, "fastestLap": None}
 
-            driver_col = next((col for col in ["Driver", "DriverId", "DriverNumber"] if col in laps.columns), None)
+            driver_col = next((c for c in ["Driver", "DriverId", "DriverNumber"] if c in laps.columns), None)
             if not driver_col:
-                print("Impossible de trouver la colonne du pilote.")
-                return []
+                return {"results": [], "winner": None, "poleman": None, "fastestLap": None}
 
             best_laps_idx = laps.groupby(driver_col)["LapTime"].idxmin().dropna()
-            best_laps = laps.loc[best_laps_idx].copy()
-            best_laps = best_laps.sort_values("LapTime").reset_index(drop=True)
+            best_laps = laps.loc[best_laps_idx].copy().sort_values("LapTime").reset_index(drop=True)
 
             for pos, (_, lap) in enumerate(best_laps.iterrows(), start=1):
                 driver_id = lap.get(driver_col)
                 driver_info = session.get_driver(driver_id)
                 total_laps = laps[laps[driver_col] == driver_id].shape[0]
 
+                driver_name = getattr(driver_info, "FullName", None)
+                driver_number = getattr(driver_info, "DriverNumber", None)
+
                 results.append({
                     "position": pos,
-                    "driver": driver_info.get("FullName", None) if driver_info is not None else None,
-                    "DriverNumber": driver_info.get("DriverNumber") if driver_info is not None else None,
-                    "team": lap.get("Team", None),
+                    "driver": driver_name,
+                    "DriverNumber": driver_number,
+                    "team": lap.get("Team"),
                     "best_lap": self._clean_fastf1_time(lap["LapTime"]) if pd.notna(lap["LapTime"]) else None,
-                    "lap": total_laps
+                    "laps": total_laps
                 })
 
-            return results
+            return {"results": results, "winner": None, "poleman": None, "fastestLap": None}
 
-        if session.results is None:
-            print("Pas de résultats disponibles pour cette session.")
-            return []
+        # --- Course / Qualification ---
+        results_df = pd.DataFrame(session.results) if session.results is not None else pd.DataFrame()
+        if results_df.empty:
+            return {"results": [], "winner": DEFAULT_INFO, "poleman": DEFAULT_INFO, "fastestLap": DEFAULT_INFO}
 
-        for _, row in session.results.iterrows():
-            laps = row.get("Laps")
+        winner = None
+        poleman = None
+        fastest_lap = None
+
+        for _, row in results_df.iterrows():
             status = str(row.get("Status")) if row.get("Status") else ""
             time_val = row.get("Time")
             clean_time = None
-
             if "Lapped" in status or "+1 Lap" in status or "+2 Laps" in status:
                 match = re.search(r"\+(\d+)\s+Lap", status)
-                if match:
-                    n = int(match.group(1))
-                    clean_time = f"{n} Tours" if n > 1 else "1 Tour"
-                else:
-                    clean_time = "1 Tour"
+                clean_time = f"{int(match.group(1))} Tours" if match else "1 Tour"
             elif time_val and pd.notna(time_val):
                 clean_time = self._clean_fastf1_time(time_val)
 
             result_data = {
-                "position": int(row["Position"]) if not pd.isna(row["Position"]) else None,
+                "position": int(row["Position"]) if not pd.isna(row.get("Position")) else None,
                 "driver": row.get("FullName"),
                 "DriverNumber": row.get("DriverNumber"),
                 "team": row.get("TeamName"),
@@ -175,7 +191,52 @@ class EventService:
             }
             results.append(result_data)
 
-        return results
+            if session_id.upper() == "R" and row.get("Position") == 1:
+                winner = {"driver": row.get("FullName"), "team": row.get("TeamName"), "time": clean_time}
+
+        # --- Statut du weekend
+        race_finished = False
+        if session_id.upper() == "R" and not results_df.empty:
+            statuses = results_df['Status'].dropna().unique()
+            if "Finished" in statuses:
+                race_finished = True
+
+        try:
+            quali_session = fastf1.get_session(self.season, self.round, "Q")
+            quali_session.load()
+            quali_df = pd.DataFrame(quali_session.results) if quali_session.results is not None else pd.DataFrame()
+            if not quali_df.empty:
+                first = quali_df.iloc[0]
+                poleman = {"driver": first["FullName"], "team": first["TeamName"],
+                           "time": self._clean_fastf1_time(first.get("Q3"))}
+        except Exception as e:
+            print(f"Impossible de charger la qualif pour la pole : {e}")
+
+        try:
+            laps = session.laps
+            if not laps.empty:
+                best_lap = laps.loc[laps["LapTime"].idxmin()]
+                driver_info = session.get_driver(best_lap["Driver"])
+                driver_name = getattr(driver_info, "FullName", None)
+                fastest_lap = {"driver": driver_name, "team": best_lap.get("Team"),
+                               "time": self._clean_fastf1_time(best_lap["LapTime"])}
+        except Exception as e:
+            print(f"Erreur lors de la récupération du meilleur tour : {e}")
+
+        if race_finished:
+            data = {
+                "results": results,
+                "winner": winner or DEFAULT_INFO,
+                "poleman": poleman or DEFAULT_INFO,
+                "fastestLap": fastest_lap or DEFAULT_INFO
+            }
+        else:
+            data = {
+                "results": results,
+                "poleman": poleman or DEFAULT_INFO
+            }
+
+        return data
 
     def _clean_fastf1_time(self, time_str):
         if not time_str:

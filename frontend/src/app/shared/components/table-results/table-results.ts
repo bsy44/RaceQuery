@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import {TEAMS_INFO} from '../../teams-info';
 
 @Component({
   selector: 'app-session-result-table',
@@ -20,4 +21,6 @@ export class SessionResultTableComponent {
   isRaceOrSprint() {
     return this.sessionCode?.includes('R') || this.sessionCode?.includes('S');
   }
+
+  protected readonly TEAMS_INFO = TEAMS_INFO;
 }

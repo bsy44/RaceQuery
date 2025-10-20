@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -14,10 +14,11 @@ export class RaceDetail implements OnInit {
   season!: number;
   raceData: any;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute) {}
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.round = +this.route.snapshot.paramMap.get('round')!;
+    const nav = this.router.lastSuccessfulNavigation;
+    this.round = nav?.extras?.state?.['round'] || null;
     this.season = +this.route.snapshot.paramMap.get('season')!;
     console.log()
 

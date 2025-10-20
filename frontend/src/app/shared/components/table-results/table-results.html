@@ -28,10 +28,10 @@
     <tbody>
       @for (r of results; track r) {
         <tr>
-          <td>{{ r.position }}</td>
-          <td>{{ r.driver }}</td>
+          <td>{{ r?.position }}</td>
+          <td>{{ r?.driver }}</td>
           <td>
-            <img src="{{ r.teamLogo }}" width="40" height="40" alt="{{ r.teamLogo }}" class="team-logo">
+            <img src="{{ TEAMS_INFO[r.team].logo }}" alt="{{ TEAMS_INFO[r.team].logo }}" class="team-logo">
             <span>{{ r.team }}</span>
           </td>
 
@@ -43,7 +43,7 @@
 
           @if (isPractice()) {
             <td>{{ r.best_lap }}</td>
-            <td>{{ r.lap }}</td>
+            <td>{{ r.laps }}</td>
           }
 
           @if (isRaceOrSprint()) {
