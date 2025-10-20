@@ -204,7 +204,6 @@ class EventService:
                 driver_id = lap.get(driver_col)
                 driver_info = session.get_driver(driver_id)
                 total_laps = laps[laps[driver_col] == driver_id].shape[0]
-
                 results.append({
                     "position": pos,
                     "driver": getattr(driver_info, "FullName", None),
@@ -236,6 +235,7 @@ class EventService:
                 "position": int(row["Position"]) if not pd.isna(row.get("Position")) else None,
                 "driver": row.get("FullName"),
                 "DriverNumber": row.get("DriverNumber"),
+                "teamColor": row.get("TeamColor"),
                 "team": row.get("TeamName"),
                 "laps": int(row["Laps"]) if not pd.isna(row.get("Laps")) else None,
                 "q1": self._clean_fastf1_time(row.get("Q1")) if pd.notna(row.get("Q1")) else None,
@@ -256,19 +256,28 @@ class EventService:
     def _clean_fastf1_time(self, time_str):
         if not time_str:
             return None
+
         t = str(time_str).strip().replace("0 days ", "")
-        t = re.sub(r'(\.\d*?)0+$', r'\1', t)
-        t = re.sub(r'\.$', '', t)
-        parts = t.split(":")
-        parts = [p.lstrip("0") or "0" for p in parts]
-        if len(parts) == 3:
-            h, m, s = parts
-            t = f"{m}:{s}" if h == "0" and m != "0" else (s if m == "0" else f"{h}:{m}:{s}")
-        elif len(parts) == 2:
-            m, s = parts
-            t = s if m == "0" else f"{m}:{s}"
-        else:
-            t = parts[0]
-        if t.startswith("."):
-            t = "0" + t
-        return t
+
+        try:
+            h, m, s = 0, 0, 0
+            ms = 0
+
+            if "." in t:
+                time_part, frac = t.split(".")
+                frac = (frac + "000")[:3]
+                ms = int(frac)
+            else:
+                time_part = t
+
+            parts = [int(p) for p in time_part.split(":")]
+            if len(parts) == 3:
+                h, m, s = parts
+            elif len(parts) == 2:
+                m, s = parts
+            elif len(parts) == 1:
+                s = parts[0]
+
+            return f"{h}:{m:02d}:{s:02d}.{ms:03d}" if h > 0 else f"{m}:{s:02d}.{ms:03d}" if m > 0 else f"{s}.{ms:03d}"
+        except Exception:
+            return t

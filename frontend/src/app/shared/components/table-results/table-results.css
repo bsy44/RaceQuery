@@ -1,123 +1,18 @@
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: "Inter", "Roboto", sans-serif;
-  font-size: 15px;
-  margin-top: 20px;
-  background-color: #0e0e10;
-  color: #e5e5e5;
-  border-radius: 12px;
-  overflow: hidden;
+.position-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.table thead {
-  background: linear-gradient(90deg, #202020, #1a1a1a);
-  color: #f1f1f1;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 13px;
-}
-
-.table th {
-  padding: 12px 10px;
-  text-align: left;
-  border-bottom: 1px solid #2c2c2c;
-}
-
-.table tbody tr {
-  transition: background 0.25s ease, transform 0.2s ease;
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #141414;
-}
-
-.table tbody tr:nth-child(odd) {
-  background-color: #191919;
-}
-
-.table tbody tr:hover {
-  background-color: #262626;
-  transform: translateX(2px);
-}
-
-.table td {
-  padding: 10px 12px;
-  vertical-align: middle;
-  border-bottom: 1px solid #2a2a2a;
-}
-
-.table td span {
-  vertical-align: middle;
-}
-
-/* Team logo */
-.team-logo {
-  width: 22px;
+.team-badge {
+  width: 8px;
   height: 22px;
-  margin-right: 8px;
-  border-radius: 4px;
-  vertical-align: middle;
+  border-radius: 25%;
+  display: inline-block;
+  border: 1px solid #000; /* optionnel pour contraste */
 }
 
-/* Position column */
-.table td:first-child {
+.position-number {
   font-weight: 600;
-  text-align: center;
   color: #fff;
-  width: 60px;
-}
-
-/* Pilote name */
-.table td:nth-child(2) {
-  font-weight: 500;
-  color: #e0e0e0;
-}
-
-/* Équipe */
-.table td:nth-child(3) {
-  font-weight: 400;
-  color: #b5b5b5;
-}
-
-/* Temps */
-.table td:nth-last-child(2) {
-  font-family: "Roboto Mono", monospace;
-  color: #f8f8f8;
-}
-
-/* Points */
-.table td:last-child {
-  font-weight: 600;
-  text-align: center;
-  color: #ffd700;
-}
-
-/* Message quand aucun résultat */
-p {
-  text-align: center;
-  color: #bbb;
-  font-style: italic;
-  padding: 20px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .table {
-    font-size: 13px;
-  }
-
-  .team-logo {
-    width: 18px;
-    height: 18px;
-  }
-
-  .table th,
-  .table td {
-    padding: 8px;
-  }
-
-  .table td:first-child {
-    width: 40px;
-  }
 }

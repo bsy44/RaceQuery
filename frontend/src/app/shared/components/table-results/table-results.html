@@ -1,7 +1,7 @@
 @if (results.length) {
   <table class="table table-striped">
-    <thead>
-      <tr>
+    <thead class="head">
+      <tr class="head-title">
         <th>Pos</th>
         <th>Pilote</th>
         <th>Équipe</th>
@@ -28,7 +28,12 @@
     <tbody>
       @for (r of results; track r) {
         <tr>
-          <td>{{ r?.position }}</td>
+          <td>
+            <span class="position-wrapper">
+              <span class="team-badge" [style.background-color]="'#' + r.teamColor"></span>
+              <span class="position-number">{{ r?.position }}</span>
+            </span>
+          </td>
           <td>{{ r?.driver }}</td>
           <td>
             <img src="{{ TEAMS_INFO[r.team].logo }}" alt="{{ TEAMS_INFO[r.team].logo }}" class="team-logo">
