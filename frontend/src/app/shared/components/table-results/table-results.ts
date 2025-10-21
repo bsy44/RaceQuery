@@ -13,13 +13,14 @@ export class SessionResultTableComponent {
   @Input() results: any[] = [];
 
   isQualifying() {
-    return this.sessionCode?.includes('Q');
+    return this.sessionCode?.includes('Q') || this.sessionCode?.startsWith('SQ');
   }
   isPractice() {
     return this.sessionCode?.includes('FP');
   }
   isRaceOrSprint() {
-    return this.sessionCode?.includes('R') || this.sessionCode?.includes('S');
+    return this.sessionCode?.includes('R')  ||
+         (this.sessionCode?.startsWith('S') && !this.sessionCode?.startsWith('SQ'));
   }
 
   protected readonly TEAMS_INFO = TEAMS_INFO;
