@@ -1,4 +1,4 @@
-flask
-flask-cors
-fastf1
-pandas
+Flask>=3.1.2
+Flask-Cors>=6.0.1
+fastf1>=3.6.1
+pandas>=2.3.3
