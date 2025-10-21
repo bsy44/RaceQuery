@@ -26,7 +26,7 @@
     </thead>
 
     <tbody>
-      @for (r of results; track r) {
+      @for (r of results; track r.DriverNumber ?? r.position) {
         <tr>
           <td>
             <span class="position-wrapper">
