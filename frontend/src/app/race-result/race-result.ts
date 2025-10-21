@@ -4,11 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SessionResultTableComponent } from '../shared/components/table-results/table-results';
 import { TEAMS_INFO } from '../shared/teams-info'
+import {RaceInfo} from '../shared/components/race-info/race-info';
 
 @Component({
   imports: [
     FormsModule,
-    SessionResultTableComponent
+    SessionResultTableComponent,
+    RaceInfo
   ],
   selector: 'app-race-result',
   styleUrls: ['./race-result.css'],

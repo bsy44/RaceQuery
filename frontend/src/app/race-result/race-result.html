@@ -6,6 +6,12 @@
 <div class="container">
   <h1 class="page-title">{{ eventInfo }} - {{ season }}</h1>
 
+  <app-race-info
+  [winner]="winner"
+  [poleman]="pole"
+  [fastestLap]="fastestLap">
+  </app-race-info>
+
   <div class="session-selector">
     <select id="session" [(ngModel)]="sessionCode" (change)="getSessionResult()" class="form-select">
       @for (s of sessions; track s) {
@@ -14,57 +20,8 @@
     </select>
   </div>
 
-  <div class="race-info">
-    <div class="card winner">
-      <div class="card-header">
-        <div class="card-header-name">Vainqueur</div>
-        <span class="material-symbols-outlined">trophy</span>
-      </div>
-      <div class="card-main">
-        <div class="card-driver">
-          <img src="{{ TEAMS_INFO[winner?.team]?.logo }}" class="team-logo">
-          <span class="driver-name">{{ winner?.driver }}</span>
-        </div>
-        <div class="card-time">
-          {{ winner?.time }}
-        </div>
-      </div>
-    </div>
 
-    <div class="card pole">
-      <div class="card-header">
-        <div class="card-header-name">Pole Position</div>
-        <span class="material-symbols-outlined">timer</span>
-      </div>
-      <div class="card-main">
-        <div class="card-driver">
-          <img src="{{ TEAMS_INFO[pole?.team]?.logo }}" class="team-logo">
-          <span class="driver-name">{{ pole?.driver }}</span>
-        </div>
-        <div class="card-time">
-          {{ pole?.time }}
-        </div>
-      </div>
-    </div>
 
-    <div class="card fastestLap">
-      <div class="card-header">
-        <div class="card-header-name">Meilleur Tour</div>
-        <span class="material-symbols-outlined">timer</span>
-      </div>
-      <div class="card-main">
-        <div class="card-driver">
-          <img src="{{ TEAMS_INFO[fastestLap?.team]?.logo }}" class="team-logo">
-          <span class="driver-name">{{ fastestLap?.driver }}</span>
-        </div>
-        <div class="card-time">
-          {{ fastestLap?.time }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Seul ce tableau se met à jour -->
   <app-session-result-table
     [sessionCode]="sessionCode"
     [results]="raceList">
