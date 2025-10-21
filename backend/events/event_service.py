@@ -126,14 +126,12 @@ class EventService:
         DEFAULT_INFO = {"driver": "Information non disponible", "team": "", "time": ""}
         results, winner, poleman, fastest_lap = [], None, None, None
 
-        # Charger la session demandée
         try:
             session = self._load_fastf1_session_cached(self.season, self.round, session_id)
         except Exception as e:
             print(f"Erreur FastF1 : {e}")
             return {"results": [], "winner": DEFAULT_INFO, "poleman": DEFAULT_INFO, "fastestLap": DEFAULT_INFO}
 
-        # 🟢 On essaie de charger la course (pour winner & fastest lap)
         race_session = None
         try:
             race_session = self._load_fastf1_session_cached(self.season, self.round, "R")
@@ -229,7 +227,19 @@ class EventService:
 
         for _, row in results_df.iterrows():
             time_val = row.get("Time")
-            clean_time = self._clean_fastf1_time(time_val) if pd.notna(time_val) else None
+            status = str(row.get("Status") or "").strip()
+            clean_time = None
+
+            if "Lapped" in status or re.search(r"\+\d+\s+Lap", status):
+                match = re.search(r"\+(\d+)\s+Lap", status)
+                if match:
+                    n = int(match.group(1))
+                    clean_time = f"+{n} Tour{'s' if n > 1 else ''}"
+                else:
+                    clean_time = "1 Tour"
+
+            elif pd.notna(time_val):
+                clean_time = self._clean_fastf1_time(time_val)
 
             results.append({
                 "position": int(row["Position"]) if not pd.isna(row.get("Position")) else None,
@@ -243,7 +253,7 @@ class EventService:
                 "q3": self._clean_fastf1_time(row.get("Q3")) if pd.notna(row.get("Q3")) else None,
                 "time": clean_time,
                 "points": float(row["Points"]) if not pd.isna(row.get("Points")) else 0.0,
-                "status": row.get("Status"),
+                "status": status,
             })
 
         return {
