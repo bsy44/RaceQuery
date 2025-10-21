@@ -9,7 +9,6 @@
   height: 22px;
   border-radius: 25%;
   display: inline-block;
-  border: 1px solid #000; /* optionnel pour contraste */
 }
 
 .position-number {
