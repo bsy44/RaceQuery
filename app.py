@@ -5,7 +5,7 @@ from teams.constructor_controller import team_standing_bp
 from events.event_controller import event_bp
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, origins=["https://racequery.onrender.com"])
 
 app.register_blueprint(driver_standing_bp, url_prefix='/drivers')
 app.register_blueprint(team_standing_bp, url_prefix='/teams')
