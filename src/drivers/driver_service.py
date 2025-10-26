@@ -25,9 +25,11 @@ class DriverService:
         for _, row in df.iterrows():
             drivers = {
                 "driverId": row.get("driverId"),
+                "driverNumber": row.get("driverNumber"),
                 "fullName": f"{row.get('givenName')} {row.get('familyName')}",
                 "code": row.get("driverCode"),
-                "nationality": row.get("driverNationality")
+                "nationality": row.get("driverNationality"),
+                "dateOfBirth": str(row.get("dateOfBirth")),
             }
 
             constructor_names = row.get("constructorNames")
