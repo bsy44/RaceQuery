@@ -7,7 +7,7 @@ team_standing_bp = Blueprint('teams', __name__)
 @team_standing_bp.get("/standings/<int:year>")
 def get_teams_standings(year):
     service = ConstructorService(year)
-    standings = service.get_constructor_standings()
+    standings = service.get_team_standings()
     return jsonify(standings), HTTPStatus.OK
 
 @team_standing_bp.get("/<int:year>/<id_team>")

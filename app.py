@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from drivers.driver_controller import driver_standing_bp
-from teams.constructor_controller import team_standing_bp
+from teams.team_controller import team_standing_bp
 from events.event_controller import event_bp
 
 app = Flask(__name__)

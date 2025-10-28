@@ -1,4 +1,7 @@
 import os
+from datetime import datetime
+
+import pandas as pd
 import fastf1
 from fastf1.ergast import Ergast
 from teams.team import Constructor
@@ -19,25 +22,44 @@ class ConstructorService:
             nationality=row.get("constructorNationality")
         )
 
-    def get_constructor_standings(self) -> list[dict]:
+    def get_team_standings(self) -> list[dict]:
         standings = self.ergast.get_constructor_standings(season=self.year)
         df = standings.content[0]
         if df is None or df.empty:
             return []
 
+        schedule = fastf1.get_event_schedule(self.year, include_testing=False).copy()
+        schedule['EventDate'] = pd.to_datetime(schedule['EventDate'])
+
+        past_events = schedule[schedule['EventDate'] <= datetime.now()]
+        last_completed_round = past_events['RoundNumber'].max() if not past_events.empty else None
+
+        prev_positions = {}
+        if last_completed_round and last_completed_round > 1:
+            prev_resp = self.ergast.get_constructor_standings(season=self.year, round=last_completed_round - 1)
+            prev_df = prev_resp.content[0] if prev_resp.content else pd.DataFrame()
+
+            if not prev_df.empty:
+                prev_positions = {
+                    row['constructorId']: int(row['position'])
+                    for _, row in prev_df.iterrows()
+                }
+
         results = []
         first_points = float(df.iloc[0]["points"])
+
         for _, row in df.iterrows():
-            points = float(row["points"])
-            diff = first_points - points
+            team_id = row['constructorId']
+            current_pos = int(row['position'])
+            prev_pos = prev_positions.get(team_id, current_pos)
+            evolution = prev_pos - current_pos
 
             results.append({
                 "position": str(row["position"]),
-                "points": str(points),
-                "wins": str(row["wins"]),
-                "podiums": int(self.get_nb_podium(str(row.get("constructorId")))),
+                "points": str(float(row["points"])),
                 "Team": self._format_constructor(row).to_dict(),
-                "points_diff": str(diff)
+                "points_diff": str(first_points - float(row["points"])),
+                "evolution": evolution
             })
 
         return results
