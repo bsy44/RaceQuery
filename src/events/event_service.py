@@ -17,6 +17,31 @@ class EventService:
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
+    @staticmethod
+    @lru_cache(maxsize=50)
+    def _load_fastf1_session_cached(season, round_, session_id):
+        session = fastf1.get_session(season, round_, session_id)
+
+        sid = session_id.upper()
+        if sid.startswith("FP") or "PRACTICE" in session.name.upper():
+            session.load(laps=True, telemetry=False, weather=False)
+        elif sid in ["Q", "QUALIFYING"]:
+            session.load(laps=False, telemetry=False, weather=False)
+        elif sid in ["SPRINT", "SS", "SR"]:
+            session.load(laps=True, telemetry=False, weather=False)
+        else:
+            session.load(laps=True, telemetry=False, weather=False)
+        return session
+
+    def _preload_weekend_async(self):
+        def preload():
+            for sid in ["FP1", "FP2", "FP3", "Q", "R"]:
+                try:
+                    self._load_fastf1_session_cached(self.season, self.round, sid)
+                except Exception:
+                    pass
+        threading.Thread(target=preload, daemon=True).start()
+
     def get_schedule(self):
         schedule = fastf1.get_event_schedule(self.season, include_testing=False)
         events_list = []
@@ -96,31 +121,6 @@ class EventService:
         return event_info
 
 
-    @staticmethod
-    @lru_cache(maxsize=50)
-    def _load_fastf1_session_cached(season, round_, session_id):
-        session = fastf1.get_session(season, round_, session_id)
-
-        sid = session_id.upper()
-        if sid.startswith("FP") or "PRACTICE" in session.name.upper():
-            session.load(laps=True, telemetry=False, weather=False)
-        elif sid in ["Q", "QUALIFYING"]:
-            session.load(laps=False, telemetry=False, weather=False)
-        elif sid in ["SPRINT", "SS", "SR"]:
-            session.load(laps=True, telemetry=False, weather=False)
-        else:
-            session.load(laps=True, telemetry=False, weather=False)
-        return session
-
-
-    def _preload_weekend_async(self):
-        def preload():
-            for sid in ["FP1", "FP2", "FP3", "Q", "R"]:
-                try:
-                    self._load_fastf1_session_cached(self.season, self.round, sid)
-                except Exception:
-                    pass
-        threading.Thread(target=preload, daemon=True).start()
 
     def get_session_results(self, session_id: str) -> dict:
         DEFAULT_INFO = {"driver": "Information non disponible", "team": "", "time": ""}

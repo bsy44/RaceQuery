@@ -5,7 +5,8 @@ from functools import lru_cache
 import pandas as pd
 import fastf1
 from fastf1.ergast import Ergast
-from drivers.driver import DriverStanding, Driver
+from drivers.models.driver import Driver
+from drivers.models.driver_standing import DriverStanding
 
 
 class DriverService:
@@ -33,19 +34,24 @@ class DriverService:
         return session
 
     def _format_driver(self, row) -> Driver:
+        driver_number = row.get("driverNumber")
+        driver_code = row.get("code") or row.get("driverCode")
+
         return Driver(
-            driverId=row.get("driverId"),
-            driverNumber=row.get("driverNumber"),
-            code=row.get("code"),
+            driverId=str(row.get("driverId")),
+            driverNumber=int(driver_number) if pd.notna(driver_number) else None,
+            code=str(driver_code) if driver_code else None,
             fullName=f"{row.get('givenName')} {row.get('familyName')}",
-            givenName=row.get('givenName'),
-            familyName=row.get('familyName'),
-            nationality=row.get("driverNationality")
+            givenName=str(row.get('givenName')),
+            familyName=str(row.get('familyName')),
+            nationality=str(row.get("driverNationality")),
+            birthday=str(row.get("dateOfBirth"))
         )
 
-    def get_driver_standings(self) -> list[dict]:
+    def get_driver_standings(self) -> list[DriverStanding]:
         standings = self.ergast.get_driver_standings(season=self.year)
         df = standings.content[0] if standings and standings.content else None
+
         if df is None or df.empty:
             return []
 
@@ -63,7 +69,6 @@ class DriverService:
                 prev_positions = {row['driverId']: int(row['position']) for _, row in prev_df.iterrows()}
 
         results = []
-        first_points = float(df.iloc[0]["points"])
 
         for _, row in df.iterrows():
             driver_id = row['driverId']
@@ -74,17 +79,16 @@ class DriverService:
             constructor_names = row.get("constructorNames")
             last_constructor = constructor_names[-1] if isinstance(constructor_names, list) else constructor_names
 
-            standing_dict = {
-                "driver_id": driver_id,
-                "fullName": f"{row.get('givenName')} {row.get('familyName')}",
-                "nationality": row.get('driverNationality'),
-                "points": float(row['points']),
-                "points_diff": round(float(df.iloc[0]['points']) - float(row['points']), 1),
-                "position": current_pos,
-                "team": last_constructor,
-                "evolution": evolution
-            }
-            results.append(standing_dict)
+            standing = DriverStanding(
+                driver=self._format_driver(row),
+                points=float(row['points']),
+                points_diff=round(float(df.iloc[0]['points']) - float(row['points']), 1),
+                position=current_pos,
+                team=last_constructor,
+                evolution=evolution
+            )
+
+            results.append(standing)
 
         return results
 
@@ -103,49 +107,16 @@ class DriverService:
 
         row = driver_row.iloc[0]
 
-        constructor_names = row.get("constructorName")
+        constructor_names = row.get("constructorNames")
         if isinstance(constructor_names, list) and constructor_names:
             last_constructor = constructor_names[-1]
         else:
             last_constructor = constructor_names or "Inconnu"
 
+        driver = self._format_driver(row)
         driver_detail = {
-            "position": int(row.get("position", 0)),
-            "points": float(row.get("points", 0.0)),
-            "wins": int(row.get("wins", 0)),
-            "podium": int(self.get_nb_podium(str(row.get("driverId")))),
             "team": str(last_constructor),
-            "Drivers": [
-                {
-                    "driverId": str(row.get("driverId")),
-                    "fullName": f"{row.get('givenName')} {row.get('familyName')}",
-                    "driverNumber": int(row.get("driverNumber")) if row.get("driverNumber") else None,
-                    "code": str(row.get("driverCode")),
-                    "dateOfBirth": str(row.get("dateOfBirth")),
-                    "nationality": str(row.get("driverNationality"))
-                }
-            ]
+            "driver": driver.to_dict()
         }
 
         return driver_detail
-
-    def get_nb_podium(self, id_driver: str) -> int:
-        ergast = Ergast()
-        races = ergast.get_race_schedule(season=self.year)
-        podium_count = 0
-
-        for _, race in races.iterrows():
-            results_resp = ergast.get_race_results(season=self.year, round=race["round"])
-            df = results_resp.content[0] if results_resp.content else None
-            if df is None:
-                continue
-            driver_row = df[df["driverId"] == id_driver]
-            if not driver_row.empty:
-                try:
-                    pos = int(driver_row.iloc[0]["position"])
-                    if 1 <= pos <= 3:
-                        podium_count += 1
-                except (ValueError, TypeError):
-                    continue
-
-        return podium_count
