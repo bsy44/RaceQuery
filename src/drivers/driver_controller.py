@@ -1,23 +1,24 @@
 from http import HTTPStatus
 from flask import Blueprint, jsonify
 from drivers.services.driver_service import DriverService
+from drivers.services.driver_standing_service import DriverStandingService
 from drivers.services.driver_stat_service import DriverStatService
 
 driver_standing_bp = Blueprint('drivers', __name__)
-
-@driver_standing_bp.get("/standings/<int:year>")
-def get_driver_standings(year):
-    service = DriverService(year)
-    standings = service.get_driver_standings()
-    standings_dict = [s.to_dict() for s in standings]
-
-    return jsonify(standings_dict), HTTPStatus.OK
 
 @driver_standing_bp.get("/<int:year>/<id_driver>")
 def get_driver(year, id_driver):
     service = DriverService(year)
     driver = service.get_driver(id_driver)
     return jsonify(driver), HTTPStatus.OK
+
+@driver_standing_bp.get("/standings/<int:year>")
+def get_driver_standings(year):
+    service = DriverStandingService(year)
+    standings = service.get_driver_standings()
+    standings_dict = [s.to_dict() for s in standings]
+
+    return jsonify(standings_dict), HTTPStatus.OK
 
 @driver_standing_bp.get("/<int:year>/<id_driver>/stats")
 def detail_driver_stats(year, id_driver):
