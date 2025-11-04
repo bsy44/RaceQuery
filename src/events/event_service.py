@@ -241,9 +241,13 @@ class EventService:
             elif pd.notna(time_val):
                 clean_time = self._clean_fastf1_time(time_val)
 
-            print(row)
+            grid_pos = row.get("GridPosition")
+            race_pos = row.get("Position")
 
-            evolution = row.get("GridPosition") - row.get("Position")
+            if pd.notna(grid_pos) and pd.notna(race_pos):
+                evolution = int(grid_pos) - int(race_pos)
+            else:
+                evolution = None
 
             results.append({
                 "position": int(row["Position"]) if not pd.isna(row.get("Position")) else None,
