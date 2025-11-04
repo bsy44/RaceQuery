@@ -18,6 +18,13 @@ def list_teams(year):
 
 
 @team_bp.get("/<int:year>/<id_team>")
+def get_team(year, id_team):
+    service = TeamService(year)
+    stats = service.get_team(id_team)
+    return jsonify(stats.to_dict()), HTTPStatus.OK
+
+
+@team_bp.get("/<int:year>/<id_team>/info")
 def detail_team_detail(year, id_team):
     service = TeamStatService(year)
     stats = service.get_team_stats_summary(id_team)

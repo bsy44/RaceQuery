@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import fastf1
 from fastf1.ergast import Ergast
+
+from drivers.models.driver import Driver
 from teams.models.team import Team
 from teams.models.team_stat import TeamStats
 
@@ -60,13 +62,14 @@ class TeamStatService:
             df_drivers["fullname"] = df_drivers["givenName"] + " " + df_drivers["familyName"]
 
             drivers_list = [
-                {
-                    "driverId": row["driverId"],
-                    "fullName": row["givenName"] + " " + row["familyName"],
-                    "code": row["driverCode"],
-                    "driverNumber": row["driverNumber"],
-                    "nationality": row["driverNationality"]
-                }
+                Driver(
+                    driverId=row["driverId"],
+                    fullName=row["fullname"],
+                    birthday=row["dateOfBirth"],
+                    driverNumber=row["driverNumber"],
+                    code=row["driverCode"],
+                    nationality=row["driverNationality"]
+                )
                 for _, row in df_drivers[df_drivers["constructorNames"] == row["constructorName"]].iterrows()
             ]
 
