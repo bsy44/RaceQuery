@@ -17,6 +17,12 @@ class DriverService:
     def _format_driver(self, row) -> Driver:
         driver_number = row.get("driverNumber")
         driver_code = row.get("code") or row.get("driverCode")
+        constructor_names = row.get("constructorNames")
+
+        if isinstance(constructor_names, list) and constructor_names:
+            last_constructor = constructor_names[-1]
+        else:
+            last_constructor = constructor_names or "Inconnu"
 
         return Driver(
             driverId=str(row.get("driverId")),
@@ -26,11 +32,25 @@ class DriverService:
             givenName=str(row.get('givenName')),
             familyName=str(row.get('familyName')),
             nationality=str(row.get("driverNationality")),
-            birthday=str(row.get("dateOfBirth"))
+            birthday=str(row.get("dateOfBirth")),
+            team=str(last_constructor)
         )
 
+    def list_drivers(self) -> list[Driver]:
+        drivers = self.ergast.get_driver_standings(season=self.year)
+        df = drivers.content[0] if drivers and drivers.content else None
 
-    def get_driver(self, id_driver: str) -> dict:
+        if df is None or df.empty:
+            return []
+
+        drivers = []
+        for _, row in df.iterrows():
+            driver = self._format_driver(row)
+            drivers.append(driver)
+
+        return drivers
+
+    def get_driver(self, id_driver: str) -> Driver | dict:
         standings = self.ergast.get_driver_standings(season=self.year)
         df = standings.content[0] if standings and standings.content else None
 
@@ -40,20 +60,10 @@ class DriverService:
         driver_row = df[df["driverId"] == id_driver]
 
         if driver_row.empty:
-            return {"error": f"Pilote '{id_driver}' non trouvé pour {self.year}"}
+            return {"error": f"Pilote '{id_driver}' non trouve pour {self.year}"}
 
         row = driver_row.iloc[0]
 
-        constructor_names = row.get("constructorNames")
-        if isinstance(constructor_names, list) and constructor_names:
-            last_constructor = constructor_names[-1]
-        else:
-            last_constructor = constructor_names or "Inconnu"
-
         driver = self._format_driver(row)
-        driver_detail = {
-            "team": str(last_constructor),
-            "driver": driver.to_dict()
-        }
 
-        return driver_detail
+        return driver

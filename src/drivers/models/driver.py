@@ -1,6 +1,6 @@
 class Driver:
-    def __init__(self, driverId: str, driverNumber: int, code: str, fullName: str, givenName: str,
-                 familyName: str, nationality: str, birthday: str):
+    def __init__(self, driverId: str, driverNumber: int, code: str, fullName: str, nationality: str,
+                 givenName: str = None, familyName: str = None, birthday: str = None, team: str = None):
 
         self.driverId = driverId
         self.driverNumber = driverNumber
@@ -10,6 +10,7 @@ class Driver:
         self.familyName = familyName
         self.nationality = nationality
         self.birthday = birthday
+        self.team = team
 
     def to_dict(self):
         return {
@@ -20,5 +21,6 @@ class Driver:
             "givenName": self.givenName,
             "familyName": self.familyName,
             "nationality": self.nationality,
-            "date_of_birth": self.birthday
+            "date_of_birth": self.birthday,
+            "team": self.team
         }

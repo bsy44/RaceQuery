@@ -20,6 +20,12 @@ class DriverStandingService:
     def _format_driver(self, row) -> Driver:
         driver_number = row.get("driverNumber")
         driver_code = row.get("code") or row.get("driverCode")
+        constructor_names = row.get("constructorNames")
+
+        if isinstance(constructor_names, list) and constructor_names:
+            last_constructor = constructor_names[-1]
+        else:
+            last_constructor = constructor_names or "Inconnu"
 
         return Driver(
             driverId=str(row.get("driverId")),
@@ -29,7 +35,8 @@ class DriverStandingService:
             givenName=str(row.get('givenName')),
             familyName=str(row.get('familyName')),
             nationality=str(row.get("driverNationality")),
-            birthday=str(row.get("dateOfBirth"))
+            birthday=str(row.get("dateOfBirth")),
+            team=last_constructor
         )
 
     def get_driver_standings(self) -> list[DriverStanding]:

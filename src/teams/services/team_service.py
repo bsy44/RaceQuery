@@ -1,6 +1,7 @@
 import os
 import fastf1
 from fastf1.ergast import Ergast
+from drivers.models.driver import Driver
 from teams.models.team import Team
 
 
@@ -13,21 +14,45 @@ class TeamService:
         os.makedirs(cache_dir, exist_ok=True)
         fastf1.Cache.enable_cache(cache_dir)
 
-    def get_team(self, team_id: str) -> Team:
-        standings = self.ergast.get_constructor_standings(season=self.year)
-        df = standings.content[0]
+    def list_teams(self) -> list[Team]:
+        teams_data = self.ergast.get_constructor_standings(season=self.year)
+        drivers_data = self.ergast.get_driver_standings(season=self.year)
 
-        if df is None or df.empty:
-            return None
+        df_teams = teams_data.content[0] if teams_data and teams_data.content else None
+        df_drivers = drivers_data.content[0] if drivers_data and drivers_data.content else None
 
-        team_row = df[df["constructorId"] == team_id]
-        if team_row.empty:
-            return None
+        if df_teams is None or df_teams.empty or df_drivers is None or df_drivers.empty:
+            return []
 
-        row = team_row.iloc[0]
-
-        return Team(
-            constructorId=row.get("constructorId"),
-            constructorName=row.get("constructorName"),
-            nationality=row.get("constructorNationality")
+        df_drivers["constructorNames"] = df_drivers["constructorNames"].apply(
+            lambda x: x[0] if isinstance(x, list) and len(x) > 0 else None
         )
+        df_drivers["fullname"] = df_drivers["givenName"] + " " + df_drivers["familyName"]
+
+        teams = []
+
+        for _, team_row in df_teams.iterrows():
+            team_name = team_row["constructorName"]
+
+            drivers_df = df_drivers[df_drivers["constructorNames"] == team_name][
+                ["fullname"]
+            ].reset_index(drop=True)
+
+            drivers_list = [
+                row["fullname"]
+                for _, row in drivers_df.iterrows()
+            ]
+
+            team = Team(
+                constructorId=team_row["constructorId"],
+                constructorName=team_row["constructorName"],
+                nationality=team_row["constructorNationality"],
+                drivers=drivers_list
+            )
+
+            teams.append(team)
+
+        return teams
+
+
+

@@ -49,10 +49,32 @@ class TeamStatService:
         return df
 
     def _format_Team(self, row) -> Team:
+        drivers_data = self.ergast.get_driver_standings(season=self.year)
+        df_drivers = drivers_data.content[0] if drivers_data and drivers_data.content else None
+
+        drivers_list = []
+        if df_drivers is not None and not df_drivers.empty:
+            df_drivers["constructorNames"] = df_drivers["constructorNames"].apply(
+                lambda x: x[0] if isinstance(x, list) and len(x) > 0 else None
+            )
+            df_drivers["fullname"] = df_drivers["givenName"] + " " + df_drivers["familyName"]
+
+            drivers_list = [
+                {
+                    "driverId": row["driverId"],
+                    "fullName": row["givenName"] + " " + row["familyName"],
+                    "code": row["driverCode"],
+                    "driverNumber": row["driverNumber"],
+                    "nationality": row["driverNationality"]
+                }
+                for _, row in df_drivers[df_drivers["constructorNames"] == row["constructorName"]].iterrows()
+            ]
+
         return Team(
             constructorId=row.get("constructorId"),
             constructorName=row.get("constructorName"),
-            nationality=row.get("constructorNationality")
+            nationality=row.get("constructorNationality"),
+            drivers=drivers_list
         )
 
     def get_nb_podium(self, id_team: str) -> int:
@@ -121,6 +143,8 @@ class TeamStatService:
         row = df.iloc[0]
         team = self._format_Team(row)
 
+
+
         team_stats = TeamStats(
             team=team,
             position=row["position"],
@@ -134,7 +158,8 @@ class TeamStatService:
             sprint_podium=self.get_sprint_podium(id_team),
             sprint_pole=self.get_sprint_pole(id_team),
             avg_race_finish=self.get_avg_race_position(id_team),
-            avg_qualifying_finish=self.get_avg_qualifying_position(id_team),
+            avg_qualifying_finish=self.get_avg_qualifying_position(id_team)
         )
 
         return team_stats
+
