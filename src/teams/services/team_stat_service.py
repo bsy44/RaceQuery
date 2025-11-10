@@ -68,6 +68,8 @@ class TeamStatService:
 
             df_filtered = df_drivers[df_drivers["lastConstructor"] == row["constructorName"]]
 
+            df_filtered = df_filtered.head(2)
+
             drivers_list = [
                 Driver(
                     driverId=d_row["driverId"],
@@ -76,7 +78,7 @@ class TeamStatService:
                     driverNumber=d_row.get("driverNumber"),
                     code=d_row.get("driverCode"),
                     nationality=d_row.get("driverNationality"),
-                    team=d_row.get("lastConstructor")
+                    team=d_row.get("lastConstructor"),
                 )
                 for _, d_row in df_filtered.iterrows()
             ]

@@ -28,7 +28,7 @@ def get_driver_standings(year):
 
     return jsonify(standings_dict), HTTPStatus.OK
 
-@driver_bp.get("/<int:year>/<id_driver>/stats")
+@driver_bp.get("/<int:year>/<id_driver>/detail")
 def detail_driver_stats(year, id_driver):
     service = DriverStatService(year)
     stats = service.get_driver_stats_summary(id_driver)
