@@ -41,6 +41,7 @@ class TeamStatService:
                 res = func(season=self.year, round=round_num)
                 if res and hasattr(res, "content") and res.content:
                     df_race = self._clean_dataframe(res.content[0])
+                    df_race["round"] = round_num  # on garde la course pour la chronologie
                     dfs.append(df_race)
         return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
 
@@ -56,21 +57,28 @@ class TeamStatService:
 
         drivers_list = []
         if df_drivers is not None and not df_drivers.empty:
-            df_drivers["constructorNames"] = df_drivers["constructorNames"].apply(
-                lambda x: x[0] if isinstance(x, list) and len(x) > 0 else None
-            )
             df_drivers["fullname"] = df_drivers["givenName"] + " " + df_drivers["familyName"]
+
+            def get_last_constructor(x):
+                if isinstance(x, list) and len(x) > 0:
+                    return x[-1]
+                return x or "Inconnu"
+
+            df_drivers["lastConstructor"] = df_drivers["constructorNames"].apply(get_last_constructor)
+
+            df_filtered = df_drivers[df_drivers["lastConstructor"] == row["constructorName"]]
 
             drivers_list = [
                 Driver(
-                    driverId=row["driverId"],
-                    fullName=row["fullname"],
-                    birthday=row["dateOfBirth"],
-                    driverNumber=row["driverNumber"],
-                    code=row["driverCode"],
-                    nationality=row["driverNationality"]
+                    driverId=d_row["driverId"],
+                    fullName=d_row["fullname"],
+                    birthday=d_row.get("dateOfBirth"),
+                    driverNumber=d_row.get("driverNumber"),
+                    code=d_row.get("driverCode"),
+                    nationality=d_row.get("driverNationality"),
+                    team=d_row.get("lastConstructor")
                 )
-                for _, row in df_drivers[df_drivers["constructorNames"] == row["constructorName"]].iterrows()
+                for _, d_row in df_filtered.iterrows()
             ]
 
         return Team(
@@ -82,45 +90,31 @@ class TeamStatService:
 
     def get_nb_podium(self, id_team: str) -> int:
         df = self.race_results
-        if df.empty:
-            return 0
-        return df[df["constructorId"] == id_team]["position"].isin([1, 2, 3]).sum()
+        return 0 if df.empty else df[df["constructorId"] == id_team]["position"].isin([1, 2, 3]).sum()
 
     def get_top_10(self, id_team: str) -> int:
         df = self.race_results
-        if df.empty:
-            return 0
-        return df[df["constructorId"] == id_team]["position"].le(10).sum()
+        return 0 if df.empty else df[df["constructorId"] == id_team]["position"].le(10).sum()
 
     def get_pole(self, id_team: str) -> int:
         df = self.qualifying_results
-        if df.empty:
-            return 0
-        return df[df["constructorId"] == id_team]["position"].eq(1).sum()
+        return 0 if df.empty else df[df["constructorId"] == id_team]["position"].eq(1).sum()
 
     def get_dnf(self, id_team: str) -> int:
         df = self.race_results
-        if df.empty:
-            return 0
-        return df[(df["constructorId"] == id_team) & (df["status"] == "Retired")].shape[0]
+        return 0 if df.empty else df[(df["constructorId"] == id_team) & (df["status"] == "Retired")].shape[0]
 
     def get_sprint_win(self, id_team: str) -> int:
         df = self.sprint_results
-        if df.empty:
-            return 0
-        return df[df["constructorId"] == id_team]["position"].eq(1).sum()
+        return 0 if df.empty else df[df["constructorId"] == id_team]["position"].eq(1).sum()
 
     def get_sprint_podium(self, id_team: str) -> int:
         df = self.sprint_results
-        if df.empty:
-            return 0
-        return df[df["constructorId"] == id_team]["position"].isin([1, 2, 3]).sum()
+        return 0 if df.empty else df[df["constructorId"] == id_team]["position"].isin([1, 2, 3]).sum()
 
     def get_sprint_pole(self, id_team: str) -> int:
         df = self.sprint_results
-        if df.empty:
-            return 0
-        return df[df["constructorId"] == id_team]["grid"].eq(1).sum()
+        return 0 if df.empty else df[df["constructorId"] == id_team]["grid"].eq(1).sum()
 
     def get_avg_race_position(self, id_team: str) -> float:
         df = self.race_results
@@ -146,8 +140,6 @@ class TeamStatService:
         row = df.iloc[0]
         team = self._format_Team(row)
 
-
-
         team_stats = TeamStats(
             team=team,
             position=row["position"],
@@ -165,4 +157,3 @@ class TeamStatService:
         )
 
         return team_stats
-
