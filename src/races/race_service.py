@@ -7,7 +7,7 @@ from functools import lru_cache
 from fastf1.ergast import Ergast
 
 
-class EventService:
+class RaceService:
     def __init__(self, season: int, round: int = None):
         self.season = season
         self.round = round

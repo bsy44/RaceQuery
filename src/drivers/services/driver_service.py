@@ -18,22 +18,28 @@ class DriverService:
         driver_number = row.get("driverNumber")
         driver_code = row.get("code") or row.get("driverCode")
         constructor_names = row.get("constructorNames")
+        constructor_ids = row.get("constructorIds")
 
         if isinstance(constructor_names, list) and constructor_names:
             last_constructor = constructor_names[-1]
+            last_constructor_id = (
+                constructor_ids[-1] if isinstance(constructor_ids, list) and constructor_ids else None
+            )
         else:
             last_constructor = constructor_names or "Inconnu"
+            last_constructor_id = constructor_ids or None
 
         return Driver(
             driverId=str(row.get("driverId")),
             driverNumber=int(driver_number) if pd.notna(driver_number) else None,
             code=str(driver_code) if driver_code else None,
             fullName=f"{row.get('givenName')} {row.get('familyName')}",
-            givenName=str(row.get('givenName')),
-            familyName=str(row.get('familyName')),
+            givenName=str(row.get("givenName")),
+            familyName=str(row.get("familyName")),
             nationality=str(row.get("driverNationality")),
             birthday=str(row.get("dateOfBirth")),
-            team=str(last_constructor)
+            team=str(last_constructor),
+            team_id=str(last_constructor_id) if last_constructor_id else None
         )
 
     def list_drivers(self) -> list[Driver]:

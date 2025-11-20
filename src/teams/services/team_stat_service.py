@@ -66,6 +66,13 @@ class TeamStatService:
 
             df_drivers["lastConstructor"] = df_drivers["constructorNames"].apply(get_last_constructor)
 
+            def get_last_constructor_id(x):
+                if isinstance(x, list) and len(x) > 0:
+                    return x[-1]
+                return None
+
+            df_drivers["lastConstructorId"] = df_drivers["constructorIds"].apply(get_last_constructor_id)
+
             df_filtered = df_drivers[df_drivers["lastConstructor"] == row["constructorName"]]
 
             df_filtered = df_filtered.head(2)
@@ -79,6 +86,7 @@ class TeamStatService:
                     code=d_row.get("driverCode"),
                     nationality=d_row.get("driverNationality"),
                     team=d_row.get("lastConstructor"),
+                    team_id=d_row.get("lastConstructorId")
                 )
                 for _, d_row in df_filtered.iterrows()
             ]
