@@ -1,9 +1,13 @@
+import json
 import os
 import pandas as pd
 import fastf1
 from fastf1.ergast import Ergast
 from drivers.models.driver import Driver
 from drivers.models.driver_stat import DriverStats
+from datetime import datetime
+from pathlib import Path
+import requests_cache
 
 
 class DriverStatService:
@@ -132,6 +136,19 @@ class DriverStatService:
         driver_positions = df[df["driverId"] == id_driver]["position"].dropna()
         return round(driver_positions.mean(), 2) if not driver_positions.empty else None
 
+    def get_best_race_result(self, id_driver: str) -> int | None:
+        df = self.race_results
+        if df.empty:
+            return None
+
+        driver_results = df[(df["driverId"] == id_driver) & (df["position"].notna())]
+
+        if driver_results.empty:
+            return None
+
+        return int(driver_results["position"].min())
+
+
     def get_driver_stats_summary(self, id_driver: str) -> DriverStats | dict:
         standing = self.ergast.get_driver_standings(season=self.year, driver=id_driver)
         df = standing.content[0] if standing and standing.content else None
@@ -156,6 +173,74 @@ class DriverStatService:
             sprint_pole=self.get_sprint_pole(id_driver),
             avg_race_finish=self.get_avg_race_position(id_driver),
             avg_qualifying_finish=self.get_avg_qualifying_position(id_driver),
+            best_result=self.get_best_race_result(id_driver)
         )
 
         return driver_stats
+
+    requests_cache.install_cache('ergast_cache', expire_after=86400)  # 24h
+
+    def get_driver_race_summary(self, id_driver: str) -> dict:
+        print(f"DEBUG: Récupération du calendrier pour le pilote {id_driver} et saison {self.year}")
+
+        # 1️⃣ Récupérer le calendrier du pilote
+        schedule = self.ergast.get_race_schedule(season=self.year, driver=id_driver)
+        df_schedule = pd.DataFrame(schedule)
+
+        if df_schedule.empty:
+            print("DEBUG: Calendrier vide")
+            return {"driver": [], "gps": [], "countries": {}, "results": {}}
+
+        gps = []
+        countries = {}
+        results = {}
+        driver_code = None
+        today = datetime.utcnow()
+
+        # 2️⃣ Boucle sur chaque GP
+        for _, race in df_schedule.iterrows():
+            gp_name = race["raceName"]
+            country = race["country"]
+            round_num = race["round"]
+            race_date = pd.to_datetime(race["raceDate"])
+
+            # Ignorer les courses futures
+            if race_date > today:
+                print(f"DEBUG: {gp_name} n'a pas encore eu lieu, skipped")
+                continue
+
+            # 3️⃣ Récupérer le résultat du pilote pour cette course
+            res = self.ergast.get_race_results(
+                season=self.year,
+                round=round_num,
+                driver=id_driver,
+                result_type='pandas'
+            )
+
+            if not hasattr(res, "content") or not res.content or res.content[0].empty:
+                print(f"DEBUG: Pas de résultat pour {gp_name}")
+                continue
+
+            df_race = res.content[0]
+            pos = pd.to_numeric(df_race.iloc[0]["position"], errors="coerce")
+            pos = int(pos) if pd.notna(pos) else None
+
+            # Déterminer driverCode
+            if driver_code is None:
+                driver_code = df_race.iloc[0]["driverCode"]
+                results[driver_code] = {}
+
+            # Ajouter le GP aux résultats
+            gps.append(gp_name)
+            countries[gp_name] = country
+            results[driver_code][gp_name] = pos
+            print(f"DEBUG: Ajout {gp_name} position {pos}")
+
+        print(f"DEBUG: Résumé final = {results}")
+
+        return {
+            "driver": [driver_code] if driver_code else [],
+            "gps": gps,
+            "countries": countries,
+            "results": results
+        }

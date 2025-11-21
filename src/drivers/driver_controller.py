@@ -1,5 +1,7 @@
 from http import HTTPStatus
 from flask import Blueprint, jsonify
+from pathlib import Path
+import json
 from drivers.services.driver_service import DriverService
 from drivers.services.driver_standing_service import DriverStandingService
 from drivers.services.driver_stat_service import DriverStatService
@@ -33,3 +35,9 @@ def detail_driver_stats(year, id_driver):
     service = DriverStatService(year)
     stats = service.get_driver_stats_summary(id_driver)
     return jsonify(stats.to_dict()), HTTPStatus.OK
+
+@driver_bp.get("/<int:year>/<id_driver>/season-results")
+def get_driver_season_results(year, id_driver):
+    service = DriverStatService(year)
+    stats = service.get_driver_race_summary(id_driver)
+    return jsonify(stats), HTTPStatus.OK
