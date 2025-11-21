@@ -16,7 +16,7 @@ def get_event(season, round):
    races = service.get_event()
    return jsonify(races), HTTPStatus.OK
 
-@event_bp.get('/<session>-results/<int:season>/<int:round>')
+@event_bp.get('/<int:season>/<int:round>/<session>-results')
 def get_session_result(session, season, round):
    service = RaceService(season, round)
    session = service.get_session_results(session)

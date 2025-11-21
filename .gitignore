@@ -1,1 +1,14 @@
+### Python ###
+__pycache__/
+
+### Environnement ###
+.venv/
+env/
+venv/
+
+### PyCharm ###
+.idea/
+
+### Dossier cache ###
 src/data/fastf1_cache
+src/data_cache/
