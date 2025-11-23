@@ -4,7 +4,7 @@ import fastf1
 import pandas as pd
 from fastf1.ergast import Ergast
 
-
+# 🎯 Chemins
 OUTPUT_DIR = "../data_cache/static"
 CACHE_DIR = '../data/fastf1_cache'
 
@@ -17,10 +17,8 @@ def ensure_directory_exists(directory_path):
 
 def save_json(filename, data):
     path = os.path.join(OUTPUT_DIR, filename)
-
     absolute_path = os.path.abspath(path)
     print(f"   📂 Attempting to save to: {absolute_path}")
-
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
     print(f"✔ Saved {filename}")
@@ -29,7 +27,7 @@ def save_json(filename, data):
 def clean_and_convert_df(df: pd.DataFrame) -> list:
     if df is None or df.empty:
         return []
-
+    # Convertit tout en string pour éviter les problèmes de sérialisation
     df_str = df.astype(str)
     return df_str.to_dict('records')
 
@@ -39,18 +37,33 @@ def preprocess_static_data(year: int):
 
     print(f"   ⏳ Fetching drivers for {year}...")
 
+    # On utilise les standings car c'est le moyen le plus fiable d'avoir les pilotes DE LA SAISON
     drivers_collection = api.get_driver_standings(season=year)
     drivers_df = drivers_collection.content[0] if drivers_collection and drivers_collection.content else None
 
     if drivers_df is not None and not drivers_df.empty:
 
-        base_driver_info = ['driverId', 'code', 'url', 'givenName', 'familyName', 'dateOfBirth', 'nationality']
+        # 💡 CORRECTION DES NOMS DE COLONNES
+        # Voici les colonnes généralement renvoyées par FastF1 pour les standings
+        base_driver_info = [
+            'driverId',
+            'driverCode',
+            'driverNumber',
+            'givenName',
+            'familyName',
+            'dateOfBirth',
+            'driverNationality',
+            'url',
+            'constructorNames',
+            'constructorIds'
+        ]
 
+        # On ne garde que les colonnes qui existent vraiment dans le DataFrame reçu
         driver_info_cols = [col for col in base_driver_info if col in drivers_df.columns]
 
-        subset_for_duplicates = ['driverId']
+        # On déduplique sur driverId pour avoir une liste unique de pilotes
+        drivers_static_df = drivers_df[driver_info_cols].drop_duplicates(subset=['driverId'])
 
-        drivers_static_df = drivers_df[driver_info_cols].drop_duplicates(subset=subset_for_duplicates)
         drivers_data = clean_and_convert_df(drivers_static_df)
     else:
         drivers_data = []
@@ -72,8 +85,8 @@ def preprocess_static_data(year: int):
     if constructors_data:
         save_json(f"{year}_constructors.json", constructors_data)
 
-def preprocess_all_static_data(start_year=2022, end_year=2025):
 
+def preprocess_all_static_data(start_year=2022, end_year=2025):
     ensure_directory_exists(CACHE_DIR)
     ensure_directory_exists(OUTPUT_DIR)
 

@@ -192,7 +192,7 @@ def preprocess_year(year: int):
 
 
 if __name__ == "__main__":
-    TARGET_YEAR = 2022
+    TARGET_YEAR = 2025
 
     try:
         preprocess_year(TARGET_YEAR)

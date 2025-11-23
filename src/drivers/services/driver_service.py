@@ -1,75 +1,86 @@
-import os
-import pandas as pd
-import fastf1
-from fastf1.ergast import Ergast
 from drivers.models.driver import Driver
+from cache_reader import load_json_file
 
 
 class DriverService:
     def __init__(self, year: int):
         self.year = year
-        self.ergast = Ergast()
 
-        cache_dir = "src/data/fastf1_cache"
-        os.makedirs(cache_dir, exist_ok=True)
-        fastf1.Cache.enable_cache(cache_dir)
+    def _format_driver(self, row: dict) -> Driver:
+        def clean_val(val):
+            return None if val == "nan" or val is None else val
 
-    def _format_driver(self, row) -> Driver:
-        driver_number = row.get("driverNumber")
-        driver_code = row.get("code") or row.get("driverCode")
+        driver_number = clean_val(row.get("driverNumber"))
+        driver_code = clean_val(row.get("code")) or clean_val(row.get("driverCode"))
+
         constructor_names = row.get("constructorNames")
         constructor_ids = row.get("constructorIds")
 
+        last_constructor = "Inconnu"
+        last_constructor_id = None
+
         if isinstance(constructor_names, list) and constructor_names:
             last_constructor = constructor_names[-1]
-            last_constructor_id = (
-                constructor_ids[-1] if isinstance(constructor_ids, list) and constructor_ids else None
-            )
-        else:
-            last_constructor = constructor_names or "Inconnu"
-            last_constructor_id = constructor_ids or None
+        elif isinstance(constructor_names, str) and constructor_names.startswith("["):
+            try:
+                last_constructor = constructor_names.strip("[]'\" ").split(",")[-1].strip("'\" ")
+            except:
+                last_constructor = constructor_names
+        elif isinstance(constructor_names, str):
+            last_constructor = constructor_names
+
+        if isinstance(constructor_ids, list) and constructor_ids:
+            last_constructor_id = constructor_ids[-1]
+        elif isinstance(constructor_ids, str) and constructor_ids.startswith("["):
+            try:
+                last_constructor_id = constructor_ids.strip("[]'\" ").split(",")[-1].strip("'\" ")
+            except:
+                last_constructor_id = constructor_ids
+        elif isinstance(constructor_ids, str):
+            last_constructor_id = constructor_ids
 
         return Driver(
             driverId=str(row.get("driverId")),
-            driverNumber=int(driver_number) if pd.notna(driver_number) else None,
+            driverNumber=int(float(driver_number)) if driver_number else None,
             code=str(driver_code) if driver_code else None,
             fullName=f"{row.get('givenName')} {row.get('familyName')}",
-            givenName=str(row.get("givenName")),
-            familyName=str(row.get("familyName")),
             nationality=str(row.get("driverNationality")),
             birthday=str(row.get("dateOfBirth")),
-            team=str(last_constructor),
+            team=str(last_constructor) if last_constructor else None,
             team_id=str(last_constructor_id) if last_constructor_id else None
         )
 
-    def list_drivers(self) -> list[Driver]:
-        drivers = self.ergast.get_driver_standings(season=self.year)
-        df = drivers.content[0] if drivers and drivers.content else None
 
-        if df is None or df.empty:
-            return []
+    def list_drivers(self) -> list[Driver]:
+        filename = f"{self.year}_driver_standings.json"
+        data = load_json_file('ergast_preprocessed', filename)
+
+        if not data:
+            print(f"⚠️ Standings cache not found for {self.year}, checking static...")
+            static_filename = f"{self.year}_drivers.json"
+            data = load_json_file('static', static_filename)
+
+            if not data:
+                return []
 
         drivers = []
-        for _, row in df.iterrows():
+
+        for row in data:
             driver = self._format_driver(row)
             drivers.append(driver)
 
         return drivers
 
-    def get_driver(self, id_driver: str) -> Driver | dict:
-        standings = self.ergast.get_driver_standings(season=self.year)
-        df = standings.content[0] if standings and standings.content else None
 
-        if df is None or df.empty:
+    def get_driver(self, id_driver: str) -> Driver | dict:
+        drivers_list = self.list_drivers()
+
+        if not drivers_list:
             return {"error": f"Aucun classement disponible pour {self.year}"}
 
-        driver_row = df[df["driverId"] == id_driver]
+        found_driver = next((d for d in drivers_list if d.driverId == id_driver), None)
 
-        if driver_row.empty:
-            return {"error": f"Pilote '{id_driver}' non trouve pour {self.year}"}
+        if found_driver:
+            return found_driver
 
-        row = driver_row.iloc[0]
-
-        driver = self._format_driver(row)
-
-        return driver
+        return {"error": f"Pilote '{id_driver}' non trouve pour {self.year}"}

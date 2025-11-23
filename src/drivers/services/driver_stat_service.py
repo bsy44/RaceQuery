@@ -1,246 +1,94 @@
-import json
-import os
-import pandas as pd
-import fastf1
-from fastf1.ergast import Ergast
-from drivers.models.driver import Driver
 from drivers.models.driver_stat import DriverStats
-from datetime import datetime
-from pathlib import Path
-import requests_cache
+from drivers.services.driver_service import DriverService
+from cache_reader import load_json_file
 
 
 class DriverStatService:
     def __init__(self, year: int):
         self.year = year
-        self.ergast = Ergast()
+        # On initialise le DriverService pour récupérer les infos d'identité (Nom, Team, etc.)
+        self.driver_service = DriverService(year)
 
-        cache_dir = "src/data/fastf1_cache"
-        os.makedirs(cache_dir, exist_ok=True)
-        fastf1.Cache.enable_cache(cache_dir)
+    def get_driver_stats_summary(self, driver_id: str) -> DriverStats | dict:
+        """
+        Récupère les statistiques pré-calculées (Podiums, Top 10, DNF...)
+        depuis le fichier JSON de stats.
+        """
+        # 1. Charger le fichier de stats global de l'année
+        filename = f"{self.year}_driver_stats.json"
+        # Note: Le script de stats sauvegardait à la racine de 'stats', pas dans un sous-dossier année
+        all_stats = load_json_file('stats', filename)
 
-        self.race_schedule = self.ergast.get_race_schedule(season=self.year)
-        self.race_results = self._cached_load("race_results", "race")
-        self.qualifying_results = self._cached_load("qualifying_results", "qualifying")
-        self.sprint_results = self._cached_load("sprint_results", "sprint")
+        if not all_stats:
+            return {
+                "error": f"Pas de statistiques disponibles pour {self.year}. Avez-vous lancé le script preprocess_driver_stats.py ?"}
 
-    def _cached_load(self, name: str, result_type: str) -> pd.DataFrame:
-        cache_file = f"src/data/fastf1_cache/{self.year}_{name}.parquet"
-        if os.path.exists(cache_file):
-            return pd.read_parquet(cache_file)
+        # 2. Trouver les stats du pilote spécifique
+        driver_stat_data = next((item for item in all_stats if item["driverId"] == driver_id), None)
 
-        df = self._load_all_results(result_type)
-        if not df.empty:
-            df.to_parquet(cache_file)
-        return df
+        if not driver_stat_data:
+            return {"error": f"Pilote {driver_id} non trouvé dans les stats de {self.year}"}
 
-    def _load_all_results(self, result_type: str) -> pd.DataFrame:
-        dfs = []
-        for _, race in self.race_schedule.iterrows():
-            round_num = race["round"]
-            func = getattr(self.ergast, f"get_{result_type}_results", None)
-            if func:
-                res = func(season=self.year, round=round_num)
-                if res and hasattr(res, "content") and res.content:
-                    df_race = self._clean_dataframe(res.content[0])
-                    dfs.append(df_race)
-        return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+        # 3. Récupérer l'objet Driver complet via le service existant
+        driver_obj = self.driver_service.get_driver(driver_id)
 
-    def _clean_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
-        for col in ["position", "grid", "driverNumber"]:
-            if col in df.columns:
-                df[col] = pd.to_numeric(df[col], errors="coerce")
-        return df
+        # Si le DriverService renvoie une erreur (dict), on met None pour éviter le crash
+        if isinstance(driver_obj, dict):
+            driver_obj = None
 
-    def _format_driver(self, row) -> Driver:
-        driver_number = row.get("driverNumber")
-        driver_code = row.get("code") or row.get("driverCode")
-        constructor_names = row.get("constructorNames")
-        constructor_ids = row.get("constructorIds")
-
-        if isinstance(constructor_names, list) and constructor_names:
-            last_constructor = constructor_names[-1]
-            last_constructor_id = (
-                constructor_ids[-1] if isinstance(constructor_ids, list) and constructor_ids else None
-            )
-        else:
-            last_constructor = constructor_names or "Inconnu"
-            last_constructor_id = constructor_ids or None
-
-        return Driver(
-            driverId=str(row.get("driverId")),
-            driverNumber=int(driver_number) if pd.notna(driver_number) else None,
-            code=str(driver_code) if driver_code else None,
-            fullName=f"{row.get('givenName')} {row.get('familyName')}",
-            givenName=str(row.get("givenName")),
-            familyName=str(row.get("familyName")),
-            nationality=str(row.get("driverNationality")),
-            birthday=str(row.get("dateOfBirth")),
-            team=str(last_constructor),
-            team_id=str(last_constructor_id) if last_constructor_id else None
+        # 4. Construire l'objet DriverStats
+        return DriverStats(
+            driver=driver_obj,
+            position=driver_stat_data.get("position"),
+            points=driver_stat_data.get("points"),
+            win=driver_stat_data.get("wins"),
+            podium=int(driver_stat_data.get("stat_podiums", 0)),
+            pole=int(driver_stat_data.get("stat_poles", 0)),
+            top10=int(driver_stat_data.get("stat_top10", 0)),
+            dnf=int(driver_stat_data.get("stat_dnf", 0)),
+            sprint_win=int(driver_stat_data.get("stat_sprint_wins", 0)),
+            sprint_podium=int(driver_stat_data.get("stat_sprint_podiums", 0)),
+            sprint_pole=int(driver_stat_data.get("stat_sprint_poles", 0)),
+            # Les moyennes peuvent être nulles si pas de courses
+            avg_race_finish=driver_stat_data.get("stat_avg_race_position"),
+            avg_qualifying_finish=driver_stat_data.get("stat_avg_qualifying_position"),
+            best_result=driver_stat_data.get("stat_best_race_result")
         )
-
-    def get_nb_podium(self, id_driver: str) -> int:
-        df = self.race_results
-        if df.empty:
-            return 0
-        return df[df["driverId"] == id_driver]["position"].isin([1, 2, 3]).sum()
-
-    def get_top_10(self, id_driver: str) -> int:
-        df = self.race_results
-        if df.empty:
-            return 0
-        return df[df["driverId"] == id_driver]["position"].le(10).sum()
-
-    def get_pole(self, id_driver: str) -> int:
-        df = self.qualifying_results
-        if df.empty:
-            return 0
-        return df[df["driverId"] == id_driver]["position"].eq(1).sum()
-
-    def get_dnf(self, id_driver: str) -> int:
-        df = self.race_results
-        if df.empty:
-            return 0
-        return df[(df["driverId"] == id_driver) & (df["status"] == "Retired")].shape[0]
-
-    def get_sprint_win(self, id_driver: str) -> int:
-        df = self.sprint_results
-        if df.empty:
-            return 0
-        return df[df["driverId"] == id_driver]["position"].eq(1).sum()
-
-    def get_sprint_podium(self, id_driver: str) -> int:
-        df = self.sprint_results
-        if df.empty:
-            return 0
-        return df[df["driverId"] == id_driver]["position"].isin([1, 2, 3]).sum()
-
-    def get_sprint_pole(self, id_driver: str) -> int:
-        df = self.sprint_results
-        if df.empty:
-            return 0
-        return df[df["driverId"] == id_driver]["grid"].eq(1).sum()
-
-    def get_avg_race_position(self, id_driver: str) -> float:
-        df = self.race_results
-        if df.empty:
-            return 0
-        driver_positions = df[df["driverId"] == id_driver]["position"].dropna()
-        return round(driver_positions.mean(), 2) if not driver_positions.empty else None
-
-    def get_avg_qualifying_position(self, id_driver: str) -> float:
-        df = self.qualifying_results
-        if df.empty:
-            return 0
-        driver_positions = df[df["driverId"] == id_driver]["position"].dropna()
-        return round(driver_positions.mean(), 2) if not driver_positions.empty else None
-
-    def get_best_race_result(self, id_driver: str) -> int | None:
-        df = self.race_results
-        if df.empty:
-            return None
-
-        driver_results = df[(df["driverId"] == id_driver) & (df["position"].notna())]
-
-        if driver_results.empty:
-            return None
-
-        return int(driver_results["position"].min())
-
-
-    def get_driver_stats_summary(self, id_driver: str) -> DriverStats | dict:
-        standing = self.ergast.get_driver_standings(season=self.year, driver=id_driver)
-        df = standing.content[0] if standing and standing.content else None
-
-        if df is None or df.empty:
-            return {"error": f"Aucune donnée trouvée pour {id_driver} en {self.year}"}
-
-        row = df.iloc[0]
-        driver = self._format_driver(row)
-
-        driver_stats = DriverStats(
-            driver=driver,
-            position=row["position"],
-            points=row["points"],
-            win=row["wins"],
-            podium=self.get_nb_podium(id_driver),
-            pole=self.get_pole(id_driver),
-            top10=self.get_top_10(id_driver),
-            dnf=self.get_dnf(id_driver),
-            sprint_win=self.get_sprint_win(id_driver),
-            sprint_podium=self.get_sprint_podium(id_driver),
-            sprint_pole=self.get_sprint_pole(id_driver),
-            avg_race_finish=self.get_avg_race_position(id_driver),
-            avg_qualifying_finish=self.get_avg_qualifying_position(id_driver),
-            best_result=self.get_best_race_result(id_driver)
-        )
-
-        return driver_stats
-
-    requests_cache.install_cache('ergast_cache', expire_after=86400)  # 24h
 
     def get_driver_race_summary(self, id_driver: str) -> dict:
-        print(f"DEBUG: Récupération du calendrier pour le pilote {id_driver} et saison {self.year}")
+        # 1. Charger le fichier de stats global
+        filename = f"{self.year}_driver_stats.json"
+        all_stats = load_json_file('stats', filename)
 
-        # 1️⃣ Récupérer le calendrier du pilote
-        schedule = self.ergast.get_race_schedule(season=self.year, driver=id_driver)
-        df_schedule = pd.DataFrame(schedule)
-
-        if df_schedule.empty:
-            print("DEBUG: Calendrier vide")
+        if not all_stats:
             return {"driver": [], "gps": [], "countries": {}, "results": {}}
 
-        gps = []
-        countries = {}
-        results = {}
-        driver_code = None
-        today = datetime.utcnow()
+        # 2. Trouver le pilote
+        driver_stat_data = next((item for item in all_stats if item["driverId"] == id_driver), None)
 
-        # 2️⃣ Boucle sur chaque GP
-        for _, race in df_schedule.iterrows():
-            gp_name = race["raceName"]
-            country = race["country"]
-            round_num = race["round"]
-            race_date = pd.to_datetime(race["raceDate"])
+        if not driver_stat_data:
+            return {"driver": [], "gps": [], "countries": {}, "results": {}}
 
-            # Ignorer les courses futures
-            if race_date > today:
-                print(f"DEBUG: {gp_name} n'a pas encore eu lieu, skipped")
-                continue
+        # 3. Extraire l'historique déjà calculé
+        history = driver_stat_data.get("season_results_history", {})
 
-            # 3️⃣ Récupérer le résultat du pilote pour cette course
-            res = self.ergast.get_race_results(
-                season=self.year,
-                round=round_num,
-                driver=id_driver,
-                result_type='pandas'
-            )
+        # 4. Récupérer le Code Pilote (via DriverService pour être propre)
+        driver_obj = self.driver_service.get_driver(id_driver)
+        driver_code = "UNK"
+        if not isinstance(driver_obj, dict):
+            driver_code = driver_obj.code
 
-            if not hasattr(res, "content") or not res.content or res.content[0].empty:
-                print(f"DEBUG: Pas de résultat pour {gp_name}")
-                continue
-
-            df_race = res.content[0]
-            pos = pd.to_numeric(df_race.iloc[0]["position"], errors="coerce")
-            pos = int(pos) if pd.notna(pos) else None
-
-            # Déterminer driverCode
-            if driver_code is None:
-                driver_code = df_race.iloc[0]["driverCode"]
-                results[driver_code] = {}
-
-            # Ajouter le GP aux résultats
-            gps.append(gp_name)
-            countries[gp_name] = country
-            results[driver_code][gp_name] = pos
-            print(f"DEBUG: Ajout {gp_name} position {pos}")
-
-        print(f"DEBUG: Résumé final = {results}")
+        # 5. Formater pour le frontend
+        # history est déjà { "Bahrain": 1, "Saudi": "-", ... }
+        gps = list(history.keys())
+        # Note: Pour les pays, si tu les veux absolument ici, il faut les avoir sauvegardés dans preprocess
+        # ou les omettre si ton front n'en a pas besoin pour le graphique simple.
+        # Pour faire simple, on renvoie juste les GPs et les résultats.
 
         return {
-            "driver": [driver_code] if driver_code else [],
+            "driver": [driver_code],
             "gps": gps,
-            "countries": countries,
-            "results": results
+            "results": {
+                driver_code: history
+            }
         }
