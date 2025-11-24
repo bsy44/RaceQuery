@@ -2,7 +2,7 @@ from teams.models.team import Team
 
 
 class TeamStats:
-    def __init__(self, team: Team, position: str, points: str, win: str, podium: int, pole: int, top10: int,
+    def __init__(self, team: Team, position: int, points: str, win: str, podium: int, pole: int, top10: int,
                  dnf: int, sprint_win: int, sprint_podium: int, sprint_pole: int, avg_race_finish: float,
                  avg_qualifying_finish: float):
 
@@ -23,7 +23,7 @@ class TeamStats:
     def to_dict(self):
         return {
             "Team": self.team.to_dict(),
-            "position": str(self.position),
+            "position": int(self.position),
             "win": str(self.win),
             "podium": int(self.podium),
             "pole": int(self.pole),

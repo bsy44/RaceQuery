@@ -17,24 +17,28 @@ def list_teams(year):
     return jsonify(teams_dict), HTTPStatus.OK
 
 
-@team_bp.get("/<int:year>/<id_team>")
-def get_team(year, id_team):
+@team_bp.get("/<int:year>/<team_id>")
+def get_team(year, team_id):
     service = TeamService(year)
-    stats = service.get_team(id_team)
-    return jsonify(stats.to_dict()), HTTPStatus.OK
+    result = service.get_team(team_id)
+
+    if isinstance(result, dict) and "error" in result:
+        return jsonify(result), HTTPStatus.NOT_FOUND
+
+    return jsonify(result.to_dict()), HTTPStatus.OK
 
 
-@team_bp.get("/<int:year>/<id_team>/info")
-def detail_team_detail(year, id_team):
-    service = TeamStatService(year)
-    stats = service.get_team_stats_summary(id_team)
-    return jsonify(stats.to_dict()), HTTPStatus.OK
-
-
-@team_bp.get("/standings/<int:year>")
+@team_bp.get("/<int:year>/standings")
 def get_teams_standings(year):
     service = TeamStandingService(year)
     standings = service.get_team_standings()
     standings_dict = [s.to_dict() for s in standings]
 
     return jsonify(standings_dict), HTTPStatus.OK
+
+
+@team_bp.get("/<int:year>/<id_team>/stats")
+def get_team_stats(year, id_team):
+    service = TeamStatService(year)
+    stats = service.get_team_stats_summary(id_team)
+    return jsonify(stats.to_dict()), HTTPStatus.OK

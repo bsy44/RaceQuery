@@ -6,6 +6,7 @@ class DriverService:
     def __init__(self, year: int):
         self.year = year
 
+
     def _format_driver(self, row: dict) -> Driver:
         def clean_val(val):
             return None if val == "nan" or val is None else val
@@ -52,16 +53,11 @@ class DriverService:
 
 
     def list_drivers(self) -> list[Driver]:
-        filename = f"{self.year}_driver_standings.json"
-        data = load_json_file('ergast_preprocessed', filename)
+        filename = f"{self.year}_drivers.json"
+        data = load_json_file('data_cache/static', filename)
 
         if not data:
-            print(f"⚠️ Standings cache not found for {self.year}, checking static...")
-            static_filename = f"{self.year}_drivers.json"
-            data = load_json_file('static', static_filename)
-
-            if not data:
-                return []
+            return []
 
         drivers = []
 

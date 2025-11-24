@@ -8,6 +8,7 @@ class DriverStandingService:
         self.year = year
 
     def _format_driver(self, row: dict) -> Driver:
+        # ... (Cette méthode est correcte, pas de changement nécessaire) ...
         def clean_val(val):
             return None if val == "nan" or val is None else val
 
@@ -33,10 +34,12 @@ class DriverStandingService:
             team=str(last_constructor)
         )
 
-
     def get_driver_standings(self) -> list[DriverStanding]:
         main_filename = f"{self.year}_driver_standings.json"
-        main_data = load_json_file('ergast', main_filename)
+
+        # 💡 MODIFICATION 1 : Pointer vers le sous-dossier 'driver'
+        # Le chemin est : ergast/[ANNEE]/driver/[FICHIER]
+        main_data = load_json_file(f'data_cache/ergast/{self.year}/driver', main_filename)
 
         if not main_data or "standings" not in main_data:
             return []
@@ -48,12 +51,17 @@ class DriverStandingService:
         if current_round > 1:
             prev_round = current_round - 1
             prev_filename = f"{self.year}_R{prev_round}_driver_standings.json"
-            prev_data = load_json_file('ergast', prev_filename)
+
+            # 💡 MODIFICATION 2 : Pointer vers le sous-dossier 'driver' pour l'historique aussi
+            prev_data = load_json_file(f'data_cache/ergast/{self.year}/driver', prev_filename)
 
             if prev_data:
                 for row in prev_data:
                     d_id = row.get('driverId')
-                    pos = int(float(row.get('position', 0)))
+                    # Gestion sécurisée de la conversion en int
+                    pos_val = row.get('position', 0)
+                    pos = int(float(pos_val)) if pos_val else 0
+
                     if d_id:
                         prev_positions[d_id] = pos
 
@@ -61,7 +69,10 @@ class DriverStandingService:
         if not current_standings:
             return []
 
-        leader_points = float(current_standings[0].get('points', 0))
+        # Sécurisation de la lecture des points du leader
+        leader_points = 0.0
+        if current_standings:
+            leader_points = float(current_standings[0].get('points', 0))
 
         for row in current_standings:
             current_points = float(row.get('points', 0))

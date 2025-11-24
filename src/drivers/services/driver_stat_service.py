@@ -6,37 +6,27 @@ from cache_reader import load_json_file
 class DriverStatService:
     def __init__(self, year: int):
         self.year = year
-        # On initialise le DriverService pour récupérer les infos d'identité (Nom, Team, etc.)
         self.driver_service = DriverService(year)
 
+
     def get_driver_stats_summary(self, driver_id: str) -> DriverStats | dict:
-        """
-        Récupère les statistiques pré-calculées (Podiums, Top 10, DNF...)
-        depuis le fichier JSON de stats.
-        """
-        # 1. Charger le fichier de stats global de l'année
         filename = f"{self.year}_driver_stats.json"
-        # Note: Le script de stats sauvegardait à la racine de 'stats', pas dans un sous-dossier année
-        all_stats = load_json_file('stats', filename)
+        all_stats = load_json_file('data_cache/stats/driver', filename)
 
         if not all_stats:
             return {
                 "error": f"Pas de statistiques disponibles pour {self.year}. Avez-vous lancé le script preprocess_driver_stats.py ?"}
 
-        # 2. Trouver les stats du pilote spécifique
         driver_stat_data = next((item for item in all_stats if item["driverId"] == driver_id), None)
 
         if not driver_stat_data:
             return {"error": f"Pilote {driver_id} non trouvé dans les stats de {self.year}"}
 
-        # 3. Récupérer l'objet Driver complet via le service existant
         driver_obj = self.driver_service.get_driver(driver_id)
 
-        # Si le DriverService renvoie une erreur (dict), on met None pour éviter le crash
         if isinstance(driver_obj, dict):
             driver_obj = None
 
-        # 4. Construire l'objet DriverStats
         return DriverStats(
             driver=driver_obj,
             position=driver_stat_data.get("position"),
@@ -49,41 +39,32 @@ class DriverStatService:
             sprint_win=int(driver_stat_data.get("stat_sprint_wins", 0)),
             sprint_podium=int(driver_stat_data.get("stat_sprint_podiums", 0)),
             sprint_pole=int(driver_stat_data.get("stat_sprint_poles", 0)),
-            # Les moyennes peuvent être nulles si pas de courses
             avg_race_finish=driver_stat_data.get("stat_avg_race_position"),
             avg_qualifying_finish=driver_stat_data.get("stat_avg_qualifying_position"),
             best_result=driver_stat_data.get("stat_best_race_result")
         )
 
+
     def get_driver_race_summary(self, id_driver: str) -> dict:
-        # 1. Charger le fichier de stats global
         filename = f"{self.year}_driver_stats.json"
-        all_stats = load_json_file('stats', filename)
+        all_stats = load_json_file('data_cache/stats/driver', filename)
 
         if not all_stats:
             return {"driver": [], "gps": [], "countries": {}, "results": {}}
 
-        # 2. Trouver le pilote
         driver_stat_data = next((item for item in all_stats if item["driverId"] == id_driver), None)
 
         if not driver_stat_data:
             return {"driver": [], "gps": [], "countries": {}, "results": {}}
 
-        # 3. Extraire l'historique déjà calculé
         history = driver_stat_data.get("season_results_history", {})
 
-        # 4. Récupérer le Code Pilote (via DriverService pour être propre)
         driver_obj = self.driver_service.get_driver(id_driver)
         driver_code = "UNK"
         if not isinstance(driver_obj, dict):
             driver_code = driver_obj.code
 
-        # 5. Formater pour le frontend
-        # history est déjà { "Bahrain": 1, "Saudi": "-", ... }
         gps = list(history.keys())
-        # Note: Pour les pays, si tu les veux absolument ici, il faut les avoir sauvegardés dans preprocess
-        # ou les omettre si ton front n'en a pas besoin pour le graphique simple.
-        # Pour faire simple, on renvoie juste les GPs et les résultats.
 
         return {
             "driver": [driver_code],
