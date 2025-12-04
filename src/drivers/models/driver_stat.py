@@ -4,7 +4,7 @@ from drivers.models.driver import Driver
 class DriverStats:
     def __init__(self, driver: Driver, position: str, points: str, win: str, podium: int, pole: int, top10: int,
                  dnf: int, sprint_win: int, sprint_podium: int, sprint_pole: int, avg_race_finish: float,
-                 avg_qualifying_finish: float, best_result: int):
+                 avg_qualifying_finish: float, best_result: int, q3_appearance: int, total_quali: int):
 
         self.driver = driver
         self.win = win
@@ -20,6 +20,8 @@ class DriverStats:
         self.avg_race_finish = avg_race_finish
         self.avg_qualifying_finish = avg_qualifying_finish
         self.best_result = best_result
+        self.q3_appearance = q3_appearance
+        self.total_quali = total_quali
 
     def to_dict(self):
         return {
@@ -36,6 +38,8 @@ class DriverStats:
             "points": str(self.points),
             "avg_race_finish": float(self.avg_race_finish),
             "avg_qualifying_finish": float(self.avg_qualifying_finish),
-            "best_result": int(self.best_result)
+            "best_result": int(self.best_result),
+            "q3_appearance": int(self.q3_appearance),
+            "total_quali": int(self.total_quali)
         }
 

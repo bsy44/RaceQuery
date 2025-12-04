@@ -23,9 +23,8 @@ class TeamStandingService:
 
 
     def get_team_standings(self) -> list[TeamStanding]:
-        main_filename = f"{self.year}_constructor_standings.json"
-
-        data = load_json_file(f'data_cache/ergast/{self.year}/team', main_filename)
+        filename = f"{self.year}_constructor_standings.json"
+        data = load_json_file(f'data_cache/ergast/{self.year}/team', filename)
 
         if not data:
             return []
@@ -52,20 +51,28 @@ class TeamStandingService:
                     if c_id:
                         prev_positions[c_id] = pos
 
+        leader_points = 0.0
+        if standings_list:
+            leader_points = float(standings_list[0].get('points', 0))
+
         for row in standings_list:
             c_id = row.get("constructorId")
-            current_pos = int(row.get("position", 0))
+            current_pos = int(float(row.get("position", 0)))
+            current_points = float(row.get('points', 0))
 
             if c_id in prev_positions:
                 evolution = prev_positions[c_id] - current_pos
             else:
                 evolution = 0
 
+            points_diff = round(leader_points - current_points, 1)
+
             standing = TeamStanding(
                 position=current_pos,
-                points=row.get("points"),
+                points=current_points,
+                points_diff=points_diff,
                 wins=row.get("wins"),
-                team=self._format_constructor(row),
+                team=self._format_constructor(row).to_dict(),
                 evolution=evolution
             )
 

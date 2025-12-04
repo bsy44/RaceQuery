@@ -1,6 +1,6 @@
 class Driver:
     def __init__(self, driverId: str, driverNumber: int, code: str, fullName: str, nationality: str,
-                 givenName: str = None, familyName: str = None, birthday: str = None, team: str = None, team_id: str = None):
+                 givenName: str, familyName: str, birthday: str, team: str, team_id: str = None):
 
         self.driverId = driverId
         self.driverNumber = driverNumber

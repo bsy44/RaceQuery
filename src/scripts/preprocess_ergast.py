@@ -44,13 +44,79 @@ def preprocess_season_ergast(year: int):
     api = Ergast()
     print(f"\n=== Processing Ergast data for {year} ===")
 
+
     try:
         schedule = fastf1.get_event_schedule(year, include_testing=False)
         schedule = schedule[schedule['EventName'].notna()]
+
+        print(f"   ⏳ Fetching official circuit names...")
+        circuit_map = {}
+
+        try:
+            ergast_cal = api.get_race_schedule(season=year)
+            df_ergast = None
+
+            if hasattr(ergast_cal, 'content') and ergast_cal.content:
+                df_ergast = ergast_cal.content[0]
+            elif hasattr(ergast_cal, 'data'):
+                df_ergast = ergast_cal.data
+            elif isinstance(ergast_cal, pd.DataFrame):
+                df_ergast = ergast_cal
+
+            if df_ergast is not None and not df_ergast.empty:
+                for _, row in df_ergast.iterrows():
+                    r_num = int(row['round'])
+                    c_name = row.get('circuitName')
+                    if c_name:
+                        circuit_map[r_num] = c_name
+        except Exception as e:
+            print(f"   ⚠️ Could not fetch Ergast circuit names: {e}")
+
         rounds_info = {}
+        formatted_schedule = []
+
         for _, row in schedule.iterrows():
-            rounds_info[int(row['RoundNumber'])] = {'raceName': row['EventName'], 'country': row['Country']}
+            r_num = int(row['RoundNumber'])
+
+            rounds_info[r_num] = {'raceName': row['EventName'], 'country': row['Country']}
+
+            official_circuit_name = circuit_map.get(r_num, row['Location'])
+
+            event_info = {
+                "season": year,
+                "round": r_num,
+                "country": row['Country'],
+                "location": row['Location'],
+                "circuit_name": official_circuit_name,
+                "official_name": row['OfficialEventName'],
+                "short_name": row['EventName'],
+                "event_format": row['EventFormat'],
+                "event_date": str(row['EventDate']),
+                "sessions": []
+            }
+
+            for i in range(1, 6):
+                name_col = f"Session{i}"
+                date_col = f"Session{i}Date"
+                utc_col = f"Session{i}DateUtc"
+
+                if name_col in row and row[name_col]:
+                    local_date = str(row[date_col]) if pd.notna(row[date_col]) else None
+                    utc_date = str(row[utc_col]) if utc_col in row and pd.notna(row[utc_col]) else None
+
+                    event_info["sessions"].append({
+                        "name": row[name_col],
+                        "local_date": local_date,
+                        "utc_date": utc_date
+                    })
+
+            formatted_schedule.append(event_info)
+
         rounds = list(rounds_info.keys())
+        print(f"   ℹ️ Found {len(rounds)} rounds.")
+
+        save_json(year, f"{year}_schedule.json", formatted_schedule)
+
     except Exception as e:
         print(f"❌ Error getting schedule: {e}")
         return
@@ -93,15 +159,11 @@ def preprocess_season_ergast(year: int):
         final = {"season": year, "round": last_team_round, "standings": last_valid_team}
         save_json(year, f"{year}_constructor_standings.json", final, "team")
 
-    print(f"   ⏳ Downloading Results (Race, Quali, Sprint)...")
-
-    all_race = []
-    all_quali = []
-    all_sprint = []
-
+    # 4. Results
+    print(f"   ⏳ Downloading Results...")
+    all_race, all_quali, all_sprint = [], [], []
     for r in rounds:
         meta = rounds_info.get(r, {'raceName': 'Unknown', 'country': 'Unknown'})
-
         try:
             res = api.get_race_results(season=year, round=r)
             if res.content and not res.content[0].empty:
@@ -112,7 +174,6 @@ def preprocess_season_ergast(year: int):
                 all_race.extend(clean_and_convert_df(df))
         except:
             pass
-
         try:
             res = api.get_qualifying_results(season=year, round=r)
             if res.content and not res.content[0].empty:
@@ -123,7 +184,6 @@ def preprocess_season_ergast(year: int):
                 all_quali.extend(clean_and_convert_df(df))
         except:
             pass
-
         try:
             res = api.get_sprint_results(season=year, round=r)
             if res.content and not res.content[0].empty:
@@ -134,26 +194,24 @@ def preprocess_season_ergast(year: int):
                 all_sprint.extend(clean_and_convert_df(df))
         except:
             pass
-
         print(f"      Processed R{r}", end='\r')
 
-    if all_race:
-        save_json(year, f"{year}_race_results.json", all_race, "results")
-    if all_quali:
-        save_json(year, f"{year}_qualifying_results.json", all_quali, "results")
+    if all_race: save_json(year, f"{year}_race_results.json", all_race, "results")
+    if all_quali: save_json(year, f"{year}_qualifying_results.json", all_quali, "results")
     if all_sprint:
         save_json(year, f"{year}_sprint_results.json", all_sprint, "results")
     else:
         save_json(year, f"{year}_sprint_results.json", [], "results")
-
-
 def preprocess_all_ergast(start_year=2022, end_year=2025):
     ensure_directory_exists(OUTPUT_DIR)
     ensure_directory_exists(CACHE_DIR)
     fastf1.Cache.enable_cache(CACHE_DIR)
+
     for year in range(start_year, end_year + 1):
         preprocess_season_ergast(year)
 
+    print("\n🎉 Pré-processing Ergast terminé avec succès !")
+
 
 if __name__ == "__main__":
-    preprocess_all_ergast(2025, 2025)
+    preprocess_all_ergast(2022, 2025)

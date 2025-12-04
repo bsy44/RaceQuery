@@ -7,8 +7,8 @@ class DriverStandingService:
     def __init__(self, year: int):
         self.year = year
 
+
     def _format_driver(self, row: dict) -> Driver:
-        # ... (Cette méthode est correcte, pas de changement nécessaire) ...
         def clean_val(val):
             return None if val == "nan" or val is None else val
 
@@ -17,6 +17,7 @@ class DriverStandingService:
 
         constructor_names = row.get("constructorNames")
         last_constructor = "Inconnu"
+
         if isinstance(constructor_names, list) and constructor_names:
             last_constructor = constructor_names[-1]
         elif isinstance(constructor_names, str):
@@ -34,11 +35,9 @@ class DriverStandingService:
             team=str(last_constructor)
         )
 
+
     def get_driver_standings(self) -> list[DriverStanding]:
         main_filename = f"{self.year}_driver_standings.json"
-
-        # 💡 MODIFICATION 1 : Pointer vers le sous-dossier 'driver'
-        # Le chemin est : ergast/[ANNEE]/driver/[FICHIER]
         main_data = load_json_file(f'data_cache/ergast/{self.year}/driver', main_filename)
 
         if not main_data or "standings" not in main_data:
@@ -52,13 +51,11 @@ class DriverStandingService:
             prev_round = current_round - 1
             prev_filename = f"{self.year}_R{prev_round}_driver_standings.json"
 
-            # 💡 MODIFICATION 2 : Pointer vers le sous-dossier 'driver' pour l'historique aussi
             prev_data = load_json_file(f'data_cache/ergast/{self.year}/driver', prev_filename)
 
             if prev_data:
                 for row in prev_data:
                     d_id = row.get('driverId')
-                    # Gestion sécurisée de la conversion en int
                     pos_val = row.get('position', 0)
                     pos = int(float(pos_val)) if pos_val else 0
 
@@ -69,7 +66,6 @@ class DriverStandingService:
         if not current_standings:
             return []
 
-        # Sécurisation de la lecture des points du leader
         leader_points = 0.0
         if current_standings:
             leader_points = float(current_standings[0].get('points', 0))
@@ -85,18 +81,25 @@ class DriverStandingService:
                 evolution = 0
 
             constructor_names = row.get("constructorNames")
-            team_name = "Inconnu"
-            if isinstance(constructor_names, list) and constructor_names:
-                team_name = constructor_names[-1]
-            elif isinstance(constructor_names, str):
-                team_name = constructor_names.strip("[]'\" ").split(",")[-1].strip("'\" ")
+            constructor_ids = row.get("constructorIds")
+
+            last_constructor = "Inconnu"
+            last_constructor_id = "Inconnu"
+
+            if isinstance(constructor_names, list) | isinstance(constructor_ids, list) and constructor_names and constructor_ids:
+                last_constructor = constructor_names[-1]
+                last_constructor_id = constructor_ids[-1]
+            elif isinstance(constructor_names, str) | isinstance(constructor_ids, str):
+                last_constructor = constructor_names.strip("[]'\" ").split(",")[-1].strip("'\" ")
+                last_constructor_id = constructor_ids.strip("[]'\" ").split(",")[-1].strip("'\" ")
 
             standing = DriverStanding(
                 driver=self._format_driver(row),
                 points=current_points,
                 points_diff=round(leader_points - current_points, 1),
                 position=current_pos,
-                team=team_name,
+                team=last_constructor,
+                team_id=last_constructor_id,
                 evolution=evolution
             )
 
