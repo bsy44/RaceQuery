@@ -258,6 +258,7 @@ class RaceService:
                 "evolution": evolution,
                 "points": float(self._safe_float(row.get("Points")) or 0),
                 "status": status,
+                "tyre": row.get("Tyre"),
             })
 
         results_formatted.sort(key=lambda x: x['position'] if x['position'] is not None else 999)

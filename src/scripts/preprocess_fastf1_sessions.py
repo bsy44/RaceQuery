@@ -10,6 +10,20 @@ from datetime import datetime
 BASE_OUTPUT_DIR = "../data_cache/sessions"
 CACHE_DIR = '../data/fastf1_cache'
 
+# 🎨 MAPPING DES COULEURS (Fallback pour retrouver l'équipe si le nom manque)
+COLOR_TO_TEAM_ID = {
+    "3671C6": "red_bull", "1E41FF": "red_bull",
+    "27F4D2": "mercedes", "00D2BE": "mercedes",
+    "E80020": "ferrari", "DC0000": "ferrari",
+    "FF8000": "mclaren",
+    "229971": "aston_martin", "006F62": "aston_martin",
+    "0093CC": "alpine", "2293D1": "alpine",
+    "64C4FF": "williams", "005AFF": "williams",
+    "6692FF": "rb", "4E7CFF": "rb",
+    "52E252": "sauber", "00E701": "sauber",
+    "B6BABD": "haas", "FFFFFF": "haas", "767676": "haas"
+}
+
 
 def ensure_directory_exists(directory_path):
     if not os.path.exists(directory_path):
@@ -37,6 +51,7 @@ def td_to_ms(td):
 
 
 def clean_nat_values(data):
+    """Nettoie les données pour la sérialisation JSON."""
     if isinstance(data, dict):
         return {k: clean_nat_values(v) for k, v in data.items()}
     elif isinstance(data, list):
@@ -48,104 +63,155 @@ def clean_nat_values(data):
     return data
 
 
+def get_valid_val(val):
+    """Retourne une chaine vide si la valeur est NaN, None, ou 'nan'."""
+    if val is None or pd.isna(val): return ""
+    s = str(val).strip()
+    if s.lower() in ["nan", "nat", "none", ""]: return ""
+    return s
+
+
 def generate_id(name):
-    if not name or pd.isna(name): return ""
-    return str(name).lower().strip().replace(" ", "_").replace("-", "_")
+    name = get_valid_val(name)
+    if not name: return ""
+    return name.lower().replace("'", "").replace(" ", "_").replace("-", "_")
 
 
-def build_results(session: Session):
-    """Construit les résultats ou renvoie une liste vide si données manquantes."""
-    if session.results is None or session.results.empty:
-        return []
+def normalize_team_id(t_id, color=""):
+    t_id = get_valid_val(t_id).lower()
 
+    if "red_bull" in t_id: return "red_bull"
+    if "racing_bulls" in t_id or "rb" in t_id or "visa" in t_id: return "rb"
+    if "haas" in t_id: return "haas"
+    if "aston" in t_id: return "aston_martin"
+    if "alpine" in t_id: return "alpine"
+    if "williams" in t_id: return "williams"
+    if "mclaren" in t_id: return "mclaren"
+    if "ferrari" in t_id: return "ferrari"
+    if "mercedes" in t_id: return "mercedes"
+    if "sauber" in t_id or "stake" in t_id or "kick" in t_id: return "sauber"
+    if "alpha" in t_id: return "alphatauri"
+    if "alfa" in t_id: return "alfa"
+
+    # Fallback par couleur si ID vide
+    if not t_id and color:
+        clean_color = str(color).upper().strip()
+        if clean_color in COLOR_TO_TEAM_ID:
+            return COLOR_TO_TEAM_ID[clean_color]
+
+    return t_id
+
+
+def build_results(session: Session, session_type: str):
+    """
+    Construit la liste des résultats avec :
+    - Réparation des IDs manquants (pour 2025)
+    - Calcul des positions si manquantes (Practice)
+    - Injection des pneus
+    - Réparation du statut
+    """
     results_df = session.results
+    laps = session.laps
 
-    # CAS 1 : ESSAIS LIBRES (Reconstruction via Laps)
+    # --- 1. PRÉPARATION DES PNEUS (Tyre Map) ---
+    tyre_map = {}
+    if laps is not None and not laps.empty:
+        is_race = "Race" in session_type or ("Sprint" in session_type and "Qualifying" not in session_type)
+        try:
+            if is_race:
+                # Course : Pneu du dernier tour
+                last_laps = laps.sort_values('LapNumber').groupby('Driver').last()
+                tyre_map = last_laps['Compound'].to_dict()
+            else:
+                # Qualif/Practice : Pneu du meilleur tour
+                best_laps_compound = laps.sort_values('LapTime').groupby('Driver').first()
+                tyre_map = best_laps_compound['Compound'].to_dict()
+        except:
+            pass
+
+    # --- CAS 1 : PRACTICE (Pas de position officielle) ---
     if "Position" not in results_df.columns or results_df["Position"].isna().all():
-        laps = session.laps
         if laps is None or laps.empty: return []
 
-        try:
-            best_laps = laps.groupby("Driver")["LapTime"].min().sort_values()
-            results = []
-            for pos, (driver_code, lap_time) in enumerate(best_laps.items(), start=1):
-                drv = session.get_driver(driver_code)
+        # On reconstruit le classement via le meilleur tour
+        best_laps_df = laps.sort_values("LapTime").groupby("Driver").first().sort_values("LapTime")
+        results = []
+        pos = 1
 
-                d_id = drv.get("DriverId") or generate_id(drv.get("LastName") or drv.get("Abbreviation"))
-                t_id = drv.get("TeamId") or generate_id(drv.get("TeamName"))
+        for driver_code, row_lap in best_laps_df.iterrows():
+            drv = session.get_driver(driver_code)
 
-                # Normalisation Team ID
-                if "red_bull" in t_id:
-                    t_id = "red_bull"
-                elif "racing_bulls" in t_id or "rb" in t_id:
-                    t_id = "rb"
-                elif "haas" in t_id:
-                    t_id = "haas"
-                elif "aston" in t_id:
-                    t_id = "aston_martin"
-                elif "alpine" in t_id:
-                    t_id = "alpine"
-                elif "williams" in t_id:
-                    t_id = "williams"
-                elif "mclaren" in t_id:
-                    t_id = "mclaren"
-                elif "ferrari" in t_id:
-                    t_id = "ferrari"
-                elif "mercedes" in t_id:
-                    t_id = "mercedes"
-                elif "sauber" in t_id or "kick" in t_id:
-                    t_id = "sauber"
+            # Nettoyage des données brutes
+            raw_did = get_valid_val(drv.get("DriverId"))
+            raw_tid = get_valid_val(drv.get("TeamId"))
+            t_name = get_valid_val(drv.get("TeamName"))
+            t_color = get_valid_val(drv.get("TeamColor"))
 
-                results.append({
-                    "DriverNumber": drv.get("DriverNumber", ""),
-                    "BroadcastName": drv.get("BroadcastName", ""),
-                    "Abbreviation": drv.get("Abbreviation", ""),
-                    "DriverId": d_id,
-                    "TeamName": drv.get("TeamName", ""),
-                    "TeamColor": drv.get("TeamColor", ""),
-                    "TeamId": t_id,
-                    "FirstName": drv.get("FirstName", ""),
-                    "LastName": drv.get("LastName", ""),
-                    "FullName": drv.get("FullName", ""),
-                    "HeadshotUrl": drv.get("HeadshotUrl", ""),
-                    "CountryCode": drv.get("CountryCode", ""),
-                    "Position": pos,
-                    "ClassifiedPosition": pos,
-                    "GridPosition": "",
-                    "Status": "",
-                    "Points": "",
-                    "Laps": int(laps[laps["Driver"] == driver_code].shape[0]),
-                    "LapTime_ms": td_to_ms(lap_time)
-                })
-            return results
-        except Exception as e:
-            print(f"   ⚠️ Error building practice results: {e}")
-            return []
+            # Génération ID Pilote
+            d_id = raw_did if raw_did else generate_id(drv.get("LastName") or drv.get("Abbreviation"))
 
-    # CAS 2 : COURSE / QUALIF
+            # Génération ID Team
+            t_id = raw_tid if raw_tid else generate_id(t_name)
+            t_id = normalize_team_id(t_id, t_color)
+
+            # Pneu (Directement du tour)
+            tyre = str(row_lap.get("Compound", ""))
+
+            results.append({
+                "DriverNumber": drv.get("DriverNumber", ""),
+                "BroadcastName": drv.get("BroadcastName", ""),
+                "Abbreviation": drv.get("Abbreviation", ""),
+                "DriverId": d_id,
+                "TeamName": t_name,
+                "TeamColor": t_color,
+                "TeamId": t_id,
+                "FirstName": drv.get("FirstName", ""),
+                "LastName": drv.get("LastName", ""),
+                "FullName": drv.get("FullName", ""),
+                "HeadshotUrl": drv.get("HeadshotUrl", ""),
+                "CountryCode": drv.get("CountryCode", ""),
+                "Position": pos,
+                "ClassifiedPosition": pos,
+                "GridPosition": "",
+                "Status": "",
+                "Points": "",
+                "Laps": int(laps[laps["Driver"] == driver_code].shape[0]),
+                "LapTime_ms": td_to_ms(row_lap["LapTime"]),
+                "Tyre": tyre
+            })
+            pos += 1
+        return results
+
+    # --- CAS 2 : COURSE / QUALIF / SPRINT (Données officielles) ---
     results_df = results_df.copy()
 
-    if 'DriverId' in results_df.columns:
-        mask = (results_df['DriverId'] == "") | (results_df['DriverId'].isna())
-        if mask.any():
-            results_df.loc[mask, 'DriverId'] = results_df.loc[mask, 'LastName'].apply(generate_id)
+    # Fonction de réparation ligne par ligne
+    def repair_row_ids(row):
+        d_id = get_valid_val(row.get('DriverId'))
+        t_id = get_valid_val(row.get('TeamId'))
 
-    if 'TeamId' in results_df.columns:
-        mask_team = (results_df['TeamId'] == "") | (results_df['TeamId'].isna())
-        if mask_team.any():
-            results_df.loc[mask_team, 'TeamId'] = results_df.loc[mask_team, 'TeamName'].apply(generate_id)
-            results_df['TeamId'] = results_df['TeamId'].apply(lambda x: "red_bull" if "red_bull" in x else x)
-            results_df['TeamId'] = results_df['TeamId'].apply(lambda x: "rb" if "racing_bulls" in x or "rb" in x else x)
-            results_df['TeamId'] = results_df['TeamId'].apply(lambda x: "haas" if "haas" in x else x)
-            results_df['TeamId'] = results_df['TeamId'].apply(lambda x: "sauber" if "stake" in x or "kick" in x else x)
-            results_df['TeamId'] = results_df['TeamId'].apply(lambda x: "aston_martin" if "aston" in x else x)
+        if not d_id:
+            d_id = generate_id(row.get('LastName')) or generate_id(row.get('Abbreviation'))
 
+        if not t_id:
+            t_name = get_valid_val(row.get('TeamName'))
+            t_id = generate_id(t_name)
+
+        t_color = get_valid_val(row.get('TeamColor'))
+        t_id = normalize_team_id(t_id, t_color)
+
+        return pd.Series([d_id, t_id])
+
+    if 'DriverId' in results_df.columns and 'TeamId' in results_df.columns:
+        results_df[['DriverId', 'TeamId']] = results_df.apply(repair_row_ids, axis=1)
+
+    # Réparation Status (si manquant)
     if 'Status' in results_df.columns and 'Laps' in results_df.columns:
         winner_laps = results_df['Laps'].max()
 
         def fill_missing_status(row):
-            original_status = str(row.get('Status', '')).strip()
-            if original_status and original_status.lower() != "nan": return original_status
+            original = get_valid_val(row.get('Status'))
+            if original: return original  # On garde le statut officiel s'il existe
             try:
                 laps = float(row.get('Laps', 0))
                 if pd.isna(laps): return "DNF"
@@ -161,9 +227,16 @@ def build_results(session: Session):
 
         results_df['Status'] = results_df.apply(fill_missing_status, axis=1)
 
+    # Nettoyage Temps
     if 'Time' in results_df.columns:
         results_df['Time_ms'] = results_df['Time'].apply(td_to_ms)
         results_df = results_df.drop(columns=['Time'])
+
+    # Injection Pneus via le Map
+    if 'Abbreviation' in results_df.columns:
+        results_df['Tyre'] = results_df['Abbreviation'].map(tyre_map).fillna("")
+    else:
+        results_df['Tyre'] = ""
 
     return results_df.astype(str).to_dict("records")
 
@@ -172,30 +245,35 @@ def preprocess_session_data(year: int, gp_round: int, session_type: str):
     try:
         print(f"   ⏳ Processing {session_type}...")
 
-        # 1. Initialiser des données vides par défaut
         results_data = []
         laps_data = []
         stints_data = []
+        event_name = "Unknown GP"
 
-        # 2. Tenter de charger FastF1
         try:
             session: Session = fastf1.get_session(year, gp_round, session_type)
-            # On charge sans lever d'erreur si ça échoue
-            session.load(laps=True, weather=True, telemetry=False)
 
-            # Si le chargement réussit partiellement
-            if session.drivers:
-                results_data = build_results(session)
+            # Chargement sans crash
+            try:
+                session.load(laps=True, weather=True, telemetry=False)
+            except Exception:
+                pass
+
+            if hasattr(session, 'event'):
+                event_name = session.event['EventName']
+
+            # Construction Résultats
+            if hasattr(session, 'drivers') and session.drivers:
+                results_data = build_results(session, session_type)
             else:
-                print(f"      ⚠️ No drivers found for {session_type}, generating empty file.")
+                print(f"      ⚠️ No drivers found for {session_type}, generating empty results.")
 
+            # Construction Laps
             if session.laps is not None and not session.laps.empty:
                 laps_df = session.laps.reset_index(drop=True).copy()
                 for col in ['LapTime', 'Sector1Time', 'Sector2Time', 'Sector3Time']:
                     if col in laps_df:
                         laps_df[col + "_ms"] = laps_df[col].apply(td_to_ms)
-
-                # Nettoyage colonnes laps
                 laps_df = laps_df.drop(columns=['LapTime', 'Sector1Time', 'Sector2Time', 'Sector3Time'],
                                        errors='ignore')
                 lap_cols = ['Driver', 'LapNumber', 'IsPersonalBest', 'Compound', 'TyreLife', 'Stint', 'LapTime_ms',
@@ -203,46 +281,39 @@ def preprocess_session_data(year: int, gp_round: int, session_type: str):
                 lap_cols_existing = [c for c in lap_cols if c in laps_df.columns]
                 laps_data = laps_df[lap_cols_existing].astype(str).to_dict('records')
 
-                # Stints
                 stint_cols = ['Driver', 'Stint', 'Compound', 'TyreLife']
                 stint_cols_existing = [c for c in stint_cols if c in session.laps.columns]
                 stints = session.laps[stint_cols_existing].dropna(subset=['Stint']).drop_duplicates(
                     subset=['Driver', 'Stint']).sort_values(['Driver', 'Stint'])
                 stints_data = stints.astype(str).to_dict('records')
 
-            # Info de base (Même si FastF1 échoue, on a les infos de l'appel)
-            event_name = session.event['EventName']
-
         except Exception as e:
             print(f"      ⚠️ FastF1 Load Error for {session_type}: {e}")
-            event_name = "Unknown GP"
 
-        # 3. Construction du JSON (Même vide)
         session_info = {
             "year": year,
             "round": gp_round,
             "name": event_name,
             "session_type": session_type
         }
+        try:
+            session_info["event_details"] = session.event.to_dict()
+        except:
+            pass
+
+        session_info = clean_nat_values(session_info)
 
         session_data = {
             "info": session_info,
-            "results": results_data,
+            "results": results_data,  # Liste vide si échec, mais fichier créé
             "laps": laps_data,
             "stints": stints_data,
         }
 
-        # 4. Normalisation du Nom de Fichier (CRUCIAL)
-        # "Sprint Qualifying" -> "SprintQualifying"
-        # "Sprint Shootout" -> "SprintQualifying" (Compatibilité 2023)
+        # Normalisation Nom Fichier
         normalized_name = session_type.replace(' ', '')
-
-        # Gestion spécifique du Sprint Shootout (2023) pour qu'il matche "SprintQualifying"
-        # Cela permet à ton backend d'utiliser le même code pour 2023, 2024 et 2025
         if "Sprint" in session_type and "Shootout" in session_type:
             normalized_name = "SprintQualifying"
-
-        # Note : Pour 2022, "Sprint" restera "Sprint", et il n'y a pas de Shootout, donc c'est parfait.
 
         filename = f"{year}_R{gp_round}_{normalized_name}.json"
         save_json(year, filename, session_data)
@@ -266,9 +337,7 @@ def preprocess_year(year: int):
         print(f"❌ Could not load schedule for {year}: {e}")
         return
 
-    if schedule.empty:
-        print(f"   ⚠️ No official events found for {year}.")
-        return
+    if schedule.empty: return
 
     for _, event in schedule.iterrows():
         gp_round = event['RoundNumber']
@@ -280,14 +349,12 @@ def preprocess_year(year: int):
                 session_type = event[session_name_col]
                 if isinstance(session_type, str):
                     preprocess_session_data(year, gp_round, session_type)
-
         print("-" * 40)
     print(f"\n🎉 Pre-processing of {year} completed successfully!")
 
 
 if __name__ == "__main__":
-    TARGET_YEAR = 2024
-
+    TARGET_YEAR = 2022
     try:
         preprocess_year(TARGET_YEAR)
     except KeyboardInterrupt:
