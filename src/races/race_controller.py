@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify
 from races.race_service import RaceService
 
 
-race_bp = Blueprint('races', __name__)
+race_bp = Blueprint('races', __name__, url_prefix='/races')
 
 @race_bp.get('/<int:season>')
 def get_schedule(season):

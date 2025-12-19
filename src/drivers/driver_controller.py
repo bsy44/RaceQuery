@@ -4,7 +4,7 @@ from drivers.services.driver_service import DriverService
 from drivers.services.driver_standing_service import DriverStandingService
 from drivers.services.driver_stat_service import DriverStatService
 
-driver_bp = Blueprint('drivers', __name__)
+driver_bp = Blueprint('drivers', __name__, url_prefix='/drivers')
 
 
 # 2. LISTE DES PILOTES

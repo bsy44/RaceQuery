@@ -5,7 +5,7 @@ from teams.services.team_stat_service import TeamStatService
 from teams.services.team_standing_service import TeamStandingService
 
 
-team_bp = Blueprint('teams', __name__)
+team_bp = Blueprint('teams', __name__, url_prefix='/teams')
 
 
 @team_bp.get("/<int:year>")
