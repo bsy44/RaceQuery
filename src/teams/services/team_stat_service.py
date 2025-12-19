@@ -11,7 +11,7 @@ class TeamStatService:
 
     def get_team_stats_summary(self, team_id: str) -> TeamStats | dict:
         filename = f"{self.year}_team_stats.json"
-        all_stats = load_json_file('data_cache/stats/team', filename)
+        all_stats = load_json_file('data_cache/services/team', filename)
 
         if not all_stats:
             return {
@@ -20,7 +20,7 @@ class TeamStatService:
         team_stat_data = next((item for item in all_stats if item["constructorId"] == team_id), None)
 
         if not team_stat_data:
-            return {"error": f"Écurie '{team_id}' non trouvée dans les stats de {self.year}"}
+            return {"error": f"Écurie '{team_id}' non trouvée dans les services de {self.year}"}
 
         team_obj = self.team_service.get_team(team_id)
 

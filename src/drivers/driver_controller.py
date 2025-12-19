@@ -47,5 +47,5 @@ def get_driver_season_results(year, id_driver):
     service = DriverStatService(year)
     stats = service.get_driver_race_summary(id_driver)
 
-    # Ici stats est déjà un dictionnaire formaté par le service, pas besoin de to_dict()
+    # Ici services est déjà un dictionnaire formaté par le service, pas besoin de to_dict()
     return jsonify(stats), HTTPStatus.OK

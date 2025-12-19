@@ -11,7 +11,7 @@ class DriverStatService:
 
     def get_driver_stats_summary(self, driver_id: str) -> DriverStats | dict:
         filename = f"{self.year}_driver_stats.json"
-        all_stats = load_json_file('data_cache/stats/driver', filename)
+        all_stats = load_json_file('data_cache/services/driver', filename)
 
         if not all_stats:
             return {
@@ -20,7 +20,7 @@ class DriverStatService:
         driver_stat_data = next((item for item in all_stats if item["driverId"] == driver_id), None)
 
         if not driver_stat_data:
-            return {"error": f"Pilote {driver_id} non trouvé dans les stats de {self.year}"}
+            return {"error": f"Pilote {driver_id} non trouvé dans les services de {self.year}"}
 
         driver_obj = self.driver_service.get_driver(driver_id)
 
@@ -50,7 +50,7 @@ class DriverStatService:
 
     def get_driver_race_summary(self, id_driver: str) -> dict:
         filename = f"{self.year}_driver_stats.json"
-        all_stats = load_json_file('data_cache/stats/driver', filename)
+        all_stats = load_json_file('data_cache/services/driver', filename)
 
         if not all_stats:
             return {"driver": [], "gps": [], "countries": {}, "results": {}}

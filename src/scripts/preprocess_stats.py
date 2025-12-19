@@ -1,13 +1,13 @@
 import fastf1
 import os
 from utils.data_utils import ensure_directory_exists, load_json_as_df, save_json
-from stats.stats_service import calculate_stats_generic
+from services.stats_service import calculate_stats_generic
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 INPUT_DIR = os.path.join(PROJECT_ROOT, "data_cache", "ergast")
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data_cache", "stats")
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data_cache", "services")
 FASTF1_CACHE_DIR = os.path.join(PROJECT_ROOT, "data", "fastf1_cache")
 
 
