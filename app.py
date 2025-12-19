@@ -5,7 +5,7 @@ from teams.team_controller import team_bp
 from races.race_controller import event_bp
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.register_blueprint(driver_bp, url_prefix='/drivers')
 app.register_blueprint(team_bp, url_prefix='/teams')
