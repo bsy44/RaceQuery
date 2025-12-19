@@ -1,6 +1,6 @@
 from drivers.models.driver_stat import DriverStats
 from drivers.services.driver_service import DriverService
-from cache_reader import load_json_file
+from utils.cache_reader import load_json_file
 
 
 class DriverStatService:

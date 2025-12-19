@@ -1,6 +1,6 @@
 from teams.models.team_stat import TeamStats
 from teams.services.team_service import TeamService
-from cache_reader import load_json_file
+from utils.cache_reader import load_json_file
 
 
 class TeamStatService:

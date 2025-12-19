@@ -1,6 +1,6 @@
 from teams.models.team import Team
 from drivers.models.driver import Driver
-from cache_reader import load_json_file
+from utils.cache_reader import load_json_file
 
 
 class TeamService:

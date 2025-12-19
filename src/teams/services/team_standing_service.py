@@ -1,6 +1,6 @@
 from teams.models.team import Team
 from teams.models.team_standing import TeamStanding
-from cache_reader import load_json_file
+from utils.cache_reader import load_json_file
 
 
 class TeamStandingService:

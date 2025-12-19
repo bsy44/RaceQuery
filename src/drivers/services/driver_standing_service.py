@@ -1,6 +1,6 @@
 from drivers.models.driver import Driver
 from drivers.models.driver_standing import DriverStanding
-from cache_reader import load_json_file
+from utils.cache_reader import load_json_file
 
 
 class DriverStandingService:
