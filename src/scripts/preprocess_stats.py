@@ -1,10 +1,9 @@
 import json
 import os
 import pandas as pd
-import numpy as np
 import fastf1
 
-# 🎯 Chemins
+
 INPUT_DIR = "../data_cache/ergast"
 OUTPUT_DIR = "../data_cache/stats"
 CACHE_DIR = '../data/fastf1_cache'
@@ -83,24 +82,21 @@ def build_season_history(entity_id, id_column, race_df, schedule):
 
 def calculate_stats_generic(entity_id, id_column, row_standing, race_df, quali_df, sprint_df, schedule, total_qualis,
                             include_history=True):
-    # Filtrage
     races = race_df[race_df[id_column] == entity_id] if not race_df.empty else pd.DataFrame()
     qualis = quali_df[quali_df[id_column] == entity_id] if not quali_df.empty else pd.DataFrame()
     sprints = sprint_df[sprint_df[id_column] == entity_id] if not sprint_df.empty else pd.DataFrame()
 
-    # Positions
     race_pos = get_positions_series(races, 'position')
     quali_pos = get_positions_series(qualis, 'position')
     sprint_pos = get_positions_series(sprints, 'position')
     sprint_grids = get_positions_series(sprints, 'grid')
 
-    # Calculs Base
+    total_races = int(races.shape[0])
     podiums = race_pos[race_pos.isin([1, 2, 3])].count()
     top10 = race_pos[race_pos <= 10].count()
     wins = race_pos[race_pos == 1].count()
     poles = quali_pos[quali_pos == 1].count()
 
-    # DNF
     dnf = 0
     if not races.empty and 'status' in races.columns:
         def is_dnf_check(status_val):
@@ -113,12 +109,10 @@ def calculate_stats_generic(entity_id, id_column, row_standing, race_df, quali_d
 
         dnf = races['status'].apply(is_dnf_check).sum()
 
-    # Sprints
     sprint_wins = sprint_pos[sprint_pos == 1].count()
     sprint_podiums = sprint_pos[sprint_pos.isin([1, 2, 3])].count()
     sprint_poles = sprint_grids[sprint_grids == 1].count()
 
-    # Moyennes
     avg_race = round(race_pos.mean(), 2) if not race_pos.empty else None
     avg_quali = round(quali_pos.mean(), 2) if not quali_pos.empty else None
     best_res = int(race_pos.min()) if not race_pos.dropna().empty else None
@@ -129,6 +123,7 @@ def calculate_stats_generic(entity_id, id_column, row_standing, race_df, quali_d
         id_column: entity_id,
         "position": safe_int(row_standing.get('position')),
         "points": safe_float(row_standing.get('points')),
+        "total_races": total_races,
         "wins": safe_int(row_standing.get('wins')),
         "stat_podiums": int(podiums),
         "stat_top10": int(top10),
@@ -137,11 +132,8 @@ def calculate_stats_generic(entity_id, id_column, row_standing, race_df, quali_d
         "stat_sprint_wins": int(sprint_wins),
         "stat_sprint_podiums": int(sprint_podiums),
         "stat_sprint_poles": int(sprint_poles),
-
-        # Nouvelles données
         "stat_q3_appearances": int(q3_appearances),
-        "total_qualis": int(total_qualis),  # Le total pour faire le ratio
-
+        "total_qualis": int(total_qualis),
         "stat_avg_race_position": avg_race,
         "stat_avg_qualifying_position": avg_quali,
         "stat_best_race_result": best_res
@@ -163,21 +155,14 @@ def process_year(year):
         print(f"   ❌ Error loading schedule: {e}")
         return
 
-    # Chargement
     race_df = load_json_as_df(year, "results", f"{year}_race_results.json")
     quali_df = load_json_as_df(year, "results", f"{year}_qualifying_results.json")
     sprint_df = load_json_as_df(year, "results", f"{year}_sprint_results.json")
 
-    # 💡 CALCUL DU TOTAL DES QUALIFS (Pour le ratio)
-    # On compte le nombre de rounds uniques dans le fichier de résultats de qualif
     total_qualis_count = 0
     if not quali_df.empty and 'round' in quali_df.columns:
         total_qualis_count = quali_df['round'].nunique()
 
-    # Si le fichier est vide mais qu'on a un calendrier, on peut estimer (moins précis pour la saison en cours)
-    # Ici on reste sur le factuel : combien de qualifs ont des résultats enregistrés.
-
-    # PILOTES
     d_standings = load_json_as_df(year, "driver", f"{year}_driver_standings.json")
     if not d_standings.empty:
         driver_stats_list = []
@@ -191,14 +176,14 @@ def process_year(year):
         if driver_stats_list:
             save_json(year, f"{year}_driver_stats.json", driver_stats_list, "driver")
 
-    # ÉQUIPES
     t_standings = load_json_as_df(year, "team", f"{year}_constructor_standings.json")
     if not t_standings.empty:
         team_stats_list = []
         for _, row in t_standings.iterrows():
             c_id = row.get('constructorId')
             if c_id:
-                stats = calculate_stats_generic(c_id, 'constructorId', row, race_df, quali_df, sprint_df, schedule,
+                stats = calculate_stats_generic(c_id, 'constructorId',
+                                                row, race_df, quali_df, sprint_df, schedule,
                                                 total_qualis_count, include_history=False)
                 team_stats_list.append(stats)
 

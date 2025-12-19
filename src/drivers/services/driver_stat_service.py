@@ -43,7 +43,8 @@ class DriverStatService:
             avg_qualifying_finish=driver_stat_data.get("stat_avg_qualifying_position"),
             best_result=driver_stat_data.get("stat_best_race_result"),
             q3_appearance=int(driver_stat_data.get("stat_q3_appearances", 0)),
-            total_quali=driver_stat_data.get("total_qualis")
+            total_quali=driver_stat_data.get("total_qualis"),
+            total_races=driver_stat_data.get("total_races")
         )
 
 

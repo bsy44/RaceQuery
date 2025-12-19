@@ -159,7 +159,6 @@ def preprocess_season_ergast(year: int):
         final = {"season": year, "round": last_team_round, "standings": last_valid_team}
         save_json(year, f"{year}_constructor_standings.json", final, "team")
 
-    # 4. Results
     print(f"   ⏳ Downloading Results...")
     all_race, all_quali, all_sprint = [], [], []
     for r in rounds:
@@ -214,4 +213,4 @@ def preprocess_all_ergast(start_year=2022, end_year=2025):
 
 
 if __name__ == "__main__":
-    preprocess_all_ergast(2022, 2025)
+    preprocess_all_ergast(2025, 2025)

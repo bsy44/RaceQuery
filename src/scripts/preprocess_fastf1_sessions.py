@@ -6,11 +6,9 @@ from fastf1.core import Session
 import numpy as np
 from datetime import datetime
 
-# 🎯 Chemins
 BASE_OUTPUT_DIR = "../data_cache/sessions"
 CACHE_DIR = '../data/fastf1_cache'
 
-# 🎨 MAPPING DES COULEURS (Fallback pour retrouver l'équipe si le nom manque)
 COLOR_TO_TEAM_ID = {
     "3671C6": "red_bull", "1E41FF": "red_bull",
     "27F4D2": "mercedes", "00D2BE": "mercedes",
@@ -51,7 +49,6 @@ def td_to_ms(td):
 
 
 def clean_nat_values(data):
-    """Nettoie les données pour la sérialisation JSON."""
     if isinstance(data, dict):
         return {k: clean_nat_values(v) for k, v in data.items()}
     elif isinstance(data, list):
@@ -64,7 +61,6 @@ def clean_nat_values(data):
 
 
 def get_valid_val(val):
-    """Retourne une chaine vide si la valeur est NaN, None, ou 'nan'."""
     if val is None or pd.isna(val): return ""
     s = str(val).strip()
     if s.lower() in ["nan", "nat", "none", ""]: return ""
@@ -93,7 +89,6 @@ def normalize_team_id(t_id, color=""):
     if "alpha" in t_id: return "alphatauri"
     if "alfa" in t_id: return "alfa"
 
-    # Fallback par couleur si ID vide
     if not t_id and color:
         clean_color = str(color).upper().strip()
         if clean_color in COLOR_TO_TEAM_ID:
@@ -103,37 +98,25 @@ def normalize_team_id(t_id, color=""):
 
 
 def build_results(session: Session, session_type: str):
-    """
-    Construit la liste des résultats avec :
-    - Réparation des IDs manquants (pour 2025)
-    - Calcul des positions si manquantes (Practice)
-    - Injection des pneus
-    - Réparation du statut
-    """
     results_df = session.results
     laps = session.laps
 
-    # --- 1. PRÉPARATION DES PNEUS (Tyre Map) ---
     tyre_map = {}
     if laps is not None and not laps.empty:
         is_race = "Race" in session_type or ("Sprint" in session_type and "Qualifying" not in session_type)
         try:
             if is_race:
-                # Course : Pneu du dernier tour
                 last_laps = laps.sort_values('LapNumber').groupby('Driver').last()
                 tyre_map = last_laps['Compound'].to_dict()
             else:
-                # Qualif/Practice : Pneu du meilleur tour
                 best_laps_compound = laps.sort_values('LapTime').groupby('Driver').first()
                 tyre_map = best_laps_compound['Compound'].to_dict()
         except:
             pass
 
-    # --- CAS 1 : PRACTICE (Pas de position officielle) ---
     if "Position" not in results_df.columns or results_df["Position"].isna().all():
         if laps is None or laps.empty: return []
 
-        # On reconstruit le classement via le meilleur tour
         best_laps_df = laps.sort_values("LapTime").groupby("Driver").first().sort_values("LapTime")
         results = []
         pos = 1
@@ -141,20 +124,16 @@ def build_results(session: Session, session_type: str):
         for driver_code, row_lap in best_laps_df.iterrows():
             drv = session.get_driver(driver_code)
 
-            # Nettoyage des données brutes
             raw_did = get_valid_val(drv.get("DriverId"))
             raw_tid = get_valid_val(drv.get("TeamId"))
             t_name = get_valid_val(drv.get("TeamName"))
             t_color = get_valid_val(drv.get("TeamColor"))
 
-            # Génération ID Pilote
             d_id = raw_did if raw_did else generate_id(drv.get("LastName") or drv.get("Abbreviation"))
 
-            # Génération ID Team
             t_id = raw_tid if raw_tid else generate_id(t_name)
             t_id = normalize_team_id(t_id, t_color)
 
-            # Pneu (Directement du tour)
             tyre = str(row_lap.get("Compound", ""))
 
             results.append({
@@ -182,10 +161,8 @@ def build_results(session: Session, session_type: str):
             pos += 1
         return results
 
-    # --- CAS 2 : COURSE / QUALIF / SPRINT (Données officielles) ---
     results_df = results_df.copy()
 
-    # Fonction de réparation ligne par ligne
     def repair_row_ids(row):
         d_id = get_valid_val(row.get('DriverId'))
         t_id = get_valid_val(row.get('TeamId'))
@@ -205,13 +182,12 @@ def build_results(session: Session, session_type: str):
     if 'DriverId' in results_df.columns and 'TeamId' in results_df.columns:
         results_df[['DriverId', 'TeamId']] = results_df.apply(repair_row_ids, axis=1)
 
-    # Réparation Status (si manquant)
     if 'Status' in results_df.columns and 'Laps' in results_df.columns:
         winner_laps = results_df['Laps'].max()
 
         def fill_missing_status(row):
             original = get_valid_val(row.get('Status'))
-            if original: return original  # On garde le statut officiel s'il existe
+            if original: return original
             try:
                 laps = float(row.get('Laps', 0))
                 if pd.isna(laps): return "DNF"
@@ -227,12 +203,10 @@ def build_results(session: Session, session_type: str):
 
         results_df['Status'] = results_df.apply(fill_missing_status, axis=1)
 
-    # Nettoyage Temps
     if 'Time' in results_df.columns:
         results_df['Time_ms'] = results_df['Time'].apply(td_to_ms)
         results_df = results_df.drop(columns=['Time'])
 
-    # Injection Pneus via le Map
     if 'Abbreviation' in results_df.columns:
         results_df['Tyre'] = results_df['Abbreviation'].map(tyre_map).fillna("")
     else:
@@ -253,7 +227,6 @@ def preprocess_session_data(year: int, gp_round: int, session_type: str):
         try:
             session: Session = fastf1.get_session(year, gp_round, session_type)
 
-            # Chargement sans crash
             try:
                 session.load(laps=True, weather=True, telemetry=False)
             except Exception:
@@ -262,13 +235,11 @@ def preprocess_session_data(year: int, gp_round: int, session_type: str):
             if hasattr(session, 'event'):
                 event_name = session.event['EventName']
 
-            # Construction Résultats
             if hasattr(session, 'drivers') and session.drivers:
                 results_data = build_results(session, session_type)
             else:
                 print(f"      ⚠️ No drivers found for {session_type}, generating empty results.")
 
-            # Construction Laps
             if session.laps is not None and not session.laps.empty:
                 laps_df = session.laps.reset_index(drop=True).copy()
                 for col in ['LapTime', 'Sector1Time', 'Sector2Time', 'Sector3Time']:
@@ -305,12 +276,11 @@ def preprocess_session_data(year: int, gp_round: int, session_type: str):
 
         session_data = {
             "info": session_info,
-            "results": results_data,  # Liste vide si échec, mais fichier créé
+            "results": results_data,
             "laps": laps_data,
             "stints": stints_data,
         }
 
-        # Normalisation Nom Fichier
         normalized_name = session_type.replace(' ', '')
         if "Sprint" in session_type and "Shootout" in session_type:
             normalized_name = "SprintQualifying"
@@ -354,7 +324,7 @@ def preprocess_year(year: int):
 
 
 if __name__ == "__main__":
-    TARGET_YEAR = 2022
+    TARGET_YEAR = 2025
     try:
         preprocess_year(TARGET_YEAR)
     except KeyboardInterrupt:
