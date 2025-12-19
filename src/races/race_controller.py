@@ -2,21 +2,24 @@ from http import HTTPStatus
 from flask import Blueprint, jsonify
 from races.race_service import RaceService
 
-event_bp = Blueprint('races', __name__)
 
-@event_bp.get('/<int:season>')
+race_bp = Blueprint('races', __name__)
+
+@race_bp.get('/<int:season>')
 def get_schedule(season):
    service = RaceService(season)
    races = service.get_schedule()
    return jsonify(races), HTTPStatus.OK
 
-@event_bp.get('/<int:season>/<int:round>')
+
+@race_bp.get('/<int:season>/<int:round>')
 def get_event(season, round):
    service = RaceService(season, round)
    races = service.get_event()
    return jsonify(races), HTTPStatus.OK
 
-@event_bp.get('/<int:season>/<int:round>/<session>-results')
+
+@race_bp.get('/<int:season>/<int:round>/<session>-results')
 def get_session_result(session, season, round):
    service = RaceService(season, round)
    session = service.get_session_results(session)
