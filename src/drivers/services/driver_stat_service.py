@@ -11,7 +11,7 @@ class DriverStatService:
 
     def get_driver_stats_summary(self, driver_id: str) -> DriverStats | dict:
         filename = f"{self.year}_driver_stats.json"
-        all_stats = load_json_file('data_cache/stats/driver', filename)
+        all_stats = load_json_file(f'data_cache/stats/{self.year}/driver', filename)
 
         if not all_stats:
             return {
@@ -44,13 +44,14 @@ class DriverStatService:
             best_result=driver_stat_data.get("stat_best_race_result"),
             q3_appearance=int(driver_stat_data.get("stat_q3_appearances", 0)),
             total_quali=driver_stat_data.get("total_qualis"),
-            total_races=driver_stat_data.get("total_races")
+            total_races=driver_stat_data.get("total_races"),
+            best_quali_result=driver_stat_data.get("stat_best_quali_result")
         )
 
 
     def get_driver_race_summary(self, id_driver: str) -> dict:
         filename = f"{self.year}_driver_stats.json"
-        all_stats = load_json_file('data_cache/stats/driver', filename)
+        all_stats = load_json_file(f'data_cache/stats/{self.year}/driver', filename)
 
         if not all_stats:
             return {"driver": [], "gps": [], "countries": {}, "results": {}}

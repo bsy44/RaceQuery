@@ -54,7 +54,7 @@ class DriverService:
 
     def list_drivers(self) -> list[Driver]:
         filename = f"{self.year}_drivers.json"
-        data = load_json_file('data_cache/static', filename)
+        data = load_json_file(f'data_cache/static/{self.year}', filename)
 
         if not data:
             return []

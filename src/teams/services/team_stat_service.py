@@ -11,7 +11,7 @@ class TeamStatService:
 
     def get_team_stats_summary(self, team_id: str) -> TeamStats | dict:
         filename = f"{self.year}_team_stats.json"
-        all_stats = load_json_file('data_cache/stats/team', filename)
+        all_stats = load_json_file(f'data_cache/stats/{self.year}/team', filename)
 
         if not all_stats:
             return {

@@ -9,7 +9,7 @@ class TeamService:
 
 
     def list_teams(self) -> list[Team]:
-        teams_data = load_json_file('data_cache/static', f"{self.year}_constructors.json")
+        teams_data = load_json_file(f'data_cache/static/{self.year}', f"{self.year}_constructors.json")
 
         if not teams_data:
             return []
