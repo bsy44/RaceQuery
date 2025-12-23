@@ -121,4 +121,4 @@ def preprocess_all_ergast(start_year=2022, end_year=2025):
 
 
 if __name__ == "__main__":
-    preprocess_all_ergast(2022, 2022)
+    preprocess_all_ergast(2025, 2025)

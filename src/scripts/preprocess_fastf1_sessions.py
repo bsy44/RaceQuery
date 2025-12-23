@@ -63,4 +63,4 @@ def run_season(year):
 
 
 if __name__ == "__main__":
-    run_season(2022)
+    run_season(2025)
