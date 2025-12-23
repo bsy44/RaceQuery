@@ -79,15 +79,6 @@
         "nationality": "Dutch"
       },
       {
-        "driverId": "lawson",
-        "code": "LAW",
-        "driverNumber": "30",
-        "dateOfBirth": "2002-02-11 00:00:00",
-        "givenName": "Liam",
-        "familyName": "Lawson",
-        "nationality": "New Zealander"
-      },
-      {
         "driverId": "tsunoda",
         "code": "TSU",
         "driverNumber": "22",
@@ -185,15 +176,6 @@
         "givenName": "Liam",
         "familyName": "Lawson",
         "nationality": "New Zealander"
-      },
-      {
-        "driverId": "tsunoda",
-        "code": "TSU",
-        "driverNumber": "22",
-        "dateOfBirth": "2000-05-11 00:00:00",
-        "givenName": "Yuki",
-        "familyName": "Tsunoda",
-        "nationality": "Japanese"
       }
     ]
   },
@@ -314,15 +296,6 @@
         "givenName": "Franco",
         "familyName": "Colapinto",
         "nationality": "Argentine"
-      },
-      {
-        "driverId": "doohan",
-        "code": "DOO",
-        "driverNumber": "7",
-        "dateOfBirth": "2003-01-20 00:00:00",
-        "givenName": "Jack",
-        "familyName": "Doohan",
-        "nationality": "Australian"
       }
     ]
   }

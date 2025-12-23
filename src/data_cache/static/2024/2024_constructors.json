@@ -185,15 +185,6 @@
         "givenName": "Esteban",
         "familyName": "Ocon",
         "nationality": "French"
-      },
-      {
-        "driverId": "doohan",
-        "code": "DOO",
-        "driverNumber": "7",
-        "dateOfBirth": "2003-01-20 00:00:00",
-        "givenName": "Jack",
-        "familyName": "Doohan",
-        "nationality": "Australian"
       }
     ]
   },
@@ -224,15 +215,6 @@
         "givenName": "Kevin",
         "familyName": "Magnussen",
         "nationality": "Danish"
-      },
-      {
-        "driverId": "bearman",
-        "code": "BEA",
-        "driverNumber": "87",
-        "dateOfBirth": "2005-05-08 00:00:00",
-        "givenName": "Oliver",
-        "familyName": "Bearman",
-        "nationality": "British"
       }
     ]
   },
@@ -254,15 +236,6 @@
         "givenName": "Yuki",
         "familyName": "Tsunoda",
         "nationality": "Japanese"
-      },
-      {
-        "driverId": "ricciardo",
-        "code": "RIC",
-        "driverNumber": "3",
-        "dateOfBirth": "1989-07-01 00:00:00",
-        "givenName": "Daniel",
-        "familyName": "Ricciardo",
-        "nationality": "Australian"
       },
       {
         "driverId": "lawson",
@@ -302,15 +275,6 @@
         "givenName": "Franco",
         "familyName": "Colapinto",
         "nationality": "Argentine"
-      },
-      {
-        "driverId": "sargeant",
-        "code": "SAR",
-        "driverNumber": "2",
-        "dateOfBirth": "2000-12-31 00:00:00",
-        "givenName": "Logan",
-        "familyName": "Sargeant",
-        "nationality": "American"
       }
     ]
   },

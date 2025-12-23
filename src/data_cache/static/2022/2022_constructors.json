@@ -206,15 +206,6 @@
         "givenName": "Lance",
         "familyName": "Stroll",
         "nationality": "Canadian"
-      },
-      {
-        "driverId": "hulkenberg",
-        "code": "HUL",
-        "driverNumber": "27",
-        "dateOfBirth": "1987-08-19 00:00:00",
-        "givenName": "Nico",
-        "familyName": "H\u00fclkenberg",
-        "nationality": "German"
       }
     ]
   },
@@ -305,15 +296,6 @@
         "givenName": "Nicholas",
         "familyName": "Latifi",
         "nationality": "Canadian"
-      },
-      {
-        "driverId": "de_vries",
-        "code": "DEV",
-        "driverNumber": "21",
-        "dateOfBirth": "1995-02-06 00:00:00",
-        "givenName": "Nyck",
-        "familyName": "de Vries",
-        "nationality": "Dutch"
       }
     ]
   }

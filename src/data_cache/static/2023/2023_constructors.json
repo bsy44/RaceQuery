@@ -236,24 +236,6 @@
         "givenName": "Daniel",
         "familyName": "Ricciardo",
         "nationality": "Australian"
-      },
-      {
-        "driverId": "lawson",
-        "code": "LAW",
-        "driverNumber": "30",
-        "dateOfBirth": "2002-02-11 00:00:00",
-        "givenName": "Liam",
-        "familyName": "Lawson",
-        "nationality": "New Zealander"
-      },
-      {
-        "driverId": "de_vries",
-        "code": "DEV",
-        "driverNumber": "21",
-        "dateOfBirth": "1995-02-06 00:00:00",
-        "givenName": "Nyck",
-        "familyName": "de Vries",
-        "nationality": "Dutch"
       }
     ]
   },
