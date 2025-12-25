@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "92544",
+      "Time_ms": "92544.0",
       "Tyre": "SOFT"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "16",
-      "Time_ms": "92640",
+      "Time_ms": "92640.0",
       "Tyre": "SOFT"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "92791",
+      "Time_ms": "92791.0",
       "Tyre": "SOFT"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "92935",
+      "Time_ms": "92935.0",
       "Tyre": "SOFT"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "93053",
+      "Time_ms": "93053.0",
       "Tyre": "SOFT"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "93121",
+      "Time_ms": "93121.0",
       "Tyre": "SOFT"
     },
     {
@@ -138,13 +138,13 @@
       "FirstName": "Kevin",
       "LastName": "Magnussen",
       "FullName": "Kevin Magnussen",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "DEN",
       "Position": "7",
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "93437",
+      "Time_ms": "93437.0",
       "Tyre": "SOFT"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "21",
-      "Time_ms": "93733",
+      "Time_ms": "93733.0",
       "Tyre": "SOFT"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "93880",
+      "Time_ms": "93880.0",
       "Tyre": "SOFT"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "14",
-      "Time_ms": "93920",
+      "Time_ms": "93920.0",
       "Tyre": "SOFT"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "93955",
+      "Time_ms": "93955.0",
       "Tyre": "SOFT"
     },
     {
@@ -238,13 +238,13 @@
       "FirstName": "Nico",
       "LastName": "Hulkenberg",
       "FullName": "Nico Hulkenberg",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "GER",
       "Position": "12",
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "93971",
+      "Time_ms": "93971.0",
       "Tyre": "SOFT"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "94176",
+      "Time_ms": "94176.0",
       "Tyre": "SOFT"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "17",
-      "Time_ms": "94295",
+      "Time_ms": "94295.0",
       "Tyre": "SOFT"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "94378",
+      "Time_ms": "94378.0",
       "Tyre": "SOFT"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "94628",
+      "Time_ms": "94628.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "94868",
+      "Time_ms": "94868.0",
       "Tyre": "SOFT"
     },
     {
@@ -364,7 +364,7 @@
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "16",
-      "Time_ms": "94957",
+      "Time_ms": "94957.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "14",
-      "Time_ms": "95667",
+      "Time_ms": "95667.0",
       "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "22",
+      "BroadcastName": "Y TSUNODA",
+      "Abbreviation": "TSU",
+      "DriverId": "tsunoda",
+      "TeamName": "AlphaTauri",
+      "TeamColor": "4e7c9b",
+      "TeamId": "alphatauri",
+      "FirstName": "Yuki",
+      "LastName": "Tsunoda",
+      "FullName": "Yuki Tsunoda",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/Y/YUKTSU01_Yuki_Tsunoda/yuktsu01.png.transform/1col/image.png",
+      "CountryCode": "JPN",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

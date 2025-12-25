@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "81631",
+      "Time_ms": "81631.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "82010",
+      "Time_ms": "82010.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "82631",
+      "Time_ms": "82631.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "14",
-      "Time_ms": "82634",
+      "Time_ms": "82634.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "82723",
+      "Time_ms": "82723.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "82750",
+      "Time_ms": "82750.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "82892",
+      "Time_ms": "82892.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "25",
-      "Time_ms": "82965",
+      "Time_ms": "82965.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "12",
-      "Time_ms": "83093",
+      "Time_ms": "83093.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "24",
-      "Time_ms": "83158",
+      "Time_ms": "83158.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "83210",
+      "Time_ms": "83210.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -244,7 +244,7 @@
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "17",
-      "Time_ms": "83438",
+      "Time_ms": "83438.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "83544",
+      "Time_ms": "83544.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "83570",
+      "Time_ms": "83570.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "83640",
+      "Time_ms": "83640.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "12",
-      "Time_ms": "83806",
+      "Time_ms": "83806.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "84058",
+      "Time_ms": "84058.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -358,13 +358,13 @@
       "FirstName": "Liam",
       "LastName": "Lawson",
       "FullName": "Liam Lawson",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "NZL",
       "Position": "18",
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "26",
-      "Time_ms": "86343",
+      "Time_ms": "86343.0",
       "Tyre": "INTERMEDIATE"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "9",
-      "Time_ms": "88482",
+      "Time_ms": "88482.0",
       "Tyre": "INTERMEDIATE"
+    },
+    {
+      "DriverNumber": "20",
+      "BroadcastName": "K MAGNUSSEN",
+      "Abbreviation": "MAG",
+      "DriverId": "kevin_magnussen",
+      "TeamName": "Haas F1 Team",
+      "TeamColor": "B6BABD",
+      "TeamId": "haas",
+      "FirstName": "Kevin",
+      "LastName": "Magnussen",
+      "FullName": "Kevin Magnussen",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/K/KEVMAG01_Kevin_Magnussen/kevmag01.png.transform/1col/image.png",
+      "CountryCode": "DEN",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

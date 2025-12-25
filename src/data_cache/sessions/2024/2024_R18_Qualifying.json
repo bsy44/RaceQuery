@@ -27,10 +27,10 @@
       "Q2": "0 days 00:01:30.007000",
       "Q3": "0 days 00:01:29.525000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -53,10 +53,10 @@
       "Q2": "0 days 00:01:29.680000",
       "Q3": "0 days 00:01:29.728000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -79,10 +79,10 @@
       "Q2": "0 days 00:01:29.929000",
       "Q3": "0 days 00:01:29.841000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -105,10 +105,10 @@
       "Q2": "0 days 00:01:30.153000",
       "Q3": "0 days 00:01:29.867000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -131,10 +131,10 @@
       "Q2": "0 days 00:01:29.640000",
       "Q3": "0 days 00:01:29.953000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -157,10 +157,10 @@
       "Q2": "0 days 00:01:30.150000",
       "Q3": "0 days 00:01:30.115000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -183,10 +183,10 @@
       "Q2": "0 days 00:01:30.450000",
       "Q3": "0 days 00:01:30.214000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -209,10 +209,10 @@
       "Q2": "0 days 00:01:30.289000",
       "Q3": "0 days 00:01:30.354000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -235,10 +235,10 @@
       "Q2": "0 days 00:01:29.747000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -261,10 +261,10 @@
       "Q2": "0 days 00:01:30.108000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -287,10 +287,10 @@
       "Q2": "0 days 00:01:30.474000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -304,7 +304,7 @@
       "FirstName": "Franco",
       "LastName": "Colapinto",
       "FullName": "Franco Colapinto",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "ARG",
       "Position": "12.0",
       "ClassifiedPosition": "",
@@ -313,10 +313,10 @@
       "Q2": "0 days 00:01:30.481000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -339,10 +339,10 @@
       "Q2": "0 days 00:01:30.579000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -365,10 +365,10 @@
       "Q2": "0 days 00:01:30.653000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -391,10 +391,10 @@
       "Q2": "0 days 00:01:30.769000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -417,10 +417,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -443,10 +443,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -469,10 +469,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -495,10 +495,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -521,10 +521,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     }
   ],

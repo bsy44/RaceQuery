@@ -198,7 +198,7 @@
       "FirstName": "Kevin",
       "LastName": "Magnussen",
       "FullName": "Kevin Magnussen",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "DEN",
       "Position": "10",
       "ClassifiedPosition": "10",
@@ -386,6 +386,26 @@
       "Laps": "1",
       "Time_ms": "nan",
       "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "77",
+      "BroadcastName": "V BOTTAS",
+      "Abbreviation": "BOT",
+      "DriverId": "bottas",
+      "TeamName": "Alfa Romeo",
+      "TeamColor": "b12039",
+      "TeamId": "alfa",
+      "FirstName": "Valtteri",
+      "LastName": "Bottas",
+      "FullName": "Valtteri Bottas",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/V/VALBOT01_Valtteri_Bottas/valbot01.png.transform/1col/image.png",
+      "CountryCode": "FIN",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

@@ -325,7 +325,7 @@
       "Status": "Finished",
       "Laps": "16",
       "Time_ms": "73666",
-      "Tyre": ""
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "23",
@@ -378,7 +378,7 @@
       "FirstName": "Kevin",
       "LastName": "Magnussen",
       "FullName": "Kevin Magnussen",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "DEN",
       "Position": "19",
       "ClassifiedPosition": "19",

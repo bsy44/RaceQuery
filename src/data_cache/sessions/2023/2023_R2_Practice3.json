@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "88485",
+      "Time_ms": "88485.0",
       "Tyre": "SOFT"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "89098",
+      "Time_ms": "89098.0",
       "Tyre": "SOFT"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "21",
-      "Time_ms": "89483",
+      "Time_ms": "89483.0",
       "Tyre": "SOFT"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "21",
-      "Time_ms": "89509",
+      "Time_ms": "89509.0",
       "Tyre": "SOFT"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "89568",
+      "Time_ms": "89568.0",
       "Tyre": "SOFT"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "16",
-      "Time_ms": "89588",
+      "Time_ms": "89588.0",
       "Tyre": "SOFT"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "89690",
+      "Time_ms": "89690.0",
       "Tyre": "SOFT"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "23",
-      "Time_ms": "89698",
+      "Time_ms": "89698.0",
       "Tyre": "SOFT"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "89701",
+      "Time_ms": "89701.0",
       "Tyre": "SOFT"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "16",
-      "Time_ms": "89761",
+      "Time_ms": "89761.0",
       "Tyre": "SOFT"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "89811",
+      "Time_ms": "89811.0",
       "Tyre": "SOFT"
     },
     {
@@ -244,7 +244,7 @@
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "21",
-      "Time_ms": "89917",
+      "Time_ms": "89917.0",
       "Tyre": "SOFT"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "89933",
+      "Time_ms": "89933.0",
       "Tyre": "SOFT"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "89953",
+      "Time_ms": "89953.0",
       "Tyre": "SOFT"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "89983",
+      "Time_ms": "89983.0",
       "Tyre": "SOFT"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "90035",
+      "Time_ms": "90035.0",
       "Tyre": "SOFT"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "90131",
+      "Time_ms": "90131.0",
       "Tyre": "SOFT"
     },
     {
@@ -364,7 +364,7 @@
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "90317",
+      "Time_ms": "90317.0",
       "Tyre": "SOFT"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "90797",
+      "Time_ms": "90797.0",
       "Tyre": "MEDIUM"
+    },
+    {
+      "DriverNumber": "21",
+      "BroadcastName": "N DE VRIES",
+      "Abbreviation": "DEV",
+      "DriverId": "de_vries",
+      "TeamName": "AlphaTauri",
+      "TeamColor": "5E8FAA",
+      "TeamId": "alphatauri",
+      "FirstName": "Nyck",
+      "LastName": "De Vries",
+      "FullName": "Nyck De Vries",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/N/NYCDEV01_Nyck_De%20Vries/nycdev01.png.transform/1col/image.png",
+      "CountryCode": "NED",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

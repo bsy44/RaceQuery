@@ -27,10 +27,10 @@
       "Q2": "0 days 00:01:28.001000",
       "Q3": "0 days 00:01:27.641000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -53,10 +53,10 @@
       "Q2": "0 days 00:01:27.977000",
       "Q3": "0 days 00:01:27.749000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -79,11 +79,11 @@
       "Q2": "0 days 00:01:27.865000",
       "Q3": "0 days 00:01:27.876000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "SOFT"
+      "Time_ms": "",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "3",
@@ -105,10 +105,10 @@
       "Q2": "0 days 00:01:28.122000",
       "Q3": "0 days 00:01:28.044000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -131,10 +131,10 @@
       "Q2": "0 days 00:01:28.262000",
       "Q3": "0 days 00:01:28.103000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -157,11 +157,11 @@
       "Q2": "0 days 00:01:28.163000",
       "Q3": "0 days 00:01:28.161000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "SOFT"
+      "Time_ms": "",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "18",
@@ -183,11 +183,11 @@
       "Q2": "0 days 00:01:28.323000",
       "Q3": "0 days 00:01:28.375000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "SOFT"
+      "Time_ms": "",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "14",
@@ -209,11 +209,11 @@
       "Q2": "0 days 00:01:28.189000",
       "Q3": "0 days 00:01:28.419000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "SOFT"
+      "Time_ms": "",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "4",
@@ -235,11 +235,11 @@
       "Q2": "0 days 00:01:27.597000",
       "Q3": "0 days 00:01:28.472000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "SOFT"
+      "Time_ms": "",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "27",
@@ -261,11 +261,11 @@
       "Q2": "0 days 00:01:28.330000",
       "Q3": "0 days 00:01:28.476000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "SOFT"
+      "Time_ms": "",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "63",
@@ -287,10 +287,10 @@
       "Q2": "0 days 00:01:28.343000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -313,10 +313,10 @@
       "Q2": "0 days 00:01:28.371000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -339,10 +339,10 @@
       "Q2": "0 days 00:01:28.379000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -365,10 +365,10 @@
       "Q2": "0 days 00:01:28.614000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -391,10 +391,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -417,10 +417,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -443,10 +443,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -469,10 +469,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -495,10 +495,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     },
     {
@@ -521,10 +521,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "MEDIUM"
     }
   ],

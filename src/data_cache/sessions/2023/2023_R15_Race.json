@@ -226,7 +226,7 @@
       "FirstName": "Liam",
       "LastName": "Lawson",
       "FullName": "Liam Lawson",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "NZL",
       "Position": "9.0",
       "ClassifiedPosition": "9",
@@ -525,7 +525,7 @@
       "Points": "0.0",
       "Laps": "0.0",
       "Time_ms": "nan",
-      "Tyre": ""
+      "Tyre": "SOFT"
     }
   ],
   "laps": [

@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "32",
-      "Time_ms": "79457",
+      "Time_ms": "79457.0",
       "Tyre": "SOFT"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "33",
-      "Time_ms": "79538",
+      "Time_ms": "79538.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "35",
-      "Time_ms": "79740",
+      "Time_ms": "79740.0",
       "Tyre": "SOFT"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "34",
-      "Time_ms": "79992",
+      "Time_ms": "79992.0",
       "Tyre": "SOFT"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "29",
-      "Time_ms": "80174",
+      "Time_ms": "80174.0",
       "Tyre": "SOFT"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "80258",
+      "Time_ms": "80258.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "36",
-      "Time_ms": "80371",
+      "Time_ms": "80371.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "35",
-      "Time_ms": "80381",
+      "Time_ms": "80381.0",
       "Tyre": "SOFT"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "37",
-      "Time_ms": "80439",
+      "Time_ms": "80439.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "32",
-      "Time_ms": "80498",
+      "Time_ms": "80498.0",
       "Tyre": "SOFT"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "34",
-      "Time_ms": "80591",
+      "Time_ms": "80591.0",
       "Tyre": "SOFT"
     },
     {
@@ -238,13 +238,13 @@
       "FirstName": "Kevin",
       "LastName": "Magnussen",
       "FullName": "Kevin Magnussen",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "DEN",
       "Position": "12",
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "80740",
+      "Time_ms": "80740.0",
       "Tyre": "SOFT"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "29",
-      "Time_ms": "80977",
+      "Time_ms": "80977.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "38",
-      "Time_ms": "81149",
+      "Time_ms": "81149.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "38",
-      "Time_ms": "81155",
+      "Time_ms": "81155.0",
       "Tyre": "SOFT"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "81179",
+      "Time_ms": "81179.0",
       "Tyre": "SOFT"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "81263",
+      "Time_ms": "81263.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -364,8 +364,48 @@
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "6",
-      "Time_ms": "83821",
+      "Time_ms": "83821.0",
       "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "3",
+      "BroadcastName": "D RICCIARDO",
+      "Abbreviation": "RIC",
+      "DriverId": "ricciardo",
+      "TeamName": "McLaren",
+      "TeamColor": "f58020",
+      "TeamId": "mclaren",
+      "FirstName": "Daniel",
+      "LastName": "Ricciardo",
+      "FullName": "Daniel Ricciardo",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/D/DANRIC01_Daniel_Ricciardo/danric01.png.transform/1col/image.png",
+      "CountryCode": "AUS",
+      "Position": "19",
+      "ClassifiedPosition": "19",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
+    },
+    {
+      "DriverNumber": "77",
+      "BroadcastName": "V BOTTAS",
+      "Abbreviation": "BOT",
+      "DriverId": "bottas",
+      "TeamName": "Alfa Romeo",
+      "TeamColor": "b12039",
+      "TeamId": "alfa",
+      "FirstName": "Valtteri",
+      "LastName": "Bottas",
+      "FullName": "Valtteri Bottas",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/V/VALBOT01_Valtteri_Bottas/valbot01.png.transform/1col/image.png",
+      "CountryCode": "FIN",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

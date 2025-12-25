@@ -27,10 +27,10 @@
       "Q2": "0 days 00:01:04.410000",
       "Q3": "0 days 00:01:03.971000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -53,10 +53,10 @@
       "Q2": "0 days 00:01:04.734000",
       "Q3": "0 days 00:01:04.492000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -79,10 +79,10 @@
       "Q2": "0 days 00:01:04.556000",
       "Q3": "0 days 00:01:04.554000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -105,10 +105,10 @@
       "Q2": "0 days 00:01:04.896000",
       "Q3": "0 days 00:01:04.582000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -131,10 +131,10 @@
       "Q2": "0 days 00:01:04.860000",
       "Q3": "0 days 00:01:04.763000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -157,10 +157,10 @@
       "Q2": "0 days 00:01:05.041000",
       "Q3": "0 days 00:01:04.926000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -183,10 +183,10 @@
       "Q2": "0 days 00:01:04.836000",
       "Q3": "0 days 00:01:04.929000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -209,10 +209,10 @@
       "Q2": "0 days 00:01:04.846000",
       "Q3": "0 days 00:01:05.132000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -235,10 +235,10 @@
       "Q2": "0 days 00:01:05.052000",
       "Q3": "0 days 00:01:05.276000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -261,10 +261,10 @@
       "Q2": "0 days 00:01:04.846000",
       "Q3": "0 days 00:01:05.649000",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -287,10 +287,10 @@
       "Q2": "0 days 00:01:05.128000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -313,11 +313,11 @@
       "Q2": "0 days 00:01:05.205000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "None"
+      "Time_ms": "",
+      "Tyre": "SOFT"
     },
     {
       "DriverNumber": "6",
@@ -339,11 +339,11 @@
       "Q2": "0 days 00:01:05.226000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
-      "Tyre": "None"
+      "Time_ms": "",
+      "Tyre": "SOFT"
     },
     {
       "DriverNumber": "43",
@@ -356,7 +356,7 @@
       "FirstName": "Franco",
       "LastName": "Colapinto",
       "FullName": "Franco Colapinto",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "",
       "Position": "14.0",
       "ClassifiedPosition": "",
@@ -365,10 +365,10 @@
       "Q2": "0 days 00:01:05.288000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -391,10 +391,10 @@
       "Q2": "0 days 00:01:05.312000",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -417,10 +417,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -443,10 +443,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -469,10 +469,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -495,10 +495,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     },
     {
@@ -521,10 +521,10 @@
       "Q2": "NaT",
       "Q3": "NaT",
       "Time": "NaT",
-      "Status": "DNF",
+      "Status": "",
       "Points": "nan",
       "Laps": "nan",
-      "Time_ms": "None",
+      "Time_ms": "",
       "Tyre": "SOFT"
     }
   ],
@@ -806,7 +806,7 @@
       "Driver": "LEC",
       "LapNumber": "4.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "4.0",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -819,7 +819,7 @@
       "Driver": "LEC",
       "LapNumber": "5.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "5.0",
       "Stint": "2.0",
       "LapTime_ms": "65197.0",
@@ -832,7 +832,7 @@
       "Driver": "LEC",
       "LapNumber": "6.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "6.0",
       "Stint": "2.0",
       "LapTime_ms": "88814.0",
@@ -2054,7 +2054,7 @@
       "Driver": "VER",
       "LapNumber": "4.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "4.0",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -2067,7 +2067,7 @@
       "Driver": "VER",
       "LapNumber": "5.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "5.0",
       "Stint": "2.0",
       "LapTime_ms": "65202.0",
@@ -2080,7 +2080,7 @@
       "Driver": "VER",
       "LapNumber": "6.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "6.0",
       "Stint": "2.0",
       "LapTime_ms": "87709.0",
@@ -2288,7 +2288,7 @@
       "Driver": "BOR",
       "LapNumber": "4.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "4.0",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -2301,7 +2301,7 @@
       "Driver": "BOR",
       "LapNumber": "5.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "5.0",
       "Stint": "2.0",
       "LapTime_ms": "65272.0",
@@ -2314,7 +2314,7 @@
       "Driver": "BOR",
       "LapNumber": "6.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "6.0",
       "Stint": "2.0",
       "LapTime_ms": "81350.0",
@@ -2561,7 +2561,7 @@
       "Driver": "ANT",
       "LapNumber": "4.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -2574,7 +2574,7 @@
       "Driver": "ANT",
       "LapNumber": "5.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "65178.0",
@@ -2587,7 +2587,7 @@
       "Driver": "ANT",
       "LapNumber": "6.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "96288.0",
@@ -2782,7 +2782,7 @@
       "Driver": "GAS",
       "LapNumber": "4.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -2795,7 +2795,7 @@
       "Driver": "GAS",
       "LapNumber": "5.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "65292.0",
@@ -2808,7 +2808,7 @@
       "Driver": "GAS",
       "LapNumber": "6.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "108095.0",
@@ -3042,7 +3042,7 @@
       "Driver": "ALO",
       "LapNumber": "3.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -3055,7 +3055,7 @@
       "Driver": "ALO",
       "LapNumber": "4.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "65891.0",
@@ -3068,7 +3068,7 @@
       "Driver": "ALO",
       "LapNumber": "5.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "86559.0",
@@ -3276,7 +3276,7 @@
       "Driver": "ALB",
       "LapNumber": "7.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "3.0",
       "LapTime_ms": "121934.0",
@@ -3289,7 +3289,7 @@
       "Driver": "ALB",
       "LapNumber": "8.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "3.0",
       "LapTime_ms": "65143.0",
@@ -3302,7 +3302,7 @@
       "Driver": "ALB",
       "LapNumber": "9.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "3.0",
       "LapTime_ms": "82472.0",
@@ -3471,7 +3471,7 @@
       "Driver": "HAD",
       "LapNumber": "4.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "nan",
@@ -3484,7 +3484,7 @@
       "Driver": "HAD",
       "LapNumber": "5.0",
       "IsPersonalBest": "True",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "65063.0",
@@ -3497,7 +3497,7 @@
       "Driver": "HAD",
       "LapNumber": "6.0",
       "IsPersonalBest": "False",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan",
       "Stint": "2.0",
       "LapTime_ms": "87983.0",
@@ -4576,7 +4576,7 @@
     {
       "Driver": "ALB",
       "Stint": "3.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan"
     },
     {
@@ -4612,7 +4612,7 @@
     {
       "Driver": "ALO",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan"
     },
     {
@@ -4642,7 +4642,7 @@
     {
       "Driver": "ANT",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan"
     },
     {
@@ -4708,7 +4708,7 @@
     {
       "Driver": "BOR",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "4.0"
     },
     {
@@ -4780,7 +4780,7 @@
     {
       "Driver": "GAS",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan"
     },
     {
@@ -4822,7 +4822,7 @@
     {
       "Driver": "HAD",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "nan"
     },
     {
@@ -4942,7 +4942,7 @@
     {
       "Driver": "LEC",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "4.0"
     },
     {
@@ -5164,7 +5164,7 @@
     {
       "Driver": "VER",
       "Stint": "2.0",
-      "Compound": "None",
+      "Compound": "",
       "TyreLife": "4.0"
     },
     {

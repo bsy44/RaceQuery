@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "32",
-      "Time_ms": "76439",
+      "Time_ms": "76439.0",
       "Tyre": "SOFT"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "76563",
+      "Time_ms": "76563.0",
       "Tyre": "SOFT"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "76580",
+      "Time_ms": "76580.0",
       "Tyre": "SOFT"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "29",
-      "Time_ms": "76784",
+      "Time_ms": "76784.0",
       "Tyre": "SOFT"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "76859",
+      "Time_ms": "76859.0",
       "Tyre": "SOFT"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "77019",
+      "Time_ms": "77019.0",
       "Tyre": "SOFT"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "22",
-      "Time_ms": "77063",
+      "Time_ms": "77063.0",
       "Tyre": "SOFT"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "24",
-      "Time_ms": "77161",
+      "Time_ms": "77161.0",
       "Tyre": "SOFT"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "28",
-      "Time_ms": "77279",
+      "Time_ms": "77279.0",
       "Tyre": "SOFT"
     },
     {
@@ -204,7 +204,27 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "77282",
+      "Time_ms": "77282.0",
+      "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "23",
+      "BroadcastName": "A ALBON",
+      "Abbreviation": "ALB",
+      "DriverId": "albon",
+      "TeamName": "Williams",
+      "TeamColor": "64C4FF",
+      "TeamId": "williams",
+      "FirstName": "Alexander",
+      "LastName": "Albon",
+      "FullName": "Alexander Albon",
+      "HeadshotUrl": "https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/A/ALEALB01_Alexander_Albon/alealb01.png.transform/1col/image.png",
+      "CountryCode": "",
+      "Position": "11",
+      "ClassifiedPosition": "11",
+      "Status": "Finished",
+      "Laps": "28",
+      "Time_ms": "77302.0",
       "Tyre": "SOFT"
     },
     {
@@ -220,32 +240,12 @@
       "FullName": "Carlos Sainz",
       "HeadshotUrl": "https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/C/CARSAI01_Carlos_Sainz/carsai01.png.transform/1col/image.png",
       "CountryCode": "",
-      "Position": "11",
-      "ClassifiedPosition": "11",
-      "Status": "Finished",
-      "Laps": "30",
-      "Time_ms": "77302",
-      "Tyre": "MEDIUM"
-    },
-    {
-      "DriverNumber": "23",
-      "BroadcastName": "A ALBON",
-      "Abbreviation": "ALB",
-      "DriverId": "albon",
-      "TeamName": "Williams",
-      "TeamColor": "64C4FF",
-      "TeamId": "williams",
-      "FirstName": "Alexander",
-      "LastName": "Albon",
-      "FullName": "Alexander Albon",
-      "HeadshotUrl": "https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/A/ALEALB01_Alexander_Albon/alealb01.png.transform/1col/image.png",
-      "CountryCode": "",
       "Position": "12",
       "ClassifiedPosition": "12",
       "Status": "Finished",
-      "Laps": "28",
-      "Time_ms": "77302",
-      "Tyre": "SOFT"
+      "Laps": "30",
+      "Time_ms": "77302.0",
+      "Tyre": "MEDIUM"
     },
     {
       "DriverNumber": "14",
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "27",
-      "Time_ms": "77330",
+      "Time_ms": "77330.0",
       "Tyre": "SOFT"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "77394",
+      "Time_ms": "77394.0",
       "Tyre": "SOFT"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "77493",
+      "Time_ms": "77493.0",
       "Tyre": "SOFT"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "77634",
+      "Time_ms": "77634.0",
       "Tyre": "SOFT"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "77640",
+      "Time_ms": "77640.0",
       "Tyre": "SOFT"
     },
     {
@@ -364,7 +364,7 @@
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "29",
-      "Time_ms": "77847",
+      "Time_ms": "77847.0",
       "Tyre": "SOFT"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "78034",
+      "Time_ms": "78034.0",
       "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "87",
+      "BroadcastName": "O BEARMAN",
+      "Abbreviation": "BEA",
+      "DriverId": "bearman",
+      "TeamName": "Haas F1 Team",
+      "TeamColor": "B6BABD",
+      "TeamId": "haas",
+      "FirstName": "Oliver",
+      "LastName": "Bearman",
+      "FullName": "Oliver Bearman",
+      "HeadshotUrl": "https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/O/OLIBEA01_Oliver_Bearman/olibea01.png.transform/1col/image.png",
+      "CountryCode": "",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

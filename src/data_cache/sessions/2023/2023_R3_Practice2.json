@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "13",
-      "Time_ms": "78887",
+      "Time_ms": "78887.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "10",
-      "Time_ms": "79332",
+      "Time_ms": "79332.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "12",
-      "Time_ms": "79502",
+      "Time_ms": "79502.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "79672",
+      "Time_ms": "79672.0",
       "Tyre": "HARD"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "12",
-      "Time_ms": "79695",
+      "Time_ms": "79695.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "12",
-      "Time_ms": "79725",
+      "Time_ms": "79725.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "80083",
+      "Time_ms": "80083.0",
       "Tyre": "SOFT"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "80176",
+      "Time_ms": "80176.0",
       "Tyre": "HARD"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "19",
-      "Time_ms": "80194",
+      "Time_ms": "80194.0",
       "Tyre": "HARD"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "12",
-      "Time_ms": "80206",
+      "Time_ms": "80206.0",
       "Tyre": "HARD"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "80220",
+      "Time_ms": "80220.0",
       "Tyre": "HARD"
     },
     {
@@ -244,7 +244,7 @@
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "22",
-      "Time_ms": "80312",
+      "Time_ms": "80312.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "17",
-      "Time_ms": "80323",
+      "Time_ms": "80323.0",
       "Tyre": "HARD"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "24",
-      "Time_ms": "80380",
+      "Time_ms": "80380.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "22",
-      "Time_ms": "80470",
+      "Time_ms": "80470.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "15",
-      "Time_ms": "80579",
+      "Time_ms": "80579.0",
       "Tyre": "HARD"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "8",
-      "Time_ms": "80600",
+      "Time_ms": "80600.0",
       "Tyre": "HARD"
     },
     {
@@ -364,7 +364,7 @@
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "81182",
+      "Time_ms": "81182.0",
       "Tyre": "SOFT"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "18",
-      "Time_ms": "81266",
+      "Time_ms": "81266.0",
       "Tyre": "MEDIUM"
+    },
+    {
+      "DriverNumber": "2",
+      "BroadcastName": "L SARGEANT",
+      "Abbreviation": "SAR",
+      "DriverId": "sargeant",
+      "TeamName": "Williams",
+      "TeamColor": "37BEDD",
+      "TeamId": "williams",
+      "FirstName": "Logan",
+      "LastName": "Sargeant",
+      "FullName": "Logan Sargeant",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/L/LOGSAR01_Logan_Sargeant/logsar01.png.transform/1col/image.png",
+      "CountryCode": "USA",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

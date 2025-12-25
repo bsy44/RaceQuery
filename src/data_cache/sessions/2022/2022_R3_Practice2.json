@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "27",
-      "Time_ms": "78978",
+      "Time_ms": "78978.0",
       "Tyre": "SOFT"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "22",
-      "Time_ms": "79223",
+      "Time_ms": "79223.0",
       "Tyre": "SOFT"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "27",
-      "Time_ms": "79376",
+      "Time_ms": "79376.0",
       "Tyre": "SOFT"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "22",
-      "Time_ms": "79537",
+      "Time_ms": "79537.0",
       "Tyre": "SOFT"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "20",
-      "Time_ms": "79658",
+      "Time_ms": "79658.0",
       "Tyre": "SOFT"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "25",
-      "Time_ms": "79842",
+      "Time_ms": "79842.0",
       "Tyre": "SOFT"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "25",
-      "Time_ms": "80055",
+      "Time_ms": "80055.0",
       "Tyre": "SOFT"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "24",
-      "Time_ms": "80100",
+      "Time_ms": "80100.0",
       "Tyre": "SOFT"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "27",
-      "Time_ms": "80142",
+      "Time_ms": "80142.0",
       "Tyre": "SOFT"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "24",
-      "Time_ms": "80203",
+      "Time_ms": "80203.0",
       "Tyre": "SOFT"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "25",
-      "Time_ms": "80212",
+      "Time_ms": "80212.0",
       "Tyre": "SOFT"
     },
     {
@@ -244,7 +244,7 @@
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "80424",
+      "Time_ms": "80424.0",
       "Tyre": "SOFT"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "23",
-      "Time_ms": "80521",
+      "Time_ms": "80521.0",
       "Tyre": "SOFT"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "28",
-      "Time_ms": "80611",
+      "Time_ms": "80611.0",
       "Tyre": "SOFT"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "23",
-      "Time_ms": "81063",
+      "Time_ms": "81063.0",
       "Tyre": "SOFT"
     },
     {
@@ -318,13 +318,13 @@
       "FirstName": "Kevin",
       "LastName": "Magnussen",
       "FullName": "Kevin Magnussen",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "DEN",
       "Position": "16",
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "23",
-      "Time_ms": "81191",
+      "Time_ms": "81191.0",
       "Tyre": "SOFT"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "28",
-      "Time_ms": "81912",
+      "Time_ms": "81912.0",
       "Tyre": "SOFT"
     },
     {
@@ -364,7 +364,7 @@
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "22",
-      "Time_ms": "81974",
+      "Time_ms": "81974.0",
       "Tyre": "SOFT"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "24",
-      "Time_ms": "82307",
+      "Time_ms": "82307.0",
       "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "5",
+      "BroadcastName": "S VETTEL",
+      "Abbreviation": "VET",
+      "DriverId": "vettel",
+      "TeamName": "Aston Martin",
+      "TeamColor": "2d826d",
+      "TeamId": "aston_martin",
+      "FirstName": "Sebastian",
+      "LastName": "Vettel",
+      "FullName": "Sebastian Vettel",
+      "HeadshotUrl": "https://www.formula1.com/content/dam/fom-website/drivers/S/SEBVET01_Sebastian_Vettel/sebvet01.png.transform/1col/image.png",
+      "CountryCode": "GER",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [

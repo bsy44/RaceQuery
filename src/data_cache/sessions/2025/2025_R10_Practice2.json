@@ -24,7 +24,7 @@
       "ClassifiedPosition": "1",
       "Status": "Finished",
       "Laps": "33",
-      "Time_ms": "72123",
+      "Time_ms": "72123.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -44,7 +44,7 @@
       "ClassifiedPosition": "2",
       "Status": "Finished",
       "Laps": "32",
-      "Time_ms": "72151",
+      "Time_ms": "72151.0",
       "Tyre": "SOFT"
     },
     {
@@ -64,7 +64,7 @@
       "ClassifiedPosition": "3",
       "Status": "Finished",
       "Laps": "33",
-      "Time_ms": "72411",
+      "Time_ms": "72411.0",
       "Tyre": "SOFT"
     },
     {
@@ -84,7 +84,7 @@
       "ClassifiedPosition": "4",
       "Status": "Finished",
       "Laps": "36",
-      "Time_ms": "72445",
+      "Time_ms": "72445.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -104,7 +104,7 @@
       "ClassifiedPosition": "5",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "72458",
+      "Time_ms": "72458.0",
       "Tyre": "SOFT"
     },
     {
@@ -124,7 +124,7 @@
       "ClassifiedPosition": "6",
       "Status": "Finished",
       "Laps": "32",
-      "Time_ms": "72562",
+      "Time_ms": "72562.0",
       "Tyre": "SOFT"
     },
     {
@@ -144,7 +144,7 @@
       "ClassifiedPosition": "7",
       "Status": "Finished",
       "Laps": "37",
-      "Time_ms": "72631",
+      "Time_ms": "72631.0",
       "Tyre": "SOFT"
     },
     {
@@ -164,7 +164,7 @@
       "ClassifiedPosition": "8",
       "Status": "Finished",
       "Laps": "34",
-      "Time_ms": "72653",
+      "Time_ms": "72653.0",
       "Tyre": "SOFT"
     },
     {
@@ -184,7 +184,7 @@
       "ClassifiedPosition": "9",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "72666",
+      "Time_ms": "72666.0",
       "Tyre": "MEDIUM"
     },
     {
@@ -204,7 +204,7 @@
       "ClassifiedPosition": "10",
       "Status": "Finished",
       "Laps": "30",
-      "Time_ms": "72751",
+      "Time_ms": "72751.0",
       "Tyre": "SOFT"
     },
     {
@@ -224,7 +224,7 @@
       "ClassifiedPosition": "11",
       "Status": "Finished",
       "Laps": "31",
-      "Time_ms": "72799",
+      "Time_ms": "72799.0",
       "Tyre": "SOFT"
     },
     {
@@ -244,7 +244,7 @@
       "ClassifiedPosition": "12",
       "Status": "Finished",
       "Laps": "34",
-      "Time_ms": "72874",
+      "Time_ms": "72874.0",
       "Tyre": "SOFT"
     },
     {
@@ -264,7 +264,7 @@
       "ClassifiedPosition": "13",
       "Status": "Finished",
       "Laps": "32",
-      "Time_ms": "72896",
+      "Time_ms": "72896.0",
       "Tyre": "SOFT"
     },
     {
@@ -284,7 +284,7 @@
       "ClassifiedPosition": "14",
       "Status": "Finished",
       "Laps": "33",
-      "Time_ms": "72914",
+      "Time_ms": "72914.0",
       "Tyre": "SOFT"
     },
     {
@@ -304,7 +304,7 @@
       "ClassifiedPosition": "15",
       "Status": "Finished",
       "Laps": "35",
-      "Time_ms": "72939",
+      "Time_ms": "72939.0",
       "Tyre": "SOFT"
     },
     {
@@ -324,7 +324,7 @@
       "ClassifiedPosition": "16",
       "Status": "Finished",
       "Laps": "36",
-      "Time_ms": "73080",
+      "Time_ms": "73080.0",
       "Tyre": "SOFT"
     },
     {
@@ -344,7 +344,7 @@
       "ClassifiedPosition": "17",
       "Status": "Finished",
       "Laps": "33",
-      "Time_ms": "73175",
+      "Time_ms": "73175.0",
       "Tyre": "SOFT"
     },
     {
@@ -358,13 +358,13 @@
       "FirstName": "Franco",
       "LastName": "Colapinto",
       "FullName": "Franco Colapinto",
-      "HeadshotUrl": "None",
+      "HeadshotUrl": "",
       "CountryCode": "",
       "Position": "18",
       "ClassifiedPosition": "18",
       "Status": "Finished",
       "Laps": "33",
-      "Time_ms": "73898",
+      "Time_ms": "73898.0",
       "Tyre": "SOFT"
     },
     {
@@ -384,8 +384,28 @@
       "ClassifiedPosition": "19",
       "Status": "Finished",
       "Laps": "2",
-      "Time_ms": "109253",
+      "Time_ms": "109253.0",
       "Tyre": "SOFT"
+    },
+    {
+      "DriverNumber": "16",
+      "BroadcastName": "C LECLERC",
+      "Abbreviation": "LEC",
+      "DriverId": "leclerc",
+      "TeamName": "Ferrari",
+      "TeamColor": "ED1131",
+      "TeamId": "ferrari",
+      "FirstName": "Charles",
+      "LastName": "Leclerc",
+      "FullName": "Charles Leclerc",
+      "HeadshotUrl": "https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png.transform/1col/image.png",
+      "CountryCode": "",
+      "Position": "20",
+      "ClassifiedPosition": "20",
+      "Status": "No Time",
+      "Laps": "0",
+      "Time_ms": "nan",
+      "Tyre": ""
     }
   ],
   "laps": [
