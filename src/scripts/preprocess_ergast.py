@@ -92,6 +92,7 @@ def preprocess_season_ergast(year: int):
 
     print(f"   ⏳ Processing Driver Standings...")
     last_valid_drivers = []
+    last_driver_round = 0
     for r in rounds:
         try:
             s = api.get_driver_standings(season=year, round=r)
@@ -100,15 +101,17 @@ def preprocess_season_ergast(year: int):
             data = clean_and_convert_df(df, year)
             save_json(OUTPUT_DIR, year, f"{year}_R{r}_driver_standings.json", data, "driver")
             last_valid_drivers = data
+            last_driver_round = r
         except:
             break
 
     if last_valid_drivers:
-        final_drivers = {"season": year, "standings": last_valid_drivers}
+        final_drivers = {"season": year, "round": last_driver_round, "standings": last_valid_drivers}
         save_json(OUTPUT_DIR, year, f"{year}_driver_standings.json", final_drivers, "driver")
 
     print(f"   ⏳ Processing Constructor Standings...")
     last_valid_teams = []
+    last_team_round = 0
     for r in rounds:
         try:
             s = api.get_constructor_standings(season=year, round=r)
@@ -117,63 +120,55 @@ def preprocess_season_ergast(year: int):
             data = clean_and_convert_df(df, year)
             save_json(OUTPUT_DIR, year, f"{year}_R{r}_constructor_standings.json", data, "team")
             last_valid_teams = data
+            last_team_round = r
         except:
             break
 
     if last_valid_teams:
-        final_teams = {"season": year, "standings": last_valid_teams}
+        final_teams = {"season": year, "round": last_team_round, "standings": last_valid_teams}
         save_json(OUTPUT_DIR, year, f"{year}_constructor_standings.json", final_teams, "team")
 
     print(f"   ⏳ Downloading Results (Race, Qualy, Sprint)...")
-    all_race = []
-    all_qualy = []
-    all_sprint = []
+    all_race, all_qualy, all_sprint = [], [], []
 
     for r in rounds:
-        meta = rounds_info.get(r, {'raceName': 'Unknown', 'country': 'Unknown'})
+        meta = rounds_info.get(r, {'gpName': 'Unknown', 'country': 'Unknown'})
 
         try:
             res = api.get_race_results(season=year, round=r)
             if res.content and not res.content[0].empty:
                 df = res.content[0]
-                df['round'], df['raceName'], df['country'] = r, meta['raceName'], meta['country']
+                df['round'], df['raceName'], df['country'] = r, meta['gpName'], meta['country']
                 all_race.extend(clean_and_convert_df(df, year))
-        except:
-            pass
+        except: pass
 
         try:
             res_q = api.get_qualifying_results(season=year, round=r)
             if res_q.content and not res_q.content[0].empty:
                 df_q = res_q.content[0]
-                df_q['round'], df_q['raceName'], df_q['country'] = r, meta['raceName'], meta['country']
+                df_q['round'], df_q['raceName'], df_q['country'] = r, meta['gpName'], meta['country']
                 all_qualy.extend(clean_and_convert_df(df_q, year))
-        except:
-            pass
+        except: pass
 
         try:
             res_s = api.get_sprint_results(season=year, round=r)
             if res_s.content and not res_s.content[0].empty:
                 df_s = res_s.content[0]
-                df_s['round'], df_s['raceName'], df_s['country'] = r, meta['raceName'], meta['country']
+                df_s['round'], df_s['raceName'], df_s['country'] = r, meta['gpName'], meta['country']
                 all_sprint.extend(clean_and_convert_df(df_s, year))
-        except:
-            pass
+        except: pass
 
         print(f"      Processed R{r}", end='\r')
 
-    if all_race:
-        save_json(OUTPUT_DIR, year, f"{year}_race_results.json", all_race, "results")
-    if all_qualy:
-        save_json(OUTPUT_DIR, year, f"{year}_qualifying_results.json", all_qualy, "results")
-    if all_sprint:
-        save_json(OUTPUT_DIR, year, f"{year}_sprint_results.json", all_sprint, "results")
+    if all_race: save_json(OUTPUT_DIR, year, f"{year}_race_results.json", all_race, "results")
+    if all_qualy: save_json(OUTPUT_DIR, year, f"{year}_qualifying_results.json", all_qualy, "results")
+    if all_sprint: save_json(OUTPUT_DIR, year, f"{year}_sprint_results.json", all_sprint, "results")
 
 
 def preprocess_all_ergast(start_year=2022, end_year=2025):
     ensure_directory_exists(OUTPUT_DIR)
     ensure_directory_exists(CACHE_DIR)
     fastf1.Cache.enable_cache(CACHE_DIR)
-
     for year in range(start_year, end_year + 1):
         preprocess_season_ergast(year)
 
