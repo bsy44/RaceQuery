@@ -2,6 +2,7 @@ import os
 import fastf1
 from fastf1.ergast import Ergast
 import pandas as pd
+import numpy as np
 from utils.data_utils import get_path, save_json, apply_data_patches, ensure_directory_exists
 
 
@@ -9,40 +10,69 @@ OUTPUT_DIR = get_path("data_cache", "static")
 CACHE_DIR = get_path("data", "fastf1_cache")
 
 
+def format_numeric_str(val):
+    if pd.isna(val) or val is None or str(val).lower() in ['nan', 'none', 'nat', '']:
+        return ""
+    try:
+        return str(int(float(val)))
+    except (ValueError, TypeError):
+        return str(val).strip()
+
+
 def clean_and_convert_df(df: pd.DataFrame, year: int) -> list:
     if df is None or df.empty:
         return []
+
     df = apply_data_patches(df, year)
-    return df.astype(str).to_dict('records')
+
+    num_cols = ['driverNumber', 'number', 'permanentNumber', 'position', 'rank']
+    for col in num_cols:
+        if col in df.columns:
+            df[col] = df[col].apply(format_numeric_str)
+
+    return df.astype(str).replace('nan', '').replace('None', '').to_dict('records')
 
 
 def preprocess_static_data(year: int):
-    api = Ergast()
+    api = Ergast(result_type='pandas')
     print(f"\n--- 🛠️ Processing static data for season {year} ---")
 
-    print(f"   ⏳ Fetching drivers...")
+    print(f"   ⏳ Fetching drivers via get_driver_info...")
 
-    drivers_collection = api.get_driver_standings(season=year)
-    drivers_df = drivers_collection.content[0] if drivers_collection and hasattr(drivers_collection,
-                                                                                 'content') and drivers_collection.content else None
+    drivers_df = pd.DataFrame()
+    try:
+        response = api.get_driver_info(season=year)
+        if response is not None:
+            if hasattr(response, 'dataframe'):
+                drivers_df = response.dataframe
+            else:
+                drivers_df = response
 
-    if drivers_df is None or drivers_df.empty:
-        print(f"      ℹ️ No standings found. Fetching raw roster for {year}...")
-        try:
-            drivers_info = api.get_drivers(season=year)
-            drivers_df = drivers_info.content[0] if drivers_info and hasattr(drivers_info,
-                                                                             'content') and drivers_info.content else None
-        except Exception as e:
-            print(f"      ⚠️ Could not fetch roster: {e}")
+            if not drivers_df.empty:
+                print(f"      ✅ {len(drivers_df)} drivers found via info.")
+
+        if drivers_df.empty:
+            print(f"      ℹ️ Driver info empty, trying standings...")
+            response_standings = api.get_driver_standings(season=year)
+            if response_standings is not None:
+                if hasattr(response_standings, 'standings'):
+                    drivers_df = response_standings.standings
+                else:
+                    drivers_df = response_standings
+
+                if not drivers_df.empty:
+                    print(f"      ✅ {len(drivers_df)} drivers found via standings.")
+    except Exception as e:
+        print(f"      ⚠️ Error fetching drivers: {e}")
 
     team_drivers_map = {}
     drivers_data = []
 
-    if drivers_df is not None and not drivers_df.empty:
+    if not drivers_df.empty:
         base_cols = [
-            'driverId', 'driverCode', 'code', 'driverNumber', 'number',
+            'driverId', 'driverCode', 'code', 'driverNumber', 'number', 'permanentNumber',
             'givenName', 'familyName', 'dateOfBirth',
-            'driverNationality', 'url', 'constructorNames', 'constructorIds'
+            'driverNationality', 'nationality', 'url', 'constructorNames', 'constructorIds'
         ]
         cols = [col for col in base_cols if col in drivers_df.columns]
 
@@ -52,23 +82,28 @@ def preprocess_static_data(year: int):
         patched_drivers = apply_data_patches(drivers_df, year)
 
         for _, row in patched_drivers.iterrows():
+            raw_num = row.get('permanentNumber') or row.get('driverNumber') or row.get('number') or ""
+            driver_num = format_numeric_str(raw_num)
+
             mini_driver = {
                 "driverId": str(row.get('driverId')),
                 "code": str(row.get('code') or row.get('driverCode') or "UNK"),
-                "driverNumber": str(row.get('driverNumber') or row.get('number') or ""),
+                "driverNumber": driver_num,
                 "dateOfBirth": str(row.get('dateOfBirth')),
                 "givenName": str(row.get('givenName')),
                 "familyName": str(row.get('familyName')),
-                "nationality": str(row.get('driverNationality'))
+                "nationality": str(row.get('driverNationality') or row.get('nationality') or "")
             }
 
             c_ids = row.get('constructorIds')
             ids_list = []
-            if isinstance(c_ids, list):
-                ids_list = c_ids
+            if isinstance(c_ids, (list, pd.Series, np.ndarray)):
+                ids_list = list(c_ids)
             elif isinstance(c_ids, str) and c_ids:
                 ids_list = [x.strip() for x in
-                            c_ids.replace("[", "").replace("]", "").replace("'", "").replace('"', "").split(',')]
+                            c_ids.replace(
+                                "[", "").replace("]", "").replace("'", "").replace('"', "").split(',')
+                            ]
 
             for team_id in ids_list:
                 if team_id:
@@ -79,23 +114,30 @@ def preprocess_static_data(year: int):
     else:
         print(f"   ⚠️ No driver data found for {year}.")
 
-    print(f"   ⏳ Fetching constructors...")
+    print(f"   ⏳ Fetching constructors via get_constructor_info...")
 
-    constructors_collection = api.get_constructor_standings(season=year)
-    constructors_df = constructors_collection.content[0] if constructors_collection and hasattr(constructors_collection,
-                                                                                                'content') and constructors_collection.content else None
+    constructors_df = pd.DataFrame()
+    try:
+        response_const = api.get_constructor_info(season=year)
+        if response_const is not None:
+            if hasattr(response_const, 'dataframe'):
+                constructors_df = response_const.dataframe
+            else:
+                constructors_df = response_const
 
-    if constructors_df is None or constructors_df.empty:
-        print(f"      ℹ️ No constructor standings found. Fetching team list for {year}...")
-        try:
-            teams_info = api.get_constructors(season=year)
-            constructors_df = teams_info.content[0] if teams_info and hasattr(teams_info,
-                                                                              'content') and teams_info.content else None
-        except Exception as e:
-            print(f"      ⚠️ Could not fetch constructors list: {e}")
+        if constructors_df.empty:
+            print(f"      ℹ️ Constructor info empty, trying standings...")
+            response_c_standings = api.get_constructor_standings(season=year)
+            if response_c_standings is not None:
+                if hasattr(response_c_standings, 'standings'):
+                    constructors_df = response_c_standings.standings
+                else:
+                    constructors_df = response_c_standings
+    except Exception as e:
+        print(f"      ⚠️ Error fetching constructors: {e}")
 
     constructors_data = []
-    if constructors_df is not None and not constructors_df.empty:
+    if not constructors_df.empty:
         constructors_data = clean_and_convert_df(constructors_df, year)
 
         for team in constructors_data:

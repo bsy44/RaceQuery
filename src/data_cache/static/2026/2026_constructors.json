@@ -1,0 +1,79 @@
+[
+  {
+    "constructorId": "alpine",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
+    "constructorName": "Alpine F1 Team",
+    "constructorNationality": "French",
+    "drivers": []
+  },
+  {
+    "constructorId": "aston_martin",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+    "constructorName": "Aston Martin",
+    "constructorNationality": "British",
+    "drivers": []
+  },
+  {
+    "constructorId": "audi",
+    "constructorUrl": "",
+    "constructorName": "Audi",
+    "constructorNationality": "German",
+    "drivers": []
+  },
+  {
+    "constructorId": "cadillac",
+    "constructorUrl": "",
+    "constructorName": "Cadillac F1 Team",
+    "constructorNationality": "American",
+    "drivers": []
+  },
+  {
+    "constructorId": "ferrari",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
+    "constructorName": "Ferrari",
+    "constructorNationality": "Italian",
+    "drivers": []
+  },
+  {
+    "constructorId": "haas",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Haas_F1_Team",
+    "constructorName": "Haas F1 Team",
+    "constructorNationality": "American",
+    "drivers": []
+  },
+  {
+    "constructorId": "mclaren",
+    "constructorUrl": "http://en.wikipedia.org/wiki/McLaren",
+    "constructorName": "McLaren",
+    "constructorNationality": "British",
+    "drivers": []
+  },
+  {
+    "constructorId": "mercedes",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+    "constructorName": "Mercedes",
+    "constructorNationality": "German",
+    "drivers": []
+  },
+  {
+    "constructorId": "rb",
+    "constructorUrl": "http://en.wikipedia.org/wiki/RB_Formula_One_Team",
+    "constructorName": "RB F1 Team",
+    "constructorNationality": "Italian",
+    "drivers": []
+  },
+  {
+    "constructorId": "red_bull",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+    "constructorName": "Red Bull",
+    "constructorNationality": "Austrian",
+    "drivers": []
+  },
+  {
+    "constructorId": "williams",
+    "constructorUrl": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+    "constructorName": "Williams",
+    "constructorNationality": "British",
+    "drivers": []
+  }
+]
