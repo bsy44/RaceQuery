@@ -6,7 +6,9 @@
     "givenName": "Alexander",
     "familyName": "Albon",
     "dateOfBirth": "1996-03-23",
-    "driverNationality": "Thai"
+    "driverNationality": "Thai",
+    "constructorNames": "['Williams']",
+    "constructorIds": "['williams']"
   },
   {
     "driverId": "alonso",
@@ -15,7 +17,9 @@
     "givenName": "Fernando",
     "familyName": "Alonso",
     "dateOfBirth": "1981-07-29",
-    "driverNationality": "Spanish"
+    "driverNationality": "Spanish",
+    "constructorNames": "['Aston Martin']",
+    "constructorIds": "['aston_martin']"
   },
   {
     "driverId": "antonelli",
@@ -24,7 +28,9 @@
     "givenName": "Andrea Kimi",
     "familyName": "Antonelli",
     "dateOfBirth": "2006-08-25",
-    "driverNationality": "Italian"
+    "driverNationality": "Italian",
+    "constructorNames": "['Mercedes']",
+    "constructorIds": "['mercedes']"
   },
   {
     "driverId": "bearman",
@@ -33,7 +39,9 @@
     "givenName": "Oliver",
     "familyName": "Bearman",
     "dateOfBirth": "2005-05-08",
-    "driverNationality": "British"
+    "driverNationality": "British",
+    "constructorNames": "['Haas F1 Team']",
+    "constructorIds": "['haas']"
   },
   {
     "driverId": "bortoleto",
@@ -42,7 +50,9 @@
     "givenName": "Gabriel",
     "familyName": "Bortoleto",
     "dateOfBirth": "2004-10-14",
-    "driverNationality": "Brazilian"
+    "driverNationality": "Brazilian",
+    "constructorNames": "['Audi']",
+    "constructorIds": "['audi']"
   },
   {
     "driverId": "bottas",
@@ -51,7 +61,9 @@
     "givenName": "Valtteri",
     "familyName": "Bottas",
     "dateOfBirth": "1989-08-28",
-    "driverNationality": "Finnish"
+    "driverNationality": "Finnish",
+    "constructorNames": "['Cadillac F1 Team']",
+    "constructorIds": "['cadillac']"
   },
   {
     "driverId": "colapinto",
@@ -60,7 +72,9 @@
     "givenName": "Franco",
     "familyName": "Colapinto",
     "dateOfBirth": "2003-05-27",
-    "driverNationality": "Argentine"
+    "driverNationality": "Argentine",
+    "constructorNames": "['Alpine F1 Team']",
+    "constructorIds": "['alpine']"
   },
   {
     "driverId": "gasly",
@@ -69,7 +83,9 @@
     "givenName": "Pierre",
     "familyName": "Gasly",
     "dateOfBirth": "1996-02-07",
-    "driverNationality": "French"
+    "driverNationality": "French",
+    "constructorNames": "['Alpine F1 Team']",
+    "constructorIds": "['alpine']"
   },
   {
     "driverId": "hadjar",
@@ -78,7 +94,9 @@
     "givenName": "Isack",
     "familyName": "Hadjar",
     "dateOfBirth": "2004-09-28",
-    "driverNationality": "French"
+    "driverNationality": "French",
+    "constructorNames": "['Red Bull']",
+    "constructorIds": "['red_bull']"
   },
   {
     "driverId": "hamilton",
@@ -87,7 +105,9 @@
     "givenName": "Lewis",
     "familyName": "Hamilton",
     "dateOfBirth": "1985-01-07",
-    "driverNationality": "British"
+    "driverNationality": "British",
+    "constructorNames": "['Ferrari']",
+    "constructorIds": "['ferrari']"
   },
   {
     "driverId": "hulkenberg",
@@ -96,7 +116,9 @@
     "givenName": "Nico",
     "familyName": "H\u00fclkenberg",
     "dateOfBirth": "1987-08-19",
-    "driverNationality": "German"
+    "driverNationality": "German",
+    "constructorNames": "['Audi']",
+    "constructorIds": "['audi']"
   },
   {
     "driverId": "lawson",
@@ -105,7 +127,9 @@
     "givenName": "Liam",
     "familyName": "Lawson",
     "dateOfBirth": "2002-02-11",
-    "driverNationality": "New Zealander"
+    "driverNationality": "New Zealander",
+    "constructorNames": "['RB F1 Team']",
+    "constructorIds": "['rb']"
   },
   {
     "driverId": "leclerc",
@@ -114,7 +138,9 @@
     "givenName": "Charles",
     "familyName": "Leclerc",
     "dateOfBirth": "1997-10-16",
-    "driverNationality": "Monegasque"
+    "driverNationality": "Monegasque",
+    "constructorNames": "['Ferrari']",
+    "constructorIds": "['ferrari']"
   },
   {
     "driverId": "lindblad",
@@ -123,7 +149,9 @@
     "givenName": "Arvid",
     "familyName": "Lindblad",
     "dateOfBirth": "2007-08-08",
-    "driverNationality": "British"
+    "driverNationality": "British",
+    "constructorNames": "['RB F1 Team']",
+    "constructorIds": "['rb']"
   },
   {
     "driverId": "norris",
@@ -132,7 +160,9 @@
     "givenName": "Lando",
     "familyName": "Norris",
     "dateOfBirth": "1999-11-13",
-    "driverNationality": "British"
+    "driverNationality": "British",
+    "constructorNames": "['McLaren']",
+    "constructorIds": "['mclaren']"
   },
   {
     "driverId": "ocon",
@@ -141,7 +171,9 @@
     "givenName": "Esteban",
     "familyName": "Ocon",
     "dateOfBirth": "1996-09-17",
-    "driverNationality": "French"
+    "driverNationality": "French",
+    "constructorNames": "['Haas F1 Team']",
+    "constructorIds": "['haas']"
   },
   {
     "driverId": "piastri",
@@ -150,7 +182,9 @@
     "givenName": "Oscar",
     "familyName": "Piastri",
     "dateOfBirth": "2001-04-06",
-    "driverNationality": "Australian"
+    "driverNationality": "Australian",
+    "constructorNames": "['McLaren']",
+    "constructorIds": "['mclaren']"
   },
   {
     "driverId": "perez",
@@ -159,7 +193,9 @@
     "givenName": "Sergio",
     "familyName": "P\u00e9rez",
     "dateOfBirth": "1990-01-26",
-    "driverNationality": "Mexican"
+    "driverNationality": "Mexican",
+    "constructorNames": "['Cadillac F1 Team']",
+    "constructorIds": "['cadillac']"
   },
   {
     "driverId": "russell",
@@ -168,7 +204,9 @@
     "givenName": "George",
     "familyName": "Russell",
     "dateOfBirth": "1998-02-15",
-    "driverNationality": "British"
+    "driverNationality": "British",
+    "constructorNames": "['Mercedes']",
+    "constructorIds": "['mercedes']"
   },
   {
     "driverId": "sainz",
@@ -177,7 +215,9 @@
     "givenName": "Carlos",
     "familyName": "Sainz",
     "dateOfBirth": "1994-09-01",
-    "driverNationality": "Spanish"
+    "driverNationality": "Spanish",
+    "constructorNames": "['Williams']",
+    "constructorIds": "['williams']"
   },
   {
     "driverId": "stroll",
@@ -186,7 +226,9 @@
     "givenName": "Lance",
     "familyName": "Stroll",
     "dateOfBirth": "1998-10-29",
-    "driverNationality": "Canadian"
+    "driverNationality": "Canadian",
+    "constructorNames": "['Aston Martin']",
+    "constructorIds": "['aston_martin']"
   },
   {
     "driverId": "max_verstappen",
@@ -195,6 +237,8 @@
     "givenName": "Max",
     "familyName": "Verstappen",
     "dateOfBirth": "1997-09-30",
-    "driverNationality": "Dutch"
+    "driverNationality": "Dutch",
+    "constructorNames": "['Red Bull']",
+    "constructorIds": "['red_bull']"
   }
 ]
