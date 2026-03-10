@@ -423,7 +423,7 @@
     "country": "Belgium",
     "location": "Spa-Francorchamps",
     "circuit_name": "Circuit de Spa-Francorchamps",
-    "official_name": "FORMULA 1 BELGIAN GRAND PRIX 2026",
+    "official_name": "FORMULA 1 MO\u00cbT & CHANDON BELGIAN GRAND PRIX 2026",
     "short_name": "Belgian Grand Prix",
     "event_format": "conventional",
     "event_date": "2026-07-19 00:00:00",
@@ -658,8 +658,8 @@
     "sessions": [
       {
         "name": "Practice 1",
-        "local_date": "2026-10-09 17:30:00+08:00",
-        "utc_date": "2026-10-09 09:30:00"
+        "local_date": "2026-10-09 16:30:00+08:00",
+        "utc_date": "2026-10-09 08:30:00"
       },
       {
         "name": "Sprint Qualifying",

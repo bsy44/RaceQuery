@@ -66,7 +66,7 @@ if __name__ == "__main__":
     fastf1.Cache.enable_cache(CACHE_DIR)
     print(f"   ✅ FastF1 Cache enabled at: {os.path.abspath(CACHE_DIR)}")
 
-    for y in range(2022, 2026):
+    for y in range(2026, 2027):
         process_year(y)
 
     print("\n🎉 Statistics Pre-processing completed successfully!")

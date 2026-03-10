@@ -1,14 +1,15 @@
 import fastf1
 from fastf1.ergast import Ergast
-from utils.data_utils import get_path, save_json, ensure_directory_exists, clean_nat_values
+import pandas as pd
+from utils.data_utils import get_path, save_json, ensure_directory_exists
 from services import ergast_service
-
 
 OUTPUT_DIR = get_path("data_cache", "ergast")
 CACHE_DIR = get_path("data", "fastf1_cache")
 
 
 def preprocess_season_ergast(year: int):
+    # Initialisation avec result_type='pandas' pour profiter des DataFrames
     api = Ergast(result_type='pandas')
     print(f"\n=== 📥 Ingestion des données Ergast pour {year} ===")
 
@@ -39,19 +40,23 @@ def preprocess_season_ergast(year: int):
         print(f"❌ Erreur lors de la génération du calendrier : {e}")
         return
 
+    # --- CLASSEMENT PILOTES ---
     print(f"   ⏳ Traitement du Championnat Pilotes...")
     last_valid_drivers = []
     last_driver_round = 0
 
+    # On parcourt les rounds à l'envers pour trouver le classement le plus récent
     for r in reversed(rounds):
         try:
             s = api.get_driver_standings(season=year, round=r)
-            df = s.standings if hasattr(s, 'standings') else None
+            # Correction : Utilisation de .content[0] au lieu de .standings
+            df = s.content[0] if (hasattr(s, 'content') and len(s.content) > 0) else None
+
             if df is not None and not df.empty:
                 last_valid_drivers = ergast_service.clean_and_convert_df(df, year)
                 last_driver_round = r
                 break
-        except:
+        except Exception:
             continue
 
     if not last_valid_drivers:
@@ -63,6 +68,7 @@ def preprocess_season_ergast(year: int):
         save_json(OUTPUT_DIR, year, f"{year}_driver_standings.json",
                   {"season": year, "round": last_driver_round, "standings": last_valid_drivers}, "driver")
 
+    # --- CLASSEMENT ÉQUIPES ---
     print(f"   ⏳ Traitement du Championnat Équipes...")
     last_valid_teams = []
     last_team_round = 0
@@ -70,12 +76,14 @@ def preprocess_season_ergast(year: int):
     for r in reversed(rounds):
         try:
             s = api.get_constructor_standings(season=year, round=r)
-            df = s.standings if hasattr(s, 'standings') else None
+            # Correction : Utilisation de .content[0]
+            df = s.content[0] if (hasattr(s, 'content') and len(s.content) > 0) else None
+
             if df is not None and not df.empty:
                 last_valid_teams = ergast_service.clean_and_convert_df(df, year)
                 last_team_round = r
                 break
-        except:
+        except Exception:
             continue
 
     if not last_valid_teams:
@@ -87,37 +95,44 @@ def preprocess_season_ergast(year: int):
         save_json(OUTPUT_DIR, year, f"{year}_constructor_standings.json",
                   {"season": year, "round": last_team_round, "standings": last_valid_teams}, "team")
 
-    if last_driver_round > 0 or last_team_round > 0:
-        print(f"   ⏳ Téléchargement des résultats de sessions...")
+    # --- RÉSULTATS DES SESSIONS ---
+    # On ne télécharge les résultats que si au moins un round a été disputé
+    max_round_played = max(last_driver_round, last_team_round)
+
+    if max_round_played > 0:
+        print(f"   ⏳ Téléchargement des résultats de sessions (jusqu'au Round {max_round_played})...")
         all_race, all_qualy, all_sprint = [], [], []
 
         for r in rounds:
-            if r > max(last_driver_round, last_team_round):
+            if r > max_round_played:
                 continue
 
             meta = rounds_info.get(r, {'gpName': 'Unknown', 'country': 'Unknown'})
 
+            # Race Results
             try:
                 res = api.get_race_results(season=year, round=r)
-                df = res.content[0] if hasattr(res, 'content') and res.content else None
+                df = res.content[0] if (hasattr(res, 'content') and res.content) else None
                 if df is not None and not df.empty:
                     df['round'], df['raceName'], df['country'] = r, meta['gpName'], meta['country']
                     all_race.extend(ergast_service.clean_and_convert_df(df, year))
             except:
                 pass
 
+            # Qualifying Results
             try:
                 res_q = api.get_qualifying_results(season=year, round=r)
-                df_q = res_q.content[0] if hasattr(res_q, 'content') and res_q.content else None
+                df_q = res_q.content[0] if (hasattr(res_q, 'content') and res_q.content) else None
                 if df_q is not None and not df_q.empty:
                     df_q['round'], df_q['raceName'], df_q['country'] = r, meta['gpName'], meta['country']
                     all_qualy.extend(ergast_service.clean_and_convert_df(df_q, year))
             except:
                 pass
 
+            # Sprint Results
             try:
                 res_s = api.get_sprint_results(season=year, round=r)
-                df_s = res_s.content[0] if hasattr(res_s, 'content') and res_s.content else None
+                df_s = res_s.content[0] if (hasattr(res_s, 'content') and res_s.content) else None
                 if df_s is not None and not df_s.empty:
                     df_s['round'], df_s['raceName'], df_s['country'] = r, meta['gpName'], meta['country']
                     all_sprint.extend(ergast_service.clean_and_convert_df(df_s, year))
@@ -128,7 +143,7 @@ def preprocess_season_ergast(year: int):
         if all_qualy: save_json(OUTPUT_DIR, year, f"{year}_qualifying_results.json", all_qualy, "results")
         if all_sprint: save_json(OUTPUT_DIR, year, f"{year}_sprint_results.json", all_sprint, "results")
     else:
-        print(f"   ℹ️ Aucun résultat à télécharger (La saison n'a pas encore débuté).")
+        print(f"   ℹ️ Aucun résultat à télécharger (La saison n'a pas encore débuté ou données indisponibles).")
 
 
 def preprocess_all_ergast(start_year=2022, end_year=2026):
@@ -140,5 +155,7 @@ def preprocess_all_ergast(start_year=2022, end_year=2026):
         preprocess_season_ergast(year)
     print("\n🎉 Prétraitement Ergast terminé avec succès !")
 
+
 if __name__ == "__main__":
+    # Test spécifique pour 2026
     preprocess_all_ergast(2026, 2026)
