@@ -1,79 +1,332 @@
 [
   {
-    "constructorId": "alpine",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Alpine_F1_Team",
-    "constructorName": "Alpine F1 Team",
-    "constructorNationality": "French",
-    "drivers": []
-  },
-  {
-    "constructorId": "aston_martin",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
-    "constructorName": "Aston Martin",
-    "constructorNationality": "British",
-    "drivers": []
-  },
-  {
-    "constructorId": "audi",
-    "constructorUrl": "",
-    "constructorName": "Audi",
-    "constructorNationality": "German",
-    "drivers": []
-  },
-  {
-    "constructorId": "cadillac",
-    "constructorUrl": "",
-    "constructorName": "Cadillac F1 Team",
-    "constructorNationality": "American",
-    "drivers": []
-  },
-  {
-    "constructorId": "ferrari",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Scuderia_Ferrari",
-    "constructorName": "Ferrari",
-    "constructorNationality": "Italian",
-    "drivers": []
-  },
-  {
-    "constructorId": "haas",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Haas_F1_Team",
-    "constructorName": "Haas F1 Team",
-    "constructorNationality": "American",
-    "drivers": []
-  },
-  {
-    "constructorId": "mclaren",
-    "constructorUrl": "http://en.wikipedia.org/wiki/McLaren",
-    "constructorName": "McLaren",
-    "constructorNationality": "British",
-    "drivers": []
-  },
-  {
+    "position": "1.0",
+    "positionText": "1",
+    "points": "43.0",
+    "wins": "1",
     "constructorId": "mercedes",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
     "constructorName": "Mercedes",
     "constructorNationality": "German",
-    "drivers": []
+    "drivers": [
+      {
+        "driverId": "russell",
+        "code": "RUS",
+        "driverNumber": "63",
+        "dateOfBirth": "1998-02-15 00:00:00",
+        "givenName": "George",
+        "familyName": "Russell",
+        "nationality": "British"
+      },
+      {
+        "driverId": "antonelli",
+        "code": "ANT",
+        "driverNumber": "12",
+        "dateOfBirth": "2006-08-25 00:00:00",
+        "givenName": "Andrea Kimi",
+        "familyName": "Antonelli",
+        "nationality": "Italian"
+      }
+    ]
   },
   {
-    "constructorId": "rb",
-    "constructorUrl": "http://en.wikipedia.org/wiki/RB_Formula_One_Team",
-    "constructorName": "RB F1 Team",
+    "position": "2.0",
+    "positionText": "2",
+    "points": "27.0",
+    "wins": "0",
+    "constructorId": "ferrari",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Scuderia_Ferrari",
+    "constructorName": "Ferrari",
     "constructorNationality": "Italian",
-    "drivers": []
+    "drivers": [
+      {
+        "driverId": "leclerc",
+        "code": "LEC",
+        "driverNumber": "16",
+        "dateOfBirth": "1997-10-16 00:00:00",
+        "givenName": "Charles",
+        "familyName": "Leclerc",
+        "nationality": "Monegasque"
+      },
+      {
+        "driverId": "hamilton",
+        "code": "HAM",
+        "driverNumber": "44",
+        "dateOfBirth": "1985-01-07 00:00:00",
+        "givenName": "Lewis",
+        "familyName": "Hamilton",
+        "nationality": "British"
+      }
+    ]
   },
   {
+    "position": "3.0",
+    "positionText": "3",
+    "points": "10.0",
+    "wins": "0",
+    "constructorId": "mclaren",
+    "constructorUrl": "https://en.wikipedia.org/wiki/McLaren",
+    "constructorName": "McLaren",
+    "constructorNationality": "British",
+    "drivers": [
+      {
+        "driverId": "norris",
+        "code": "NOR",
+        "driverNumber": "4",
+        "dateOfBirth": "1999-11-13 00:00:00",
+        "givenName": "Lando",
+        "familyName": "Norris",
+        "nationality": "British"
+      },
+      {
+        "driverId": "piastri",
+        "code": "PIA",
+        "driverNumber": "81",
+        "dateOfBirth": "2001-04-06 00:00:00",
+        "givenName": "Oscar",
+        "familyName": "Piastri",
+        "nationality": "Australian"
+      }
+    ]
+  },
+  {
+    "position": "4.0",
+    "positionText": "4",
+    "points": "8.0",
+    "wins": "0",
     "constructorId": "red_bull",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Red_Bull_Racing",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Red_Bull_Racing",
     "constructorName": "Red Bull",
     "constructorNationality": "Austrian",
-    "drivers": []
+    "drivers": [
+      {
+        "driverId": "max_verstappen",
+        "code": "VER",
+        "driverNumber": "3",
+        "dateOfBirth": "1997-09-30 00:00:00",
+        "givenName": "Max",
+        "familyName": "Verstappen",
+        "nationality": "Dutch"
+      },
+      {
+        "driverId": "hadjar",
+        "code": "HAD",
+        "driverNumber": "6",
+        "dateOfBirth": "2004-09-28 00:00:00",
+        "givenName": "Isack",
+        "familyName": "Hadjar",
+        "nationality": "French"
+      }
+    ]
   },
   {
+    "position": "5.0",
+    "positionText": "5",
+    "points": "6.0",
+    "wins": "0",
+    "constructorId": "haas",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Haas_F1_Team",
+    "constructorName": "Haas F1 Team",
+    "constructorNationality": "American",
+    "drivers": [
+      {
+        "driverId": "bearman",
+        "code": "BEA",
+        "driverNumber": "87",
+        "dateOfBirth": "2005-05-08 00:00:00",
+        "givenName": "Oliver",
+        "familyName": "Bearman",
+        "nationality": "British"
+      },
+      {
+        "driverId": "ocon",
+        "code": "OCO",
+        "driverNumber": "31",
+        "dateOfBirth": "1996-09-17 00:00:00",
+        "givenName": "Esteban",
+        "familyName": "Ocon",
+        "nationality": "French"
+      }
+    ]
+  },
+  {
+    "position": "6.0",
+    "positionText": "6",
+    "points": "4.0",
+    "wins": "0",
+    "constructorId": "rb",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Racing_Bulls",
+    "constructorName": "RB F1 Team",
+    "constructorNationality": "Italian",
+    "drivers": [
+      {
+        "driverId": "arvid_lindblad",
+        "code": "LIN",
+        "driverNumber": "41",
+        "dateOfBirth": "2007-08-08 00:00:00",
+        "givenName": "Arvid",
+        "familyName": "Lindblad",
+        "nationality": "British"
+      },
+      {
+        "driverId": "lawson",
+        "code": "LAW",
+        "driverNumber": "30",
+        "dateOfBirth": "2002-02-11 00:00:00",
+        "givenName": "Liam",
+        "familyName": "Lawson",
+        "nationality": "New Zealander"
+      }
+    ]
+  },
+  {
+    "position": "7.0",
+    "positionText": "7",
+    "points": "2.0",
+    "wins": "0",
+    "constructorId": "audi",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Audi_in_Formula_One",
+    "constructorName": "Audi",
+    "constructorNationality": "German",
+    "drivers": [
+      {
+        "driverId": "bortoleto",
+        "code": "BOR",
+        "driverNumber": "5",
+        "dateOfBirth": "2004-10-14 00:00:00",
+        "givenName": "Gabriel",
+        "familyName": "Bortoleto",
+        "nationality": "Brazilian"
+      },
+      {
+        "driverId": "hulkenberg",
+        "code": "HUL",
+        "driverNumber": "27",
+        "dateOfBirth": "1987-08-19 00:00:00",
+        "givenName": "Nico",
+        "familyName": "H\u00fclkenberg",
+        "nationality": "German"
+      }
+    ]
+  },
+  {
+    "position": "8.0",
+    "positionText": "8",
+    "points": "1.0",
+    "wins": "0",
+    "constructorId": "alpine",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Alpine_F1_Team",
+    "constructorName": "Alpine F1 Team",
+    "constructorNationality": "French",
+    "drivers": [
+      {
+        "driverId": "gasly",
+        "code": "GAS",
+        "driverNumber": "10",
+        "dateOfBirth": "1996-02-07 00:00:00",
+        "givenName": "Pierre",
+        "familyName": "Gasly",
+        "nationality": "French"
+      },
+      {
+        "driverId": "colapinto",
+        "code": "COL",
+        "driverNumber": "43",
+        "dateOfBirth": "2003-05-27 00:00:00",
+        "givenName": "Franco",
+        "familyName": "Colapinto",
+        "nationality": "Argentine"
+      }
+    ]
+  },
+  {
+    "position": "9.0",
+    "positionText": "9",
+    "points": "0.0",
+    "wins": "0",
     "constructorId": "williams",
-    "constructorUrl": "http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Williams_Racing",
     "constructorName": "Williams",
     "constructorNationality": "British",
-    "drivers": []
+    "drivers": [
+      {
+        "driverId": "albon",
+        "code": "ALB",
+        "driverNumber": "23",
+        "dateOfBirth": "1996-03-23 00:00:00",
+        "givenName": "Alexander",
+        "familyName": "Albon",
+        "nationality": "Thai"
+      },
+      {
+        "driverId": "sainz",
+        "code": "SAI",
+        "driverNumber": "55",
+        "dateOfBirth": "1994-09-01 00:00:00",
+        "givenName": "Carlos",
+        "familyName": "Sainz",
+        "nationality": "Spanish"
+      }
+    ]
+  },
+  {
+    "position": "10.0",
+    "positionText": "10",
+    "points": "0.0",
+    "wins": "0",
+    "constructorId": "cadillac",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Cadillac_in_Formula_One",
+    "constructorName": "Cadillac F1 Team",
+    "constructorNationality": "American",
+    "drivers": [
+      {
+        "driverId": "perez",
+        "code": "PER",
+        "driverNumber": "11",
+        "dateOfBirth": "1990-01-26 00:00:00",
+        "givenName": "Sergio",
+        "familyName": "P\u00e9rez",
+        "nationality": "Mexican"
+      },
+      {
+        "driverId": "bottas",
+        "code": "BOT",
+        "driverNumber": "77",
+        "dateOfBirth": "1989-08-28 00:00:00",
+        "givenName": "Valtteri",
+        "familyName": "Bottas",
+        "nationality": "Finnish"
+      }
+    ]
+  },
+  {
+    "position": "nan",
+    "positionText": "-",
+    "points": "0.0",
+    "wins": "0",
+    "constructorId": "aston_martin",
+    "constructorUrl": "https://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One",
+    "constructorName": "Aston Martin",
+    "constructorNationality": "British",
+    "drivers": [
+      {
+        "driverId": "stroll",
+        "code": "STR",
+        "driverNumber": "18",
+        "dateOfBirth": "1998-10-29 00:00:00",
+        "givenName": "Lance",
+        "familyName": "Stroll",
+        "nationality": "Canadian"
+      },
+      {
+        "driverId": "alonso",
+        "code": "ALO",
+        "driverNumber": "14",
+        "dateOfBirth": "1981-07-29 00:00:00",
+        "givenName": "Fernando",
+        "familyName": "Alonso",
+        "nationality": "Spanish"
+      }
+    ]
   }
 ]
