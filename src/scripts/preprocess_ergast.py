@@ -22,16 +22,85 @@ def preprocess_season_ergast(year: int):
         schedule = schedule_resp[schedule_resp['EventName'].notna()]
 
         print(f"   ⏳ Récupération de la carte des circuits...")
-        circuit_map = ergast_service.get_official_circuit_map(api, year)
+        # On récupère la map brute d'Ergast
+        raw_circuit_map = ergast_service.get_official_circuit_map(api, year)
 
+        # Correction spécifique pour 2026 :
+        # Si FastF1 et Ergast sont décalés, on utilise une logique de repli par localisation
+        # pour éviter que Bahrain n'affiche le circuit de Miami.
         rounds_info = {}
         formatted_schedule = []
 
         for _, row in schedule.iterrows():
             r_num = int(row['RoundNumber'])
-            event_info = ergast_service.format_event_info(row, year, circuit_map)
-            formatted_schedule.append(event_info)
 
+            # On tente de récupérer le nom officiel via la map,
+            # mais on vérifie la cohérence avec la localisation de FastF1
+            location = str(row.get('Location', '')).lower()
+            event_name = str(row.get('EventName', '')).lower()
+
+            # Logique de sécurité pour les noms de circuits 2026
+            official_circuit_name = raw_circuit_map.get(r_num)
+
+            # Si c'est 2026 et que le nom semble décalé (ex: Bahrain avec Miami)
+            # On force le nom basé sur la localisation de FastF1 qui est plus fiable
+            if year == 2026:
+                if "sakhir" in location or "bahrain" in event_name:
+                    official_circuit_name = "Bahrain International Circuit"
+                elif "jeddah" in location or "saudi" in event_name:
+                    official_circuit_name = "Jeddah Corniche Circuit"
+                elif "melbourne" in location:
+                    official_circuit_name = "Albert Park Grand Prix Circuit"
+                elif "shanghai" in location:
+                    official_circuit_name = "Shanghai International Circuit"
+                elif "suzuka" in location:
+                    official_circuit_name = "Suzuka Circuit"
+                elif "miami" in location:
+                    official_circuit_name = "Miami International Autodrome"
+                elif "monaco" in location:
+                    official_circuit_name = "Circuit de Monaco"
+                elif "barcelona" in location:
+                    official_circuit_name = "Circuit de Barcelona-Catalunya"
+                elif "montréal" in location or "montreal" in location:
+                    official_circuit_name = "Circuit Gilles Villeneuve"
+                elif "spielberg" in location:
+                    official_circuit_name = "Red Bull Ring"
+                elif "silverstone" in location:
+                    official_circuit_name = "Silverstone Circuit"
+                elif "budapest" in location:
+                    official_circuit_name = "Hungaroring"
+                elif "spa" in location:
+                    official_circuit_name = "Circuit de Spa-Francorchamps"
+                elif "zandvoort" in location:
+                    official_circuit_name = "Circuit Zandvoort"
+                elif "monza" in location:
+                    official_circuit_name = "Autodromo Nazionale di Monza"
+                elif "baku" in location:
+                    official_circuit_name = "Baku City Circuit"
+                elif "singapore" in location:
+                    official_circuit_name = "Marina Bay Street Circuit"
+                elif "austin" in location:
+                    official_circuit_name = "Circuit of the Americas"
+                elif "mexico" in location:
+                    official_circuit_name = "Autódromo Hermanos Rodríguez"
+                elif "são paulo" in location or "interlagos" in location:
+                    official_circuit_name = "Autódromo José Carlos Pace"
+                elif "las vegas" in location:
+                    official_circuit_name = "Las Vegas Strip Street Circuit"
+                elif "lusail" in location or "qatar" in location:
+                    official_circuit_name = "Lusail International Circuit"
+                elif "yas marina" in location or "abu dhabi" in location:
+                    official_circuit_name = "Yas Marina Circuit"
+
+            # Si on n'a toujours rien, on utilise le formateur générique avec la map (corrigée ou non)
+            temp_map = {r_num: official_circuit_name} if official_circuit_name else raw_circuit_map
+            event_info = ergast_service.format_event_info(row, year, temp_map)
+
+            # On s'assure que le circuit_name final est bien celui qu'on a validé
+            if official_circuit_name:
+                event_info['circuit_name'] = official_circuit_name
+
+            formatted_schedule.append(event_info)
             rounds_info[r_num] = {
                 'gpName': event_info['short_name'],
                 'country': event_info['country']
@@ -55,27 +124,20 @@ def preprocess_season_ergast(year: int):
             df = s.content[0] if (hasattr(s, 'content') and len(s.content) > 0) else None
 
             if df is not None and not df.empty:
-                # On nettoie et on applique les patches (imageExt, etc.)
                 current_standing = ergast_service.clean_and_convert_df(df, year)
-
-                # Sauvegarde du round spécifique pour les graphiques d'évolution
                 save_json(OUTPUT_DIR, year, f"{year}_R{r}_driver_standings.json", current_standing, "driver")
-
                 last_valid_drivers = current_standing
                 last_driver_round = r
             else:
-                # On arrête de chercher si un round n'a pas encore de données
                 break
         except:
             break
 
-    # Initialisation si la saison n'a pas encore commencé (ex: 2026)
     if not last_valid_drivers:
         print(f"      ℹ️ Aucun classement trouvé. Initialisation du roster à 0 pts...")
         last_valid_drivers = ergast_service.initialize_empty_driver_standings(api, year)
         last_driver_round = 0
 
-    # Sauvegarde du dernier état global
     if last_valid_drivers:
         save_json(OUTPUT_DIR, year, f"{year}_driver_standings.json",
                   {"season": year, "round": last_driver_round, "standings": last_valid_drivers}, "driver")
@@ -92,10 +154,7 @@ def preprocess_season_ergast(year: int):
 
             if df is not None and not df.empty:
                 current_standing_teams = ergast_service.clean_and_convert_df(df, year)
-
-                # Sauvegarde du round spécifique
                 save_json(OUTPUT_DIR, year, f"{year}_R{r}_constructor_standings.json", current_standing_teams, "team")
-
                 last_valid_teams = current_standing_teams
                 last_team_round = r
             else:
@@ -125,7 +184,6 @@ def preprocess_season_ergast(year: int):
 
             meta = rounds_info.get(r, {'gpName': 'Unknown', 'country': 'Unknown'})
 
-            # Résultats de course
             try:
                 res = api.get_race_results(season=year, round=r)
                 df = res.content[0] if (hasattr(res, 'content') and res.content) else None
@@ -135,7 +193,6 @@ def preprocess_season_ergast(year: int):
             except:
                 pass
 
-            # Résultats de qualifications
             try:
                 res_q = api.get_qualifying_results(season=year, round=r)
                 df_q = res_q.content[0] if (hasattr(res_q, 'content') and res_q.content) else None
@@ -145,7 +202,6 @@ def preprocess_season_ergast(year: int):
             except:
                 pass
 
-            # Résultats de sprint
             try:
                 res_s = api.get_sprint_results(season=year, round=r)
                 df_s = res_s.content[0] if (hasattr(res_s, 'content') and res_s.content) else None
@@ -173,5 +229,4 @@ def preprocess_all_ergast(start_year=2022, end_year=2026):
 
 
 if __name__ == "__main__":
-    # Ingestion pour la saison actuelle/future
     preprocess_all_ergast(2026, 2026)
