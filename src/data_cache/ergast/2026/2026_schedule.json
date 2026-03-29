@@ -116,82 +116,6 @@
   {
     "season": 2026,
     "round": 4,
-    "country": "Bahrain",
-    "location": "Sakhir",
-    "circuit_name": "Bahrain International Circuit",
-    "official_name": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2026",
-    "short_name": "Bahrain Grand Prix",
-    "event_format": "conventional",
-    "event_date": "2026-04-12 00:00:00",
-    "sessions": [
-      {
-        "name": "Practice 1",
-        "local_date": "2026-04-10 14:30:00+03:00",
-        "utc_date": "2026-04-10 11:30:00"
-      },
-      {
-        "name": "Practice 2",
-        "local_date": "2026-04-10 18:00:00+03:00",
-        "utc_date": "2026-04-10 15:00:00"
-      },
-      {
-        "name": "Practice 3",
-        "local_date": "2026-04-11 15:30:00+03:00",
-        "utc_date": "2026-04-11 12:30:00"
-      },
-      {
-        "name": "Qualifying",
-        "local_date": "2026-04-11 19:00:00+03:00",
-        "utc_date": "2026-04-11 16:00:00"
-      },
-      {
-        "name": "Race",
-        "local_date": "2026-04-12 18:00:00+03:00",
-        "utc_date": "2026-04-12 15:00:00"
-      }
-    ]
-  },
-  {
-    "season": 2026,
-    "round": 5,
-    "country": "Saudi Arabia",
-    "location": "Jeddah",
-    "circuit_name": "Jeddah Corniche Circuit",
-    "official_name": "FORMULA 1 STC SAUDI ARABIAN GRAND PRIX 2026",
-    "short_name": "Saudi Arabian Grand Prix",
-    "event_format": "conventional",
-    "event_date": "2026-04-19 00:00:00",
-    "sessions": [
-      {
-        "name": "Practice 1",
-        "local_date": "2026-04-17 16:30:00+03:00",
-        "utc_date": "2026-04-17 13:30:00"
-      },
-      {
-        "name": "Practice 2",
-        "local_date": "2026-04-17 20:00:00+03:00",
-        "utc_date": "2026-04-17 17:00:00"
-      },
-      {
-        "name": "Practice 3",
-        "local_date": "2026-04-18 16:30:00+03:00",
-        "utc_date": "2026-04-18 13:30:00"
-      },
-      {
-        "name": "Qualifying",
-        "local_date": "2026-04-18 20:00:00+03:00",
-        "utc_date": "2026-04-18 17:00:00"
-      },
-      {
-        "name": "Race",
-        "local_date": "2026-04-19 20:00:00+03:00",
-        "utc_date": "2026-04-19 17:00:00"
-      }
-    ]
-  },
-  {
-    "season": 2026,
-    "round": 6,
     "country": "United States",
     "location": "Miami Gardens",
     "circuit_name": "Miami International Autodrome",
@@ -229,7 +153,7 @@
   },
   {
     "season": 2026,
-    "round": 7,
+    "round": 5,
     "country": "Canada",
     "location": "Montr\u00e9al",
     "circuit_name": "Circuit Gilles Villeneuve",
@@ -267,10 +191,10 @@
   },
   {
     "season": 2026,
-    "round": 8,
+    "round": 6,
     "country": "Monaco",
     "location": "Monte Carlo",
-    "circuit_name": "Red Bull Ring",
+    "circuit_name": "Circuit de Monaco",
     "official_name": "FORMULA 1 LOUIS VUITTON GRAND PRIX DE MONACO 2026",
     "short_name": "Monaco Grand Prix",
     "event_format": "conventional",
@@ -305,7 +229,7 @@
   },
   {
     "season": 2026,
-    "round": 9,
+    "round": 7,
     "country": "Spain",
     "location": "Barcelona",
     "circuit_name": "Circuit de Barcelona-Catalunya",
@@ -343,7 +267,7 @@
   },
   {
     "season": 2026,
-    "round": 10,
+    "round": 8,
     "country": "Austria",
     "location": "Spielberg",
     "circuit_name": "Red Bull Ring",
@@ -381,7 +305,7 @@
   },
   {
     "season": 2026,
-    "round": 11,
+    "round": 9,
     "country": "United Kingdom",
     "location": "Silverstone",
     "circuit_name": "Silverstone Circuit",
@@ -419,7 +343,7 @@
   },
   {
     "season": 2026,
-    "round": 12,
+    "round": 10,
     "country": "Belgium",
     "location": "Spa-Francorchamps",
     "circuit_name": "Circuit de Spa-Francorchamps",
@@ -457,7 +381,7 @@
   },
   {
     "season": 2026,
-    "round": 13,
+    "round": 11,
     "country": "Hungary",
     "location": "Budapest",
     "circuit_name": "Hungaroring",
@@ -495,7 +419,7 @@
   },
   {
     "season": 2026,
-    "round": 14,
+    "round": 12,
     "country": "Netherlands",
     "location": "Zandvoort",
     "circuit_name": "Circuit Zandvoort",
@@ -533,7 +457,7 @@
   },
   {
     "season": 2026,
-    "round": 15,
+    "round": 13,
     "country": "Italy",
     "location": "Monza",
     "circuit_name": "Autodromo Nazionale di Monza",
@@ -571,10 +495,10 @@
   },
   {
     "season": 2026,
-    "round": 16,
+    "round": 14,
     "country": "Spain",
     "location": "Madrid",
-    "circuit_name": "Marina Bay Street Circuit",
+    "circuit_name": "Madring",
     "official_name": "FORMULA 1 TAG HEUER GRAN PREMIO DE ESPA\u00d1A 2026",
     "short_name": "Spanish Grand Prix",
     "event_format": "conventional",
@@ -609,7 +533,7 @@
   },
   {
     "season": 2026,
-    "round": 17,
+    "round": 15,
     "country": "Azerbaijan",
     "location": "Baku",
     "circuit_name": "Baku City Circuit",
@@ -647,10 +571,10 @@
   },
   {
     "season": 2026,
-    "round": 18,
+    "round": 16,
     "country": "Singapore",
     "location": "Marina Bay",
-    "circuit_name": "Aut\u00f3dromo Hermanos Rodr\u00edguez",
+    "circuit_name": "Marina Bay Street Circuit",
     "official_name": "FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2026",
     "short_name": "Singapore Grand Prix",
     "event_format": "sprint_qualifying",
@@ -685,7 +609,7 @@
   },
   {
     "season": 2026,
-    "round": 19,
+    "round": 17,
     "country": "United States",
     "location": "Austin",
     "circuit_name": "Circuit of the Americas",
@@ -723,7 +647,7 @@
   },
   {
     "season": 2026,
-    "round": 20,
+    "round": 18,
     "country": "Mexico",
     "location": "Mexico City",
     "circuit_name": "Aut\u00f3dromo Hermanos Rodr\u00edguez",
@@ -761,7 +685,7 @@
   },
   {
     "season": 2026,
-    "round": 21,
+    "round": 19,
     "country": "Brazil",
     "location": "S\u00e3o Paulo",
     "circuit_name": "Aut\u00f3dromo Jos\u00e9 Carlos Pace",
@@ -799,7 +723,7 @@
   },
   {
     "season": 2026,
-    "round": 22,
+    "round": 20,
     "country": "United States",
     "location": "Las Vegas",
     "circuit_name": "Las Vegas Strip Street Circuit",
@@ -837,7 +761,7 @@
   },
   {
     "season": 2026,
-    "round": 23,
+    "round": 21,
     "country": "Qatar",
     "location": "Lusail",
     "circuit_name": "Lusail International Circuit",
@@ -875,7 +799,7 @@
   },
   {
     "season": 2026,
-    "round": 24,
+    "round": 22,
     "country": "United Arab Emirates",
     "location": "Yas Marina",
     "circuit_name": "Yas Marina Circuit",
