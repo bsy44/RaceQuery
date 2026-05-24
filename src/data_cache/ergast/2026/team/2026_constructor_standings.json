@@ -1,11 +1,11 @@
 {
   "season": 2026,
-  "round": 4,
+  "round": 5,
   "standings": [
     {
       "position": "1",
       "positionText": "1",
-      "points": "180",
+      "points": "194",
       "wins": "4",
       "constructorId": "mercedes",
       "constructorUrl": "https://en.wikipedia.org/wiki/Mercedes-Benz_in_Formula_One",
@@ -15,7 +15,7 @@
     {
       "position": "2",
       "positionText": "2",
-      "points": "110",
+      "points": "117",
       "wins": "0",
       "constructorId": "ferrari",
       "constructorUrl": "https://en.wikipedia.org/wiki/Scuderia_Ferrari",
@@ -25,7 +25,7 @@
     {
       "position": "3",
       "positionText": "3",
-      "points": "94",
+      "points": "106",
       "wins": "0",
       "constructorId": "mclaren",
       "constructorUrl": "https://en.wikipedia.org/wiki/McLaren",
@@ -35,7 +35,7 @@
     {
       "position": "4",
       "positionText": "4",
-      "points": "30",
+      "points": "32",
       "wins": "0",
       "constructorId": "red_bull",
       "constructorUrl": "https://en.wikipedia.org/wiki/Red_Bull_Racing",
@@ -65,7 +65,7 @@
     {
       "position": "7",
       "positionText": "7",
-      "points": "14",
+      "points": "15",
       "wins": "0",
       "constructorId": "rb",
       "constructorUrl": "https://en.wikipedia.org/wiki/Racing_Bulls",
