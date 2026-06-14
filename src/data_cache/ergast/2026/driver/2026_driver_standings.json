@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "round": 6,
+  "round": 7,
   "standings": [
     {
       "position": "1",
@@ -77,7 +77,7 @@
     {
       "position": "5",
       "positionText": "5",
-      "points": "60",
+      "points": "58",
       "wins": "0",
       "driverId": "piastri",
       "driverNumber": "81",
@@ -131,7 +131,25 @@
     {
       "position": "8",
       "positionText": "8",
-      "points": "29",
+      "points": "35",
+      "wins": "0",
+      "driverId": "gasly",
+      "driverNumber": "10",
+      "driverCode": "GAS",
+      "driverUrl": "http://en.wikipedia.org/wiki/Pierre_Gasly",
+      "givenName": "Pierre",
+      "familyName": "Gasly",
+      "dateOfBirth": "1996-02-07",
+      "driverNationality": "French",
+      "constructorIds": "['alpine']",
+      "constructorUrls": "['https://en.wikipedia.org/wiki/Alpine_F1_Team']",
+      "constructorNames": "['Alpine F1 Team']",
+      "constructorNationalities": "['French']"
+    },
+    {
+      "position": "9",
+      "positionText": "9",
+      "points": "26",
       "wins": "0",
       "driverId": "hadjar",
       "driverNumber": "6",
@@ -147,9 +165,9 @@
       "constructorNationalities": "['Austrian']"
     },
     {
-      "position": "9",
-      "positionText": "9",
-      "points": "26",
+      "position": "10",
+      "positionText": "10",
+      "points": "24",
       "wins": "0",
       "driverId": "lawson",
       "driverNumber": "30",
@@ -163,24 +181,6 @@
       "constructorUrls": "['https://en.wikipedia.org/wiki/Racing_Bulls']",
       "constructorNames": "['RB F1 Team']",
       "constructorNationalities": "['Italian']"
-    },
-    {
-      "position": "10",
-      "positionText": "10",
-      "points": "26",
-      "wins": "0",
-      "driverId": "gasly",
-      "driverNumber": "10",
-      "driverCode": "GAS",
-      "driverUrl": "http://en.wikipedia.org/wiki/Pierre_Gasly",
-      "givenName": "Pierre",
-      "familyName": "Gasly",
-      "dateOfBirth": "1996-02-07",
-      "driverNationality": "French",
-      "constructorIds": "['alpine']",
-      "constructorUrls": "['https://en.wikipedia.org/wiki/Alpine_F1_Team']",
-      "constructorNames": "['Alpine F1 Team']",
-      "constructorNationalities": "['French']"
     },
     {
       "position": "11",
@@ -221,7 +221,7 @@
     {
       "position": "13",
       "positionText": "13",
-      "points": "13",
+      "points": "11",
       "wins": "0",
       "driverId": "arvid_lindblad",
       "driverNumber": "41",
