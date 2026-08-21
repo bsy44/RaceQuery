@@ -572,6 +572,44 @@
   {
     "season": 2026,
     "round": 16,
+    "country": "Bahrain",
+    "location": "Kuala Lumpur",
+    "circuit_name": "Bahrain International Circuit",
+    "official_name": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX IN MALAYSIA 2026",
+    "short_name": "Bahrain Grand Prix",
+    "event_format": "conventional",
+    "event_date": "2026-10-04 00:00:00",
+    "sessions": [
+      {
+        "name": "Practice 1",
+        "local_date": "2026-10-02 12:30:00+08:00",
+        "utc_date": "2026-10-02 04:30:00"
+      },
+      {
+        "name": "Practice 2",
+        "local_date": "2026-10-02 16:00:00+08:00",
+        "utc_date": "2026-10-02 08:00:00"
+      },
+      {
+        "name": "Practice 3",
+        "local_date": "2026-10-03 12:30:00+08:00",
+        "utc_date": "2026-10-03 04:30:00"
+      },
+      {
+        "name": "Qualifying",
+        "local_date": "2026-10-03 16:00:00+08:00",
+        "utc_date": "2026-10-03 08:00:00"
+      },
+      {
+        "name": "Race",
+        "local_date": "2026-10-04 15:00:00+08:00",
+        "utc_date": "2026-10-04 07:00:00"
+      }
+    ]
+  },
+  {
+    "season": 2026,
+    "round": 17,
     "country": "Singapore",
     "location": "Marina Bay",
     "circuit_name": "Marina Bay Street Circuit",
@@ -609,7 +647,7 @@
   },
   {
     "season": 2026,
-    "round": 17,
+    "round": 18,
     "country": "United States",
     "location": "Austin",
     "circuit_name": "Circuit of the Americas",
@@ -647,7 +685,7 @@
   },
   {
     "season": 2026,
-    "round": 18,
+    "round": 19,
     "country": "Mexico",
     "location": "Mexico City",
     "circuit_name": "Aut\u00f3dromo Hermanos Rodr\u00edguez",
@@ -685,7 +723,7 @@
   },
   {
     "season": 2026,
-    "round": 19,
+    "round": 20,
     "country": "Brazil",
     "location": "S\u00e3o Paulo",
     "circuit_name": "Aut\u00f3dromo Jos\u00e9 Carlos Pace",
@@ -723,7 +761,7 @@
   },
   {
     "season": 2026,
-    "round": 20,
+    "round": 21,
     "country": "United States",
     "location": "Las Vegas",
     "circuit_name": "Las Vegas Strip Street Circuit",
@@ -761,7 +799,7 @@
   },
   {
     "season": 2026,
-    "round": 21,
+    "round": 22,
     "country": "Qatar",
     "location": "Lusail",
     "circuit_name": "Lusail International Circuit",
@@ -799,7 +837,7 @@
   },
   {
     "season": 2026,
-    "round": 22,
+    "round": 23,
     "country": "United Arab Emirates",
     "location": "Yas Marina",
     "circuit_name": "Yas Marina Circuit",
