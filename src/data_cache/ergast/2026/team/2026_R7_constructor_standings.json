@@ -22,7 +22,7 @@
   {
     "position": "3",
     "positionText": "3",
-    "points": "141",
+    "points": "143",
     "wins": "0",
     "constructorId": "mclaren",
     "constructorUrl": "https://en.wikipedia.org/wiki/McLaren",
@@ -32,7 +32,7 @@
   {
     "position": "4",
     "positionText": "4",
-    "points": "89",
+    "points": "92",
     "wins": "0",
     "constructorId": "red_bull",
     "constructorUrl": "https://en.wikipedia.org/wiki/Red_Bull_Racing",
@@ -42,7 +42,7 @@
   {
     "position": "5",
     "positionText": "5",
-    "points": "57",
+    "points": "48",
     "wins": "0",
     "constructorId": "alpine",
     "constructorUrl": "https://en.wikipedia.org/wiki/Alpine_F1_Team",
@@ -52,7 +52,7 @@
   {
     "position": "6",
     "positionText": "6",
-    "points": "41",
+    "points": "45",
     "wins": "0",
     "constructorId": "rb",
     "constructorUrl": "https://en.wikipedia.org/wiki/Racing_Bulls",
